@@ -13,22 +13,22 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Usuario{
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String senha;
+    private String password;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
-    private Role tipo;
+    private Role type;
 }

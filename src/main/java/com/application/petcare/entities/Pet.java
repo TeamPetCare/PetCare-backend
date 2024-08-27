@@ -1,13 +1,10 @@
 package com.application.petcare.entities;
 
 import jakarta.persistence.*;
-
-import org.springframework.data.annotation.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.UUID;
 
 @Entity
@@ -19,19 +16,16 @@ import java.util.UUID;
 public class Pet {
 
     @jakarta.persistence.Id
-    @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false)
-    private String especie;
+    private String species;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
-
-
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 }
