@@ -8,6 +8,6 @@ public class PetCareRestApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PetCareRestApplication.class, args);
-	}
 
+	}
 }
