@@ -28,7 +28,7 @@ public abstract class User {
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING) // Alterado para EnumType.STRING
     @Column(nullable = false)
     private Role type;
 }
