@@ -23,6 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResponse createCustomer(CustomerCreateRequest request) {
         Customer customer = Customer.builder()
+                .cargo(request.getCargo())
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(request.getPassword())
@@ -68,7 +69,8 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.getId(),
                 customer.getName(),
                 customer.getEmail(),
-                customer.getType()
+                customer.getType(),
+                customer.getCargo()
         );
     }
 }

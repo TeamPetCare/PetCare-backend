@@ -1,16 +1,12 @@
 package com.application.petcare.entities;
 
 import com.application.petcare.enums.Role;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.UUID;
 
 @Entity
@@ -18,14 +14,20 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Customer extends User {
+
+    @Column(nullable = false)
+    private String cargo;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets;
 
     @Builder
-    public Customer(UUID id, String name, String email, String password, Role type, List<Pet> pets) {
+    public Customer(UUID id, String name, String email, String password, Role type, List<Pet> pets, String cargo) {
         super(id, name, email, password, type);
         this.pets = pets;
+        this.cargo = cargo;
     }
 }
