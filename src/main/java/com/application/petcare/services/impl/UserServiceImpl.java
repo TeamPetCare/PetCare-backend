@@ -16,7 +16,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(UUID id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @Override
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        // add lógica de validação aqui
+        // Add lógica de validação
         return userRepository.save(user);
     }
 

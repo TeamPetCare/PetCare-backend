@@ -1,4 +1,4 @@
-package com.application.petcare.dto;
+package com.application.petcare.dto.user;
 
 import com.application.petcare.enums.Role;
 import jakarta.validation.constraints.Email;
