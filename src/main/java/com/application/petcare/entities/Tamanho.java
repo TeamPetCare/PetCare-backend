@@ -25,3 +25,4 @@ public class Tamanho {
 
     @Column(nullable = false)
     private double preco;
+}
