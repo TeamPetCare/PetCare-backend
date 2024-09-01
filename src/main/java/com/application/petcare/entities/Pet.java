@@ -1,6 +1,5 @@
 package com.application.petcare.entities;
 
-import com.application.petcare.enums.Tamanho;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,8 +43,8 @@ public class Pet {
     @Column(nullable = false)
     private double weight;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "tamanho_id", nullable = false)
     private Tamanho size;
 
     @Column(nullable = true)
