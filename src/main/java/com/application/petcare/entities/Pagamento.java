@@ -1,7 +1,6 @@
 package com.application.petcare.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,9 +11,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@MappedSuperclass
+@Entity
 public abstract class Pagamento {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Integer id;
     @Column(nullable = false)

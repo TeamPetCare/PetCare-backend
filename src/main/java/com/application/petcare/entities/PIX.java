@@ -7,13 +7,17 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@MappedSuperclass
 public abstract class PIX extends Pagamento {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
+    private Integer id;
+
     private Integer idPagamento;
     @Column(nullable = false)
     private String chavePix;
