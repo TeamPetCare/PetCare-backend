@@ -13,17 +13,17 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_admin")
+@Table(name = "tb_owner")
 @Data
 @NoArgsConstructor
-public class Admin extends User {
+public class Owner extends User {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "admin_id")
+    @JoinColumn(name = "owner_id")
     private List<Employee> employees;
 
     @Builder
-    public Admin(UUID id, String name, String email, String password, Role type, List<Employee> employees) {
+    public Owner(UUID id, String name, String email, String password, Role type, List<Employee> employees) {
         super(id, name, email, password, type);
         this.employees = employees;
     }
