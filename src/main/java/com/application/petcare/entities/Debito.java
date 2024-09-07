@@ -11,13 +11,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Debito extends Pagamento {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Integer id;
-
+@Table(name = "tb_debito")
+public class Debito extends Pagamento {
 
     private Integer idPagamento;
 
@@ -37,5 +32,10 @@ public abstract class Debito extends Pagamento {
         this.nomeTitular = nomeTitular;
         this.validade = validade;
         this.codigoDeSeguranca = codigoDeSeguranca;
+    }
+
+    @Override
+    public Double calcularPagamento() {
+        return getValor();
     }
 }

@@ -8,10 +8,8 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 
-@Getter
-@Setter
 @NoArgsConstructor
-@Entity
+@MappedSuperclass
 public abstract class Pagamento {
 
     @Id
@@ -29,4 +27,28 @@ public abstract class Pagamento {
     }
 
     public abstract Double calcularPagamento();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public LocalDate getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(LocalDate dataPagamento) {
+        this.dataPagamento = dataPagamento;
+    }
 }

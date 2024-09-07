@@ -11,12 +11,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class PIX extends Pagamento {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Integer id;
+@Table(name = "tb_pix")
+public class PIX extends Pagamento {
 
     private Integer idPagamento;
     @Column(nullable = false)
@@ -26,5 +22,10 @@ public abstract class PIX extends Pagamento {
         super(id, valor, dataPagamento);
         this.idPagamento = idPagamento;
         this.chavePix = chavePix;
+    }
+
+    @Override
+    public Double calcularPagamento() {
+        return getValor();
     }
 }

@@ -49,7 +49,9 @@ public class Ordenacao {
             frases[menorIndice] = frases[i];
             frases[i] = temp;
         }
-        System.out.println(frases[0]);
+        for (int i = 0; i < frases.length; i++) {
+            System.out.println(frases[i]);
+        }
     }
 
 }
