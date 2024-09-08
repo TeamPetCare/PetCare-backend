@@ -19,12 +19,16 @@ import java.util.UUID;
 public class Owner extends User {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id")  // Define o mapeamento do relacionamento
     private List<Employee> employees;
 
+    @Column(nullable = false, unique = true)
+    private String cnpj;
+
     @Builder
-    public Owner(UUID id, String name, String email, String password, Role type, List<Employee> employees) {
+    public Owner(UUID id, String name, String email, String password, Role type, String cnpj, List<Employee> employees) {
         super(id, name, email, password, type);
+        this.cnpj = cnpj;
         this.employees = employees;
     }
 }
