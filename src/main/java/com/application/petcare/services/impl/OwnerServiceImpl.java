@@ -9,7 +9,6 @@ import com.application.petcare.repository.EmployeeRepository;
 import com.application.petcare.repository.OwnerRepository;
 import com.application.petcare.services.OwnerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
