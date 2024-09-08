@@ -18,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Owner extends User {
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")  // Define o mapeamento do relacionamento
     private List<Employee> employees;
 
