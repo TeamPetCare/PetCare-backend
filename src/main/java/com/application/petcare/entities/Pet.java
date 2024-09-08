@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
 @Entity
 @Table(name = "tb_pet")
 @Data
@@ -24,18 +23,26 @@ public class Pet {
     @Column(nullable = false)
     private String name;
 
+    // muitos pets podem pertencer a um cliente
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @Column(nullable = false)
-    private String species;
+    // Relacionamento com Especie (muitos pets podem ter uma espécie)
+    @ManyToOne
+    @JoinColumn(name = "especie_id", nullable = false)
+    private Especie especie;
+
+    // Relacionamento com Raca (muitos pets podem ter uma raça)
+    @ManyToOne
+    @JoinColumn(name = "raca_id", nullable = false)
+    private Raca raca;
 
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
     @Column(nullable = false)
-    private String gender;
+    private String sexo;
 
     @Column(nullable = false)
     private String color;
@@ -43,12 +50,10 @@ public class Pet {
     @Column(nullable = false)
     private double weight;
 
+    // Relacionamento com Tamanho (Size)
     @ManyToOne
-    @JoinColumn(name = "tamanho_id", nullable = false)
-    private Tamanho size;
-
-    @Column(nullable = true)
-    private String microchip;
+    @JoinColumn(name = "size_id", nullable = false)
+    private Size size;
 
     @Column(name = "notes")
     private String notes;
