@@ -1,6 +1,7 @@
 package com.application.petcare.entities;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class Debito extends Pagamento {
     @Column(nullable = false)
     private Integer codigoDeSeguranca;
 
+    @Builder
     public Debito(Integer id, Double valor, LocalDate dataPagamento, Integer idPagamento, Integer numeroCartao, String nomeTitular, LocalDate validade, Integer codigoDeSeguranca) {
         super(id, valor, dataPagamento);
         this.idPagamento = idPagamento;

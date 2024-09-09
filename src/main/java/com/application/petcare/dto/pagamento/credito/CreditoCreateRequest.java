@@ -11,6 +11,8 @@ public class CreditoCreateRequest {
     private Double valor;
     @NotBlank(message = "Data Pagamento is required")
     private LocalDate dataPagamento;
+    @NotBlank(message = "idPagamento is required")
+    private Integer idPagamento;
     @NotBlank(message = "Numero Cartão is required")
     private Integer numeroCartao;
     @NotBlank(message = "Nome Titular is required")

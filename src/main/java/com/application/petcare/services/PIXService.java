@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface PIXService {
 
-    PIXResponse createPix (PIXCreateRequest request);
+    PIXResponse createPIX (PIXCreateRequest request);
     PIXResponse findById(Integer id);
-    void deleteEmployee(Integer id);
-    List<PIX> findAllPIX();
+    void deletePIX(Integer id);
+    List<PIXResponse> findAllPIX();
 }

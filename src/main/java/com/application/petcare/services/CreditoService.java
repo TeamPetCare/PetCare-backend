@@ -13,5 +13,5 @@ public interface CreditoService {
     CreditoResponse createCredito (CreditoCreateRequest request);
     CreditoResponse findById(Integer id);
     void deleteCredito(Integer id);
-    List<Credito> findAllCredito();
+    List<CreditoResponse> findAllCredito();
 }

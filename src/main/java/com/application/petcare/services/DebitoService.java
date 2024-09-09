@@ -8,8 +8,8 @@ import com.application.petcare.entities.Debito;
 import java.util.List;
 
 public interface DebitoService {
-    DebitoResponse createCredito (DebitoCreateRequest request);
+    DebitoResponse createDebito (DebitoCreateRequest request);
     DebitoResponse findById(Integer id);
-    void deleteCredito(Integer id);
-    List<Debito> findAllCredito();
+    void deleteDebito(Integer id);
+    List<DebitoResponse> findAllDebito();
 }

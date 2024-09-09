@@ -12,6 +12,7 @@ public class CreditoResponse {
     private Integer id;
     private Double valor;
     private LocalDate dataPagamento;
+    private Integer idPagamento;
     private Integer numeroCartao;
     private String nomeTitular;
     private LocalDate validade;

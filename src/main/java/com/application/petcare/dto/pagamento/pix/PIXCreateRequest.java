@@ -11,6 +11,8 @@ public class PIXCreateRequest {
     private Double valor;
     @NotBlank(message = "Data Pagamento is required")
     private LocalDate dataPagamento;
+    @NotBlank(message = "idPagamento is required")
+    private Integer idPagamento;
     @NotBlank(message = "Chave PIX is required")
     private String chavePix;
 }
