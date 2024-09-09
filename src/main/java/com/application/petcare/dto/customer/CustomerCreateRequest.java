@@ -21,6 +21,4 @@ public class CustomerCreateRequest {
     @NotNull(message = "Role is required")
     private Role role;
 
-    @NotBlank(message = "Cargo is required")
-    private String cargo;
 }

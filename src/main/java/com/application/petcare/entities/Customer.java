@@ -18,16 +18,13 @@ import java.util.UUID;
 @Setter
 public class Customer extends User {
 
-    @Column(nullable = false)
-    private String cargo;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets;
 
     @Builder
-    public Customer(UUID id, String name, String email, String password, Role type, List<Pet> pets, String cargo) {
+    public Customer(UUID id, String name, String email, String password, Role type, List<Pet> pets) {
         super(id, name, email, password, type);
         this.pets = pets;
-        this.cargo = cargo;
     }
 }
