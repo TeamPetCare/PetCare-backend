@@ -3,6 +3,7 @@ package com.application.petcare.controller;
 import com.application.petcare.dto.raca.RacaCreateRequest;
 import com.application.petcare.dto.raca.RacaResponse;
 import com.application.petcare.services.RacaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/racas")
 @RequiredArgsConstructor
+@Tag(name = "Raça", description = "Gerenciar raças de pets")
 public class RacaController {
 
     private final RacaService racaService;

@@ -4,6 +4,7 @@ package com.application.petcare.controller;
 import com.application.petcare.dto.especie.EspecieCreateRequest;
 import com.application.petcare.dto.especie.EspecieResponse;
 import com.application.petcare.services.EspecieService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @RequestMapping("/api/especies")
 @RequiredArgsConstructor
+@Tag(name = "Especie", description = "Gerenciar especies de pets")
 public class EspecieController {
 
     private final EspecieService especieService;

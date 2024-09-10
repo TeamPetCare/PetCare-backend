@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/employees")
 @RequiredArgsConstructor
-@Tag(name = "Employee", description = "Endpoints para gerenciar funcionários")
+@Tag(name = "Employee", description = "Gerenciar funcionários")
 public class EmployeeController {
 
     private final EmployeeService employeeService;

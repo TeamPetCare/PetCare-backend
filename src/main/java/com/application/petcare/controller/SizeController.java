@@ -17,7 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/sizes")
 @RequiredArgsConstructor
-@Tag(name = "Size", description = "API para gerenciar tamanhos de pets")
+@Tag(name = "Size", description = "Gerenciar tamanhos de pets")
 public class SizeController {
 
     private final SizeService sizeService;
