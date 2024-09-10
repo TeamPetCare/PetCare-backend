@@ -31,10 +31,10 @@ public class PetServiceImpl implements PetService {
         Especie especie = especieRepository.findById(request.getEspecieId())
                 .orElseThrow(() -> new RuntimeException("Especie not found"));
 
-        Raca raca = racaRepository.findById(request.getEspecieId())
-                .orElseThrow(() -> new RuntimeException("Raca not found"));
+        Raca raca = racaRepository.findById(request.getRacaId())
+                .orElseThrow(() -> new RuntimeException("Raca not found"));  // Correção aqui
 
-        Size size = sizeRepository.findById(request.getEspecieId())
+        Size size = sizeRepository.findById(request.getSizeId())
                 .orElseThrow(() -> new RuntimeException("Size not found"));
 
         Pet pet = Pet.builder()
@@ -53,6 +53,7 @@ public class PetServiceImpl implements PetService {
         Pet savedPet = petRepository.save(pet);
         return mapToResponse(savedPet);
     }
+
 
     @Override
     public PetResponse updatePet(UUID id, PetCreateRequest request) {
