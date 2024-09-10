@@ -1,9 +1,7 @@
 package com.application.petcare.services;
 
-
 import com.application.petcare.dto.pagamento.debito.DebitoCreateRequest;
 import com.application.petcare.dto.pagamento.debito.DebitoResponse;
-import com.application.petcare.entities.Debito;
 
 import java.util.List;
 
