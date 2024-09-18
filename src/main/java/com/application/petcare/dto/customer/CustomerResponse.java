@@ -14,4 +14,5 @@ public class CustomerResponse {
     private String name;
     private String email;
     private Role role;
+    private String cpf;
 }

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
@@ -26,12 +25,12 @@ public class CustomerServiceImpl implements CustomerService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(request.getPassword())
-                .type(request.getRole()) // 'type' no lugar de 'role'
+                .type(request.getRole())
+                .cpf(request.getCpf())
                 .build();
         Customer savedCustomer = customerRepository.save(customer);
         return mapToCustomerResponse(savedCustomer);
     }
-
 
     @Override
     public CustomerResponse findById(UUID id) {
@@ -54,6 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
         existingCustomer.setName(request.getName());
         existingCustomer.setEmail(request.getEmail());
         existingCustomer.setPassword(request.getPassword());
+        existingCustomer.setCpf(request.getCpf()); // Atualizando o CPF
         Customer updatedCustomer = customerRepository.save(existingCustomer);
         return mapToCustomerResponse(updatedCustomer);
     }
@@ -68,7 +68,8 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.getId(),
                 customer.getName(),
                 customer.getEmail(),
-                customer.getType()
+                customer.getType(),
+                customer.getCpf() // Incluindo o CPF na resposta
         );
     }
 }
