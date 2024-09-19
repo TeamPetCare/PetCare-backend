@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface ServicosService {
     ServicosResponse createServico(ServicosCreateRequest request);
-    ServicosResponse updateServico(Integer id, ServicosCreateRequest request);
+    ServicosResponse updateServico(Integer id, ServicosUpdateRequest request);
     void deleteServico(Integer id);
     List<ServicosResponse> findAllServicos();
-
+    ServicosResponse getServicoById(Integer id);
 }

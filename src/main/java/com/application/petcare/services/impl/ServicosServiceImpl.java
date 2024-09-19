@@ -2,6 +2,7 @@ package com.application.petcare.services.impl;
 
 import com.application.petcare.dto.servicos.ServicosCreateRequest;
 import com.application.petcare.dto.servicos.ServicosResponse;
+import com.application.petcare.dto.servicos.ServicosUpdateRequest;
 import com.application.petcare.entities.Servicos;
 import com.application.petcare.repository.ServicoRepository;
 import com.application.petcare.services.ServicosService;
@@ -30,7 +31,7 @@ public class ServicosServiceImpl implements ServicosService {
     }
 
     @Override
-    public ServicosResponse updateServico(Integer id, ServicosCreateRequest request) {
+    public ServicosResponse updateServico(Integer id, ServicosUpdateRequest request) {
         Servicos servico = servicoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Servico não encontrado"));
 
@@ -52,6 +53,13 @@ public class ServicosServiceImpl implements ServicosService {
         return servicoRepository.findAll().stream()
                 .map(this::mapToServicosResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ServicosResponse getServicoById(Integer id) {
+        Servicos servico = servicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Servico não encontrado"));
+        return mapToServicosResponse(servico);
     }
 
     private ServicosResponse mapToServicosResponse(Servicos servicos){

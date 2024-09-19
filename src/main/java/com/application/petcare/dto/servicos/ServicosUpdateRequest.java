@@ -2,7 +2,9 @@ package com.application.petcare.dto.servicos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
 public class ServicosUpdateRequest {
 
     @NotBlank(message = "Nome do serviço é obrigatorio")
