@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,12 +23,12 @@ public class RacaControllerImpl implements RacaController {
     }
 
     @Override
-    public ResponseEntity<RacaResponse> updateRaca(UUID id, @Valid RacaCreateRequest request) {
+    public ResponseEntity<RacaResponse> updateRaca(Integer id, @Valid RacaCreateRequest request) {
         return ResponseEntity.ok(racaService.updateRaca(id, request));
     }
 
     @Override
-    public ResponseEntity<RacaResponse> getRacaById(UUID id) {
+    public ResponseEntity<RacaResponse> getRacaById(Integer id) {
         return ResponseEntity.ok(racaService.getRacaById(id));
     }
 
@@ -39,7 +38,7 @@ public class RacaControllerImpl implements RacaController {
     }
 
     @Override
-    public ResponseEntity<Void> deleteRaca(UUID id) {
+    public ResponseEntity<Void> deleteRaca(Integer id) {
         racaService.deleteRaca(id);
         return ResponseEntity.noContent().build();
     }

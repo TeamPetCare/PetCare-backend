@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +25,7 @@ public class CustomerControllerImpl implements CustomerController {
     }
 
     @Override
-    public ResponseEntity<CustomerResponse> getCustomerById(UUID id) {
+    public ResponseEntity<CustomerResponse> getCustomerById(Integer id) {
         CustomerResponse customerResponse = customerService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(customerResponse);
     }
@@ -38,13 +37,13 @@ public class CustomerControllerImpl implements CustomerController {
     }
 
     @Override
-    public ResponseEntity<CustomerResponse> updateCustomer(UUID id, CustomerUpdateRequest customerUpdateRequest) {
+    public ResponseEntity<CustomerResponse> updateCustomer(Integer id, CustomerUpdateRequest customerUpdateRequest) {
         CustomerResponse updatedCustomer = customerService.updateCustomer(id, customerUpdateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(updatedCustomer);
     }
 
     @Override
-    public ResponseEntity<Void> deleteCustomer(UUID id) {
+    public ResponseEntity<Void> deleteCustomer(Integer id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

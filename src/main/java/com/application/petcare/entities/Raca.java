@@ -3,7 +3,6 @@ package com.application.petcare.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_raca")
@@ -14,8 +13,8 @@ import java.util.UUID;
 public class Raca {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(nullable = false)
     private String tipoRaca;

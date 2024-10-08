@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +25,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     }
 
     @Override
-    public ResponseEntity<EmployeeResponse> getEmployeeById(UUID id) {
+    public ResponseEntity<EmployeeResponse> getEmployeeById(Integer id) {
         EmployeeResponse employeeResponse = employeeService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(employeeResponse);
     }
@@ -38,13 +37,13 @@ public class EmployeeControllerImpl implements EmployeeController {
     }
 
     @Override
-    public ResponseEntity<EmployeeResponse> updateEmployee(UUID id, EmployeeUpdateRequest employeeUpdateRequest) {
+    public ResponseEntity<EmployeeResponse> updateEmployee(Integer id, EmployeeUpdateRequest employeeUpdateRequest) {
         EmployeeResponse updatedEmployee = employeeService.updateEmployee(id, employeeUpdateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(updatedEmployee);
     }
 
     @Override
-    public ResponseEntity<Void> deleteEmployee(UUID id) {
+    public ResponseEntity<Void> deleteEmployee(Integer id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

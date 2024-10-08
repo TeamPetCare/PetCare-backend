@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +29,7 @@ public class EspecieServiceImpl implements EspecieService {
     }
 
     @Override
-    public EspecieResponse getEspecieById(UUID id) {
+    public EspecieResponse getEspecieById(Integer id) {
         Especie especie = especieRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Espécie não encontrada!"));
         return mapToEspecieResponse(especie);
@@ -44,7 +43,7 @@ public class EspecieServiceImpl implements EspecieService {
     }
 
     @Override
-    public EspecieResponse updateEspecie(UUID id, EspecieCreateRequest request) {
+    public EspecieResponse updateEspecie(Integer id, EspecieCreateRequest request) {
         Especie especie = especieRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Espécie não encontrada!"));
 
@@ -56,7 +55,7 @@ public class EspecieServiceImpl implements EspecieService {
     }
 
     @Override
-    public void deleteEspecie(UUID id) {
+    public void deleteEspecie(Integer id) {
         especieRepository.deleteById(id);
     }
 

@@ -5,16 +5,15 @@ import com.application.petcare.dto.owner.OwnerResponse;
 import com.application.petcare.dto.owner.OwnerUpdateRequest;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface OwnerService {
     OwnerResponse createOwner(OwnerCreateRequest request);
 
-    OwnerResponse findById(UUID id);
+    OwnerResponse findById(Integer id);
 
-    OwnerResponse updateOwner(UUID id, OwnerUpdateRequest request);
+    OwnerResponse updateOwner(Integer id, OwnerUpdateRequest request);
 
-    void deleteOwner(UUID id);
+    void deleteOwner(Integer id);
 
     List<OwnerResponse> findAllOwners();
 

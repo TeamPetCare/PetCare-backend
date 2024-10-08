@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,12 +22,12 @@ public class PetControllerImpl implements PetController {
     }
 
     @Override
-    public ResponseEntity<PetResponse> updatePet(UUID id, PetCreateRequest request) {
+    public ResponseEntity<PetResponse> updatePet(Integer id, PetCreateRequest request) {
         return ResponseEntity.ok(petService.updatePet(id, request));
     }
 
     @Override
-    public ResponseEntity<PetResponse> getPetById(UUID id) {
+    public ResponseEntity<PetResponse> getPetById(Integer id) {
         return ResponseEntity.ok(petService.getPetById(id));
     }
 
@@ -38,7 +37,7 @@ public class PetControllerImpl implements PetController {
     }
 
     @Override
-    public ResponseEntity<Void> deletePet(UUID id) {
+    public ResponseEntity<Void> deletePet(Integer id) {
         petService.deletePet(id);
         return ResponseEntity.noContent().build();
     }

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Tag(name = "Employee", description = "Gerenciar funcionários")
 @RequestMapping("/api/employees")
@@ -21,7 +20,7 @@ public interface EmployeeController {
 
     @Operation(summary = "Buscar funcionário por ID")
     @GetMapping("/{id}")
-    ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable UUID id);
+    ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable Integer id);
 
     @Operation(summary = "Buscar todos os funcionários")
     @GetMapping
@@ -30,10 +29,10 @@ public interface EmployeeController {
     @Operation(summary = "Atualizar funcionário por ID")
     @PutMapping("/{id}")
     ResponseEntity<EmployeeResponse> updateEmployee(
-            @PathVariable UUID id,
+            @PathVariable Integer id,
             @RequestBody EmployeeUpdateRequest employeeUpdateRequest);
 
     @Operation(summary = "Excluir funcionário por ID")
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteEmployee(@PathVariable UUID id);
+    ResponseEntity<Void> deleteEmployee(@PathVariable Integer id);
 }

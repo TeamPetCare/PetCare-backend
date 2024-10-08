@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Tag(name = "Pets", description = "Gerenciamento de pets")
 @RequestMapping("/api/pets")
@@ -20,11 +19,11 @@ public interface PetController {
 
     @Operation(summary = "Atualizar um pet existente")
     @PutMapping("/{id}")
-    ResponseEntity<PetResponse> updatePet(@PathVariable UUID id, @RequestBody PetCreateRequest request);
+    ResponseEntity<PetResponse> updatePet(@PathVariable Integer id, @RequestBody PetCreateRequest request);
 
     @Operation(summary = "Buscar um pet pelo ID")
     @GetMapping("/{id}")
-    ResponseEntity<PetResponse> getPetById(@PathVariable UUID id);
+    ResponseEntity<PetResponse> getPetById(@PathVariable Integer id);
 
     @Operation(summary = "Listar todos os pets")
     @GetMapping
@@ -32,5 +31,5 @@ public interface PetController {
 
     @Operation(summary = "Deletar um pet")
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deletePet(@PathVariable UUID id);
+    ResponseEntity<Void> deletePet(@PathVariable Integer id);
 }

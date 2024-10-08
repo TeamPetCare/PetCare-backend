@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,14 +37,14 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public OwnerResponse findById(UUID id) {
+    public OwnerResponse findById(Integer id) {
         Owner owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Owner not found with id: " + id));
         return mapToOwnerResponse(owner);
     }
 
     @Override
-    public OwnerResponse updateOwner(UUID id, OwnerUpdateRequest request) {
+    public OwnerResponse updateOwner(Integer id, OwnerUpdateRequest request) {
         Owner existingOwner = ownerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Owner not found with id: " + id));
 
@@ -63,7 +62,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public void deleteOwner(UUID id) {
+    public void deleteOwner(Integer id) {
         Owner owner = ownerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Owner not found with id: " + id));
         ownerRepository.delete(owner);

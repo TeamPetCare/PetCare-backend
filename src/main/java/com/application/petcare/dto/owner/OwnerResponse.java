@@ -6,17 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class OwnerResponse {
 
-    private UUID id;
+    private Integer id;
     private String name;
     private String email;
     private String cnpj;
-    private List<UUID> employeeIds;
+    private List<Integer> employeeIds;
     private Role role;
 }

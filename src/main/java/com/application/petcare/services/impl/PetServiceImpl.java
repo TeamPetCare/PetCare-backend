@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +55,7 @@ public class PetServiceImpl implements PetService {
 
 
     @Override
-    public PetResponse updatePet(UUID id, PetCreateRequest request) {
+    public PetResponse updatePet(Integer id, PetCreateRequest request) {
         Pet pet = petRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Pet not found"));
 
@@ -90,7 +89,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public PetResponse getPetById(UUID id) {
+    public PetResponse getPetById(Integer id) {
         Pet pet = petRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Pet not found"));
         return mapToResponse(pet);
@@ -104,7 +103,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public void deletePet(UUID id) {
+    public void deletePet(Integer id) {
         petRepository.deleteById(id);
     }
 

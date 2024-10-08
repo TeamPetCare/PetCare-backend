@@ -4,20 +4,19 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Builder
 public class PetResponse {
-    private UUID id;
+    private Integer id;
     private String name;
-    private UUID customerId;
-    private UUID especieId;
-    private UUID racaId;
+    private Integer customerId;
+    private Integer especieId;
+    private Integer racaId;
     private LocalDate birthDate;
     private String sexo;
     private String color;
     private double weight;
-    private UUID sizeId;
+    private Integer sizeId;
     private String notes;
 }

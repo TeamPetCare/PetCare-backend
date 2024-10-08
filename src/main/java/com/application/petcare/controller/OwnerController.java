@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Tag(name = "Owner", description = "Gerenciar Owner/admin")
 @RequestMapping("/api/owners")
@@ -24,18 +23,18 @@ public interface OwnerController {
 
     @Operation(summary = "Obter um owner pelo ID", description = "Retorna os detalhes de um owner específico pelo ID.")
     @GetMapping("/{id}")
-    ResponseEntity<OwnerResponse> getOwnerById(@PathVariable UUID id);
+    ResponseEntity<OwnerResponse> getOwnerById(@PathVariable Integer id);
 
     @Operation(summary = "Atualizar um owner existente", description = "Atualiza os dados de um owner existente pelo ID.")
     @PutMapping("/{id}")
-    ResponseEntity<OwnerResponse> updateOwner(@PathVariable UUID id, @Valid @RequestBody OwnerUpdateRequest request);
+    ResponseEntity<OwnerResponse> updateOwner(@PathVariable Integer id, @Valid @RequestBody OwnerUpdateRequest request);
 
     @Operation(summary = "Deletar um owner pelo ID", description = "Deleta um owner existente pelo ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "No Content, quando o owner é deletado com sucesso")
     })
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteOwner(@PathVariable UUID id);
+    ResponseEntity<Void> deleteOwner(@PathVariable Integer id);
 
     @Operation(summary = "Listar todos os owners", description = "Retorna uma lista de todos os owners cadastrados.")
     @GetMapping

@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,7 +21,7 @@ public class Employee extends User {
     private String cargo;
 
     @Builder
-    public Employee(UUID id, String name, String email, String password, Role type, String cargo) {
+    public Employee(Integer id, String name, String email, String password, Role type, String cargo) {
         super(id, name, email, password, type);
         this.cargo = cargo;
     }

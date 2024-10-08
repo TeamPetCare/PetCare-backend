@@ -4,12 +4,11 @@ import com.application.petcare.dto.raca.RacaCreateRequest;
 import com.application.petcare.dto.raca.RacaResponse;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface RacaService {
     RacaResponse createRaca(RacaCreateRequest request);
-    RacaResponse updateRaca(UUID id, RacaCreateRequest request);
-    RacaResponse getRacaById(UUID id);
+    RacaResponse updateRaca(Integer id, RacaCreateRequest request);
+    RacaResponse getRacaById(Integer id);
     List<RacaResponse> getAllRacas();
-    void deleteRaca(UUID id);
+    void deleteRaca(Integer id);
 }

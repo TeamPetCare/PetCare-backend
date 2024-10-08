@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 
 @Tag(name = "Especie", description = "Gerenciar especies de pets")
 @RequestMapping("/api/especies")
@@ -23,7 +22,7 @@ public interface EspecieController {
 
     @Operation(summary = "Obter uma espécie pelo ID", description = "Retorna os detalhes de uma espécie específica pelo ID.")
     @GetMapping("/{id}")
-    ResponseEntity<EspecieResponse> getEspecieById(@PathVariable UUID id);
+    ResponseEntity<EspecieResponse> getEspecieById(@PathVariable Integer id);
 
     @Operation(summary = "Listar todas as espécies", description = "Retorna uma lista de todas as espécies cadastradas.")
     @GetMapping
@@ -32,7 +31,7 @@ public interface EspecieController {
     @Operation(summary = "Atualizar uma espécie existente", description = "Atualiza os dados de uma espécie existente pelo ID.")
     @PutMapping("/{id}")
     ResponseEntity<EspecieResponse> updateEspecie(
-            @PathVariable UUID id,
+            @PathVariable Integer id,
             @Valid @RequestBody EspecieCreateRequest request);
 
     @Operation(summary = "Deletar uma espécie pelo ID", description = "Deleta uma espécie existente pelo ID.")
@@ -40,5 +39,5 @@ public interface EspecieController {
             @ApiResponse(responseCode = "204", description = "No Content, quando a espécie é deletada com sucesso")
     })
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteEspecie(@PathVariable UUID id);
+    ResponseEntity<Void> deleteEspecie(@PathVariable Integer id);
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 
 @Tag(name = "Raça", description = "Gerenciar raças de pets")
 @RequestMapping("/api/racas")
@@ -23,11 +22,11 @@ public interface RacaController {
 
     @Operation(summary = "Atualizar uma raça existente", description = "Atualiza os dados de uma raça existente pelo ID.")
     @PutMapping("/{id}")
-    ResponseEntity<RacaResponse> updateRaca(@PathVariable UUID id, @Valid @RequestBody RacaCreateRequest request);
+    ResponseEntity<RacaResponse> updateRaca(@PathVariable Integer id, @Valid @RequestBody RacaCreateRequest request);
 
     @Operation(summary = "Obter uma raça pelo ID", description = "Retorna os detalhes de uma raça específica pelo ID.")
     @GetMapping("/{id}")
-    ResponseEntity<RacaResponse> getRacaById(@PathVariable UUID id);
+    ResponseEntity<RacaResponse> getRacaById(@PathVariable Integer id);
 
     @Operation(summary = "Listar todas as raças", description = "Retorna uma lista de todas as raças cadastradas.")
     @GetMapping
@@ -38,5 +37,5 @@ public interface RacaController {
             @ApiResponse(responseCode = "204", description = "No Content, quando a raça é deletada com sucesso")
     })
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteRaca(@PathVariable UUID id);
+    ResponseEntity<Void> deleteRaca(@PathVariable Integer id);
 }

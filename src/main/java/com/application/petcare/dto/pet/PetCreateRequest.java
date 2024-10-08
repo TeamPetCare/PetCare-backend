@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 public class PetCreateRequest {
@@ -13,13 +12,13 @@ public class PetCreateRequest {
     private String name;
 
     @NotNull(message = "Customer ID is required")
-    private UUID customerId;
+    private Integer customerId;
 
     @NotNull(message = "Especie ID is required")
-    private UUID especieId;
+    private Integer especieId;
 
     @NotNull(message = "Raca ID is required")
-    private UUID racaId;
+    private Integer racaId;
 
     @NotNull(message = "Birth date is required")
     private LocalDate birthDate;
@@ -34,7 +33,7 @@ public class PetCreateRequest {
     private double weight;
 
     @NotNull(message = "Size ID is required")
-    private UUID sizeId;
+    private Integer sizeId;
 
     private String notes;
 }

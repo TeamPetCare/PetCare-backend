@@ -8,7 +8,6 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class OwnerCreateRequest {
@@ -30,5 +29,5 @@ public class OwnerCreateRequest {
     private String cnpj;
 
     @NotNull(message = "Employee IDs are required")
-    private List<UUID> employeeIds = new ArrayList<>();  // ajuste
+    private List<Integer> employeeIds = new ArrayList<>();  // ajuste
 }

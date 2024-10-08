@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,18 +23,18 @@ public class SizeControllerImpl implements SizeController {
     }
 
     @Override
-    public ResponseEntity<SizeResponse> updateSize(UUID id, @Valid SizeCreateRequest request) {
+    public ResponseEntity<SizeResponse> updateSize(Integer id, @Valid SizeCreateRequest request) {
         return ResponseEntity.ok(sizeService.updateSize(id, request));
     }
 
     @Override
-    public ResponseEntity<Void> deleteSize(UUID id) {
+    public ResponseEntity<Void> deleteSize(Integer id) {
         sizeService.deleteSize(id);
         return ResponseEntity.noContent().build();
     }
 
     @Override
-    public ResponseEntity<SizeResponse> getSizeById(UUID id) {
+    public ResponseEntity<SizeResponse> getSizeById(Integer id) {
         return ResponseEntity.ok(sizeService.getSizeById(id));
     }
 

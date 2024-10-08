@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Tag(name = "Customer", description = "Gerenciar clientes")
 public interface CustomerController {
@@ -33,7 +32,7 @@ public interface CustomerController {
     })
     @GetMapping("/{id}")
     ResponseEntity<CustomerResponse> getCustomerById(
-            @PathVariable @Parameter(description = "ID único do cliente") UUID id);
+            @PathVariable @Parameter(description = "ID único do cliente") Integer id);
 
     @Operation(summary = "Listar todos os clientes", description = "Retorna uma lista de todos os clientes.")
     @ApiResponses(value = {
@@ -49,7 +48,7 @@ public interface CustomerController {
     })
     @PutMapping("/{id}")
     ResponseEntity<CustomerResponse> updateCustomer(
-            @PathVariable @Parameter(description = "ID único do cliente a ser atualizado") UUID id,
+            @PathVariable @Parameter(description = "ID único do cliente a ser atualizado") Integer id,
             @RequestBody @Parameter(description = "Dados atualizados do cliente") CustomerUpdateRequest customerUpdateRequest);
 
     @Operation(summary = "Deletar cliente", description = "Remove um cliente através do seu ID único.")
@@ -58,5 +57,5 @@ public interface CustomerController {
             @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
     })
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteCustomer(@PathVariable UUID id);
+    ResponseEntity<Void> deleteCustomer(@PathVariable Integer id);
 }

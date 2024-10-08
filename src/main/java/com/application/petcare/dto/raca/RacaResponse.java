@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RacaResponse {
-    private UUID id;
+    private Integer id;
     private String tipoRaca;
     private Double preco;
 }

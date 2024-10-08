@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class EspecieControllerImpl implements EspecieController {
     }
 
     @Override
-    public ResponseEntity<EspecieResponse> getEspecieById(UUID id) {
+    public ResponseEntity<EspecieResponse> getEspecieById(Integer id) {
         return ResponseEntity.ok(especieService.getEspecieById(id));
     }
 
@@ -34,12 +33,12 @@ public class EspecieControllerImpl implements EspecieController {
     }
 
     @Override
-    public ResponseEntity<EspecieResponse> updateEspecie(UUID id, @Valid EspecieCreateRequest request) {
+    public ResponseEntity<EspecieResponse> updateEspecie(Integer id, @Valid EspecieCreateRequest request) {
         return ResponseEntity.ok(especieService.updateEspecie(id, request));
     }
 
     @Override
-    public ResponseEntity<Void> deleteEspecie(UUID id) {
+    public ResponseEntity<Void> deleteEspecie(Integer id) {
         especieService.deleteEspecie(id);
         return ResponseEntity.noContent().build();
     }

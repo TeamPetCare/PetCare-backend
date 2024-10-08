@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,8 +14,8 @@ import java.util.UUID;
 public abstract class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(nullable = false)
     private String name;
@@ -32,7 +31,7 @@ public abstract class User {
     private Role type;
 
     // Construtor protegido para permitir que subclasses o usem
-    protected User(UUID id, String name, String email, String password, Role type) {
+    protected User(Integer id, String name, String email, String password, Role type) {
         this.id = id;
         this.name = name;
         this.email = email;

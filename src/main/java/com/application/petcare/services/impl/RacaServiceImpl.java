@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +29,7 @@ public class RacaServiceImpl implements RacaService {
     }
 
     @Override
-    public RacaResponse updateRaca(UUID id, RacaCreateRequest request) {
+    public RacaResponse updateRaca(Integer id, RacaCreateRequest request) {
         Raca raca = racaRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Raça não encontrada"));
 
@@ -41,7 +40,7 @@ public class RacaServiceImpl implements RacaService {
     }
 
     @Override
-    public RacaResponse getRacaById(UUID id) {
+    public RacaResponse getRacaById(Integer id) {
         Raca raca = racaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Raça não encontrada"));
         return mapToRacaResponse(raca);
@@ -55,7 +54,7 @@ public class RacaServiceImpl implements RacaService {
     }
 
     @Override
-    public void deleteRaca(UUID id) {
+    public void deleteRaca(Integer id) {
         racaRepository.deleteById(id);
     }
 

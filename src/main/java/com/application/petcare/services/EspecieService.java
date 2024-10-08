@@ -4,17 +4,16 @@ import com.application.petcare.dto.especie.EspecieCreateRequest;
 import com.application.petcare.dto.especie.EspecieResponse;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface EspecieService {
 
     EspecieResponse createEspecie(EspecieCreateRequest request);
 
-    EspecieResponse getEspecieById(UUID id);
+    EspecieResponse getEspecieById(Integer id);
 
     List<EspecieResponse> getAllEspecies();
 
-    EspecieResponse updateEspecie(UUID id, EspecieCreateRequest request);
+    EspecieResponse updateEspecie(Integer id, EspecieCreateRequest request);
 
-    void deleteEspecie(UUID id);
+    void deleteEspecie(Integer id);
 }

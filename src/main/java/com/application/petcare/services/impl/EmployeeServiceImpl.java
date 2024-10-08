@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponse findById(UUID id) {
+    public EmployeeResponse findById(Integer id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
 
@@ -42,7 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponse updateEmployee(UUID id, EmployeeUpdateRequest request) {
+    public EmployeeResponse updateEmployee(Integer id, EmployeeUpdateRequest request) {
         Employee existingEmployee = employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
 
@@ -56,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(UUID id) {
+    public void deleteEmployee(Integer id) {
         if (!employeeRepository.existsById(id)) {
             throw new RuntimeException("Employee not found with id: " + id);
         }

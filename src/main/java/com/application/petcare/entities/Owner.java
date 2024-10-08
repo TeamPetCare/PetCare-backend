@@ -10,7 +10,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_owner")
@@ -26,7 +25,7 @@ public class Owner extends User {
     private String cnpj;
 
     @Builder
-    public Owner(UUID id, String name, String email, String password, Role type, String cnpj, List<Employee> employees) {
+    public Owner(Integer id, String name, String email, String password, Role type, String cnpj, List<Employee> employees) {
         super(id, name, email, password, type);
         this.cnpj = cnpj;
         this.employees = employees;

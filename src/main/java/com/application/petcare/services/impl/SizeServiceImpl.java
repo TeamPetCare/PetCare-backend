@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +29,7 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public SizeResponse updateSize(UUID id, SizeCreateRequest request) {
+    public SizeResponse updateSize(Integer id, SizeCreateRequest request) {
         Size size = sizeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tamanho não encontrado"));
 
@@ -42,12 +41,12 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public void deleteSize(UUID id) {
+    public void deleteSize(Integer id) {
         sizeRepository.deleteById(id);
     }
 
     @Override
-    public SizeResponse getSizeById(UUID id) {
+    public SizeResponse getSizeById(Integer id) {
         Size size = sizeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tamanho não encontrado"));
         return mapToSizeResponse(size);

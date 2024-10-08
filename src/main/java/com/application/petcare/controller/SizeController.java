@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 
 @Tag(name = "Size", description = "Gerenciar tamanhos de pets")
 @RequestMapping("/api/sizes")
@@ -22,16 +21,16 @@ public interface SizeController {
 
     @Operation(summary = "Atualizar um tamanho existente")
     @PutMapping("/{id}")
-    ResponseEntity<SizeResponse> updateSize(@PathVariable UUID id, @Valid @RequestBody SizeCreateRequest request);
+    ResponseEntity<SizeResponse> updateSize(@PathVariable Integer id, @Valid @RequestBody SizeCreateRequest request);
 
     @Operation(summary = "Deletar um tamanho pelo ID", description = "Deleta um tamanho existente pelo ID.")
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204", description = "Tamanho é deletado com sucesso")
-    ResponseEntity<Void> deleteSize(@PathVariable UUID id);
+    ResponseEntity<Void> deleteSize(@PathVariable Integer id);
 
     @Operation(summary = "Buscar um tamanho pelo ID")
     @GetMapping("/{id}")
-    ResponseEntity<SizeResponse> getSizeById(@PathVariable UUID id);
+    ResponseEntity<SizeResponse> getSizeById(@PathVariable Integer id);
 
     @Operation(summary = "Listar todos os tamanhos")
     @GetMapping

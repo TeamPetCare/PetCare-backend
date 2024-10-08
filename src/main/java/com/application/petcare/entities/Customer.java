@@ -7,7 +7,6 @@ import java.util.List;
 
 import lombok.*;
 
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_customer")
@@ -26,7 +25,7 @@ public class Customer extends User {
     private String cpf;
 
     @Builder
-    public Customer(UUID id, String name, String email, String password, Role type, List<Pet> pets, String cpf) {
+    public Customer(Integer id, String name, String email, String password, Role type, List<Pet> pets, String cpf) {
         super(id, name, email, password, type);
         this.pets = pets;
         this.cpf = cpf;

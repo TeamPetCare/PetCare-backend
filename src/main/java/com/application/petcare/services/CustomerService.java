@@ -6,12 +6,11 @@ import com.application.petcare.dto.customer.CustomerResponse;
 import com.application.petcare.dto.customer.CustomerUpdateRequest;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface CustomerService {
     CustomerResponse createCustomer(CustomerCreateRequest request);
-    CustomerResponse findById(UUID id);
+    CustomerResponse findById(Integer id);
     List<CustomerResponse> getAllCustomers();
-    CustomerResponse updateCustomer(UUID id, CustomerUpdateRequest request);
-    void deleteCustomer(UUID id);
+    CustomerResponse updateCustomer(Integer id, CustomerUpdateRequest request);
+    void deleteCustomer(Integer id);
 }
