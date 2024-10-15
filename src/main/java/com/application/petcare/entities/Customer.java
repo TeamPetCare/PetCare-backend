@@ -15,7 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Customer extends User {
+public class Customer extends Person {
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -25,8 +25,8 @@ public class Customer extends User {
     private String cpf;
 
     @Builder
-    public Customer(Integer id, String name, String email, String password, Role type, List<Pet> pets, String cpf) {
-        super(id, name, email, password, type);
+    public Customer(Integer id, String name, List<Pet> pets, String cpf) {
+        super(id, name);
         this.pets = pets;
         this.cpf = cpf;
     }

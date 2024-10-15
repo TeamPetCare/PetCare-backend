@@ -12,7 +12,5 @@ import lombok.NoArgsConstructor;
 public class EmployeeResponse {
     private Integer id;
     private String name;
-    private String email;
-    private Role role;
     private String cargo;
 }

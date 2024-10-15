@@ -22,9 +22,6 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerResponse createCustomer(CustomerCreateRequest request) {
         Customer customer = Customer.builder()
                 .name(request.getName())
-                .email(request.getEmail())
-                .password(request.getPassword())
-                .type(request.getRole())
                 .cpf(request.getCpf())
                 .build();
         Customer savedCustomer = customerRepository.save(customer);
@@ -50,8 +47,6 @@ public class CustomerServiceImpl implements CustomerService {
         Customer existingCustomer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
         existingCustomer.setName(request.getName());
-        existingCustomer.setEmail(request.getEmail());
-        existingCustomer.setPassword(request.getPassword());
         existingCustomer.setCpf(request.getCpf()); // Atualizando o CPF
         Customer updatedCustomer = customerRepository.save(existingCustomer);
         return mapToCustomerResponse(updatedCustomer);
@@ -66,8 +61,6 @@ public class CustomerServiceImpl implements CustomerService {
         return new CustomerResponse(
                 customer.getId(),
                 customer.getName(),
-                customer.getEmail(),
-                customer.getType(),
                 customer.getCpf() // Incluindo o CPF na resposta
         );
     }

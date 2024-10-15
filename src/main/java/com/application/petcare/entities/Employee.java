@@ -15,14 +15,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_employee")
-public class Employee extends User {
+public class Employee extends Person {
 
     @Column(nullable = false)
     private String cargo;
 
     @Builder
-    public Employee(Integer id, String name, String email, String password, Role type, String cargo) {
-        super(id, name, email, password, type);
+    public Employee(Integer id, String name, String cargo) {
+        super(id, name);
         this.cargo = cargo;
     }
 }

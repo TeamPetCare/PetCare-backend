@@ -21,9 +21,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponse createEmployee(EmployeeCreateRequest request) {
         Employee employee = Employee.builder()
                 .name(request.getName())
-                .email(request.getEmail())
-                .password(request.getPassword())
-                .type(request.getRole())  // Atribui o tipo (role)
                 .cargo(request.getCargo())  // Atribui o cargo
                 .build();
 
@@ -46,8 +43,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
 
         existingEmployee.setName(request.getName());
-        existingEmployee.setEmail(request.getEmail());
-        existingEmployee.setPassword(request.getPassword());
 
         Employee updatedEmployee = employeeRepository.save(existingEmployee);
 
@@ -74,8 +69,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new EmployeeResponse(
                 employee.getId(),
                 employee.getName(),
-                employee.getEmail(),
-                employee.getType(),
                 employee.getCargo()
         );
     }

@@ -14,8 +14,6 @@ public class OwnerResponse {
 
     private Integer id;
     private String name;
-    private String email;
     private String cnpj;
     private List<Integer> employeeIds;
-    private Role role;
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "tb_owner")
 @Data
 @NoArgsConstructor
-public class Owner extends User {
+public class Owner extends Person {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")  // Define o mapeamento do relacionamento
@@ -25,8 +25,8 @@ public class Owner extends User {
     private String cnpj;
 
     @Builder
-    public Owner(Integer id, String name, String email, String password, Role type, String cnpj, List<Employee> employees) {
-        super(id, name, email, password, type);
+    public Owner(Integer id, String name,  String cnpj, List<Employee> employees) {
+        super(id, name);
         this.cnpj = cnpj;
         this.employees = employees;
     }
