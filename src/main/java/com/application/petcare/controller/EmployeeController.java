@@ -3,6 +3,8 @@ package com.application.petcare.controller;
 import com.application.petcare.dto.employee.EmployeeCreateRequest;
 import com.application.petcare.dto.employee.EmployeeResponse;
 import com.application.petcare.dto.employee.EmployeeUpdateRequest;
+import com.application.petcare.dto.user.UserCreateRequest;
+import com.application.petcare.dto.user.UserResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -35,4 +37,5 @@ public interface EmployeeController {
     @Operation(summary = "Excluir funcionário por ID")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteEmployee(@PathVariable Integer id);
+
 }

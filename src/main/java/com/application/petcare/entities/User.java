@@ -2,11 +2,14 @@ package com.application.petcare.entities;
 
 import com.application.petcare.enums.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.Collection;
+import java.util.List;
 
+@Entity
+@Table(name = "tb_pet")
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,16 +31,39 @@ public abstract class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role type;
+    private Role role;
 
-    // Construtor protegido para permitir que subclasses o usem
-    protected User(Integer id, String name, String email, String password, Role type) {
+    @Column(nullable = false)
+    private String street;
+
+    @Column(nullable = false)
+    private Integer number;
+
+    @Column(nullable = false)
+    private String complement;
+
+    @Column(nullable = false)
+    private String cep;
+
+    @Column(nullable = false)
+    private String district;
+
+    @Column(nullable = false)
+    private String city;
+
+
+    protected User(Integer id, String name, String email, String password, Role role, String street, Integer number, String complement, String cep, String district, String city) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.type = type;
+        this.role = role;
+        this.street = street;
+        this.number = number;
+        this.complement = complement;
+        this.cep = cep;
+        this.district = district;
+        this.city = city;
     }
-
 
 }
