@@ -26,6 +26,9 @@ public class OwnerServiceImpl implements OwnerService {
         List<Employee> employees = employeeRepository.findAllById(request.getEmployeeIds());
         Owner owner = Owner.builder()
                 .name(request.getName())
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .type(request.getRole())
                 .employees(employees)
                 .cnpj(request.getCnpj())
                 .build();
@@ -48,8 +51,11 @@ public class OwnerServiceImpl implements OwnerService {
         List<Employee> employees = employeeRepository.findAllById(request.getEmployeeIds());
 
         existingOwner.setName(request.getName());
+        existingOwner.setEmail(request.getEmail());
+        existingOwner.setPassword(request.getPassword());
         existingOwner.setEmployees(employees);
         existingOwner.setCnpj(request.getCnpj());
+        existingOwner.setType(request.getRole());
 
         Owner updatedOwner = ownerRepository.save(existingOwner);
         return mapToOwnerResponse(updatedOwner);
@@ -76,8 +82,10 @@ public class OwnerServiceImpl implements OwnerService {
         return new OwnerResponse(
                 owner.getId(),
                 owner.getName(),
+                owner.getEmail(),
                 owner.getCnpj(),
-                owner.getEmployees().stream().map(Employee::getId).collect(Collectors.toList())
+                owner.getEmployees().stream().map(Employee::getId).collect(Collectors.toList()),
+                owner.getType()
         );
     }
 }

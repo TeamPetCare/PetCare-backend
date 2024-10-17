@@ -2,25 +2,23 @@ package com.application.petcare.entities;
 
 import com.application.petcare.enums.Role;
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Collection;
-import java.util.List;
 
-@Entity
-@Table(name = "tb_pet")
-@Builder
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
-public class User implements UserDetails {
+@MappedSuperclass
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -30,20 +28,16 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Role type;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+    // Construtor protegido para permitir que subclasses o usem
+    protected User(Integer id, String name, String email, String password, Role type) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.type = type;
     }
 
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
 
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
 }
