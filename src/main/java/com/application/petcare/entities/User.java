@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "tb_User")
+@Table(name = "Users")
 @Builder
 @Getter
 @Setter
