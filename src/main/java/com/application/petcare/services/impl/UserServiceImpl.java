@@ -4,6 +4,8 @@ import com.application.petcare.dto.user.UserCreateRequest;
 import com.application.petcare.dto.user.UserResponse;
 import com.application.petcare.dto.user.UserUpdateRequest;
 import com.application.petcare.entities.User;
+import com.application.petcare.exceptions.BadRequestException;
+import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +20,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
 
-
     @Override
     public UserResponse createUser(UserCreateRequest request) {
-
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -37,11 +37,10 @@ public class UserServiceImpl implements UserService {
         return mapToResponse(savedUser);
     }
 
-
     @Override
     public UserResponse updateUser(Integer id, UserUpdateRequest request) {
         User user = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
 
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse findUserById(Integer userId) {
         User user = repository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
         return mapToResponse(user);
     }
 
@@ -70,11 +69,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Integer userId) {
+        if (!repository.existsById(userId)) {
+            throw new ResourceNotFoundException("User not found with ID: " + userId);
+        }
         repository.deleteById(userId);
     }
 
-
-    public UserResponse mapToResponse(User user){
+    public UserResponse mapToResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())

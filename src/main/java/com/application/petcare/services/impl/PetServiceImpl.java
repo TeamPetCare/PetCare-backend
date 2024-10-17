@@ -3,6 +3,7 @@ package com.application.petcare.services.impl;
 import com.application.petcare.dto.pet.PetCreateRequest;
 import com.application.petcare.dto.pet.PetResponse;
 import com.application.petcare.entities.*;
+import com.application.petcare.exceptions.PetNotFoundException;
 import com.application.petcare.repository.*;
 import com.application.petcare.services.PetService;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.application.petcare.exceptions.BadRequestException;
+import lombok.extern.slf4j.Slf4j;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PetServiceImpl implements PetService {
 
     private final PetRepository petRepository;
-
     private final UserRepository userRepository;
     private final EspecieRepository especieRepository;
     private final RacaRepository racaRepository;
@@ -24,22 +28,23 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public PetResponse createPet(PetCreateRequest request) {
-        // Substituindo Customer por User
+        log.info("Creating pet: {}", request);
+
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new BadRequestException("User not found"));
 
         Especie especie = especieRepository.findById(request.getEspecieId())
-                .orElseThrow(() -> new RuntimeException("Especie not found"));
+                .orElseThrow(() -> new BadRequestException("Especie not found"));
 
         Raca raca = racaRepository.findById(request.getRacaId())
-                .orElseThrow(() -> new RuntimeException("Raca not found"));
+                .orElseThrow(() -> new BadRequestException("Raca not found"));
 
         Size size = sizeRepository.findById(request.getSizeId())
-                .orElseThrow(() -> new RuntimeException("Size not found"));
+                .orElseThrow(() -> new BadRequestException("Size not found"));
 
         Pet pet = Pet.builder()
                 .name(request.getName())
-                .user(user) // Alterando o relacionamento para User
+                .user(user)
                 .especie(especie)
                 .raca(raca)
                 .birthDate(request.getBirthDate())
@@ -51,13 +56,16 @@ public class PetServiceImpl implements PetService {
                 .build();
 
         Pet savedPet = petRepository.save(pet);
+        log.info("Pet created successfully: {}", savedPet);
         return mapToResponse(savedPet);
     }
 
     @Override
     public PetResponse updatePet(Integer id, PetCreateRequest request) {
+        log.info("Updating pet with id: {}", id);
+
         Pet pet = petRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Pet not found"));
+                .orElseThrow(() -> new PetNotFoundException("Pet not found"));
 
         // Atualizando as informações
         pet.setName(request.getName());
@@ -69,34 +77,37 @@ public class PetServiceImpl implements PetService {
 
         // Relacionamentos
         User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-        pet.setUser(user); // Atualizando para User
+                .orElseThrow(() -> new BadRequestException("User not found"));
+        pet.setUser(user);
 
         Especie especie = especieRepository.findById(request.getEspecieId())
-                .orElseThrow(() -> new IllegalArgumentException("Especie not found"));
+                .orElseThrow(() -> new BadRequestException("Especie not found"));
         pet.setEspecie(especie);
 
         Raca raca = racaRepository.findById(request.getRacaId())
-                .orElseThrow(() -> new IllegalArgumentException("Raca not found"));
+                .orElseThrow(() -> new BadRequestException("Raca not found"));
         pet.setRaca(raca);
 
         Size size = sizeRepository.findById(request.getSizeId())
-                .orElseThrow(() -> new IllegalArgumentException("Size not found"));
+                .orElseThrow(() -> new BadRequestException("Size not found"));
         pet.setSize(size);
 
         Pet updatedPet = petRepository.save(pet);
+        log.info("Pet updated successfully: {}", updatedPet);
         return mapToResponse(updatedPet);
     }
 
     @Override
     public PetResponse getPetById(Integer id) {
+        log.info("Fetching pet by id: {}", id);
         Pet pet = petRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Pet not found"));
+                .orElseThrow(() -> new PetNotFoundException("Pet not found"));
         return mapToResponse(pet);
     }
 
     @Override
     public List<PetResponse> getAllPets() {
+        log.info("Fetching all pets");
         return petRepository.findAll().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -104,14 +115,19 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public void deletePet(Integer id) {
+        log.info("Deleting pet with id: {}", id);
+        if (!petRepository.existsById(id)) {
+            throw new PetNotFoundException("Pet not found");
+        }
         petRepository.deleteById(id);
+        log.info("Pet deleted successfully with id: {}", id);
     }
 
     private PetResponse mapToResponse(Pet pet) {
         return PetResponse.builder()
                 .id(pet.getId())
                 .name(pet.getName())
-                .userId(pet.getUser().getId()) // Alterando para userId
+                .userId(pet.getUser().getId())
                 .especieId(pet.getEspecie().getId())
                 .racaId(pet.getRaca().getId())
                 .birthDate(pet.getBirthDate())
