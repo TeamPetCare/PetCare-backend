@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class PetResponse {
     private Integer id;
     private String name;
-    private Integer customerId;
+    private Integer userId;
     private Integer especieId;
     private Integer racaId;
     private LocalDate birthDate;

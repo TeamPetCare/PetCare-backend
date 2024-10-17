@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse createUser(UserCreateRequest request) {
 
         User user = User.builder()
+                .name(request.getName())
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .role(request.getRole())

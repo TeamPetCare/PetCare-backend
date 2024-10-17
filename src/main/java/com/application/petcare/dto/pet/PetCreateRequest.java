@@ -12,7 +12,7 @@ public class PetCreateRequest {
     private String name;
 
     @NotNull(message = "Customer ID is required")
-    private Integer customerId;
+    private Integer userId;
 
     @NotNull(message = "Especie ID is required")
     private Integer especieId;

@@ -17,28 +17,29 @@ public class PetServiceImpl implements PetService {
 
     private final PetRepository petRepository;
 
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
     private final EspecieRepository especieRepository;
     private final RacaRepository racaRepository;
     private final SizeRepository sizeRepository;
 
     @Override
     public PetResponse createPet(PetCreateRequest request) {
-        Customer customer = customerRepository.findById(request.getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+        // Substituindo Customer por User
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         Especie especie = especieRepository.findById(request.getEspecieId())
                 .orElseThrow(() -> new RuntimeException("Especie not found"));
 
         Raca raca = racaRepository.findById(request.getRacaId())
-                .orElseThrow(() -> new RuntimeException("Raca not found"));  // Correção aqui
+                .orElseThrow(() -> new RuntimeException("Raca not found"));
 
         Size size = sizeRepository.findById(request.getSizeId())
                 .orElseThrow(() -> new RuntimeException("Size not found"));
 
         Pet pet = Pet.builder()
                 .name(request.getName())
-                .customer(customer)
+                .user(user) // Alterando o relacionamento para User
                 .especie(especie)
                 .raca(raca)
                 .birthDate(request.getBirthDate())
@@ -52,7 +53,6 @@ public class PetServiceImpl implements PetService {
         Pet savedPet = petRepository.save(pet);
         return mapToResponse(savedPet);
     }
-
 
     @Override
     public PetResponse updatePet(Integer id, PetCreateRequest request) {
@@ -68,9 +68,9 @@ public class PetServiceImpl implements PetService {
         pet.setNotes(request.getNotes());
 
         // Relacionamentos
-        Customer customer = customerRepository.findById(request.getCustomerId())
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
-        pet.setCustomer(customer);
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        pet.setUser(user); // Atualizando para User
 
         Especie especie = especieRepository.findById(request.getEspecieId())
                 .orElseThrow(() -> new IllegalArgumentException("Especie not found"));
@@ -107,11 +107,11 @@ public class PetServiceImpl implements PetService {
         petRepository.deleteById(id);
     }
 
-    private PetResponse mapToResponse(Pet pet){
+    private PetResponse mapToResponse(Pet pet) {
         return PetResponse.builder()
                 .id(pet.getId())
                 .name(pet.getName())
-                .customerId(pet.getCustomer().getId())
+                .userId(pet.getUser().getId()) // Alterando para userId
                 .especieId(pet.getEspecie().getId())
                 .racaId(pet.getRaca().getId())
                 .birthDate(pet.getBirthDate())

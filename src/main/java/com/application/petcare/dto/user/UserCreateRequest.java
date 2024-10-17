@@ -8,8 +8,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Builder
 public class UserCreateRequest {
@@ -30,8 +28,8 @@ public class UserCreateRequest {
     @NotBlank(message = "Street is required")
     private String street;
 
-    @NotBlank(message = "Number is required")
-    private Integer number;
+    @NotNull(message = "Number is required")
+    private Integer number;  // Corrigido para @NotNull
 
     @NotBlank(message = "Complement is required")
     private String complement;

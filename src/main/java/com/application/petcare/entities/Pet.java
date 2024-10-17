@@ -25,7 +25,7 @@ public class Pet {
     // muitos pets podem pertencer a um cliente
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    private User user;
 
     // Relacionamento com Especie (muitos pets podem ter uma espécie)
     @ManyToOne

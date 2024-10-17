@@ -7,14 +7,14 @@ import lombok.*;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name = "tb_pet")
+@Table(name = "tb_User")
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
-@MappedSuperclass
-public abstract class User {
+@Entity
+@AllArgsConstructor
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,19 +51,5 @@ public abstract class User {
     @Column(nullable = false)
     private String city;
 
-
-    protected User(Integer id, String name, String email, String password, Role role, String street, Integer number, String complement, String cep, String district, String city) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.street = street;
-        this.number = number;
-        this.complement = complement;
-        this.cep = cep;
-        this.district = district;
-        this.city = city;
-    }
 
 }
