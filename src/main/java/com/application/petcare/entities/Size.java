@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "Sizes")
+@Table(name = "sizes")
 public class Size {
 
     @Id

@@ -11,12 +11,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserUpdateRequest {
+    private String name;
+    private String userImg;
     private String email;
     private String password;
+    private String cellphone;
+    private Role role;
     private String street;
     private Integer number;
     private String complement;
     private String cep;
     private String district;
     private String city;
+    private String cnpjOwner;
+    private String roleEmployee;
+    private Boolean disponibilityStatus;
+    private String cpfClient;
 }

@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "Users")
+@Table(name = "tb_User")
 @Builder
 @Getter
 @Setter
@@ -23,11 +23,15 @@ public class User {
     @Column(nullable = false)
     private String name;
 
+    private String userImg;
+
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
+
+    private String cellphone;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -50,6 +54,14 @@ public class User {
 
     @Column(nullable = false)
     private String city;
+
+    private String cnpjOwner;
+
+    private String roleEmployee;
+
+    private Boolean disponibilityStatusEmployee;
+
+    private String cpfClient;
 
 
 }

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "Specie")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

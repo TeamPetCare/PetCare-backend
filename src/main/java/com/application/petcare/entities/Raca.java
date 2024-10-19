@@ -5,7 +5,7 @@ import lombok.*;
 
 
 @Entity
-@Table(name = "Race")
+@Table(name = "tb_raca")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

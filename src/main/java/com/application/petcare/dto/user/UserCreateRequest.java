@@ -15,12 +15,17 @@ public class UserCreateRequest {
     @NotBlank(message = "Name is required")
     private String name;
 
+    private String userImg;
+
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
     private String email;
 
     @NotBlank(message = "Password is required")
     private String password;
+
+    @NotBlank(message = "Cellphone is required")
+    private String cellphone;
 
     @NotNull(message = "Role is required")
     private Role role;
@@ -43,4 +48,12 @@ public class UserCreateRequest {
 
     @NotBlank(message = "City is required")
     private String city;
+
+    private String cnpjOwner;
+
+    private String roleEmployee;
+
+    private Boolean disponibilityStatus;
+
+    private String cpfClient;
 }
