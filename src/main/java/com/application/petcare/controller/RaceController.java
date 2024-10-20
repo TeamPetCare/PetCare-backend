@@ -1,7 +1,7 @@
 package com.application.petcare.controller;
 
-import com.application.petcare.dto.raca.RacaCreateRequest;
-import com.application.petcare.dto.raca.RacaResponse;
+import com.application.petcare.dto.race.RaceCreateRequest;
+import com.application.petcare.dto.race.RaceResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import java.util.List;
 
-@Tag(name = "Raça", description = "Gerenciar raças de pets")
-@RequestMapping("/api/racas")
-public interface RacaController {
+@Tag(name = "Race", description = "Gerenciar raças de pets")
+@RequestMapping("/api/races")
+public interface RaceController {
 
     @Operation(summary = "Criar uma nova raça", description = "Cria uma nova raça com os dados fornecidos.")
     @PostMapping
-    ResponseEntity<RacaResponse> createRaca(@Valid @RequestBody RacaCreateRequest request);
+    ResponseEntity<RaceResponse> createRaca(@Valid @RequestBody RaceCreateRequest request);
 
     @Operation(summary = "Atualizar uma raça existente", description = "Atualiza os dados de uma raça existente pelo ID.")
     @PutMapping("/{id}")
-    ResponseEntity<RacaResponse> updateRaca(@PathVariable Integer id, @Valid @RequestBody RacaCreateRequest request);
+    ResponseEntity<RaceResponse> updateRaca(@PathVariable Integer id, @Valid @RequestBody RaceCreateRequest request);
 
     @Operation(summary = "Obter uma raça pelo ID", description = "Retorna os detalhes de uma raça específica pelo ID.")
     @GetMapping("/{id}")
-    ResponseEntity<RacaResponse> getRacaById(@PathVariable Integer id);
+    ResponseEntity<RaceResponse> getRacaById(@PathVariable Integer id);
 
     @Operation(summary = "Listar todas as raças", description = "Retorna uma lista de todas as raças cadastradas.")
     @GetMapping
-    ResponseEntity<List<RacaResponse>> getAllRacas();
+    ResponseEntity<List<RaceResponse>> getAllRacas();
 
     @Operation(summary = "Deletar uma raça pelo ID", description = "Deleta uma raça existente pelo ID.")
     @ApiResponses(value = {

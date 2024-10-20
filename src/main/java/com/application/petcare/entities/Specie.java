@@ -9,19 +9,20 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
+@Table(name = "Specie")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Especie {
+public class Specie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String nomeEspecie;
+    private String name;
 
     @Column(nullable = false)
-    private Double preco;
+    private Double priece;
 }

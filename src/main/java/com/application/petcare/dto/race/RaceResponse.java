@@ -1,4 +1,4 @@
-package com.application.petcare.dto.especie;
+package com.application.petcare.dto.race;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EspecieResponse {
-
+public class RaceResponse {
     private Integer id;
-    private String nomeEspecie;
-    private Double preco;
+    private String raceType;
+    private Double priece;
 }

@@ -6,25 +6,33 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
+
 @Entity
 @Table(name = "tb_servicos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Servicos {
+public class Services {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false)
-    private String descricao;
+    private String note;
 
     @Column(nullable = false)
-    private Double preco;
+    private Double price;
+
+    @Column(nullable = false)
+    private Time estimatedTime;
+
+    @Column(nullable = false)
+    private Boolean disponibility;
 
 }

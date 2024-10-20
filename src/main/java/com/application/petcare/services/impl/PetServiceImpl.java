@@ -22,8 +22,8 @@ public class PetServiceImpl implements PetService {
 
     private final PetRepository petRepository;
     private final UserRepository userRepository;
-    private final EspecieRepository especieRepository;
-    private final RacaRepository racaRepository;
+    private final SpecieRepository especieRepository;
+    private final RaceRepository racaRepository;
     private final SizeRepository sizeRepository;
 
     @Override
@@ -33,10 +33,10 @@ public class PetServiceImpl implements PetService {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new BadRequestException("User not found"));
 
-        Especie especie = especieRepository.findById(request.getEspecieId())
+        Specie specie = especieRepository.findById(request.getEspecieId())
                 .orElseThrow(() -> new BadRequestException("Especie not found"));
 
-        Raca raca = racaRepository.findById(request.getRacaId())
+        Race race = racaRepository.findById(request.getRacaId())
                 .orElseThrow(() -> new BadRequestException("Raca not found"));
 
         Size size = sizeRepository.findById(request.getSizeId())
@@ -45,8 +45,8 @@ public class PetServiceImpl implements PetService {
         Pet pet = Pet.builder()
                 .name(request.getName())
                 .user(user)
-                .especie(especie)
-                .raca(raca)
+                .specie(specie)
+                .race(race)
                 .birthDate(request.getBirthDate())
                 .sexo(request.getSexo())
                 .color(request.getColor())
@@ -80,13 +80,13 @@ public class PetServiceImpl implements PetService {
                 .orElseThrow(() -> new BadRequestException("User not found"));
         pet.setUser(user);
 
-        Especie especie = especieRepository.findById(request.getEspecieId())
+        Specie specie = especieRepository.findById(request.getEspecieId())
                 .orElseThrow(() -> new BadRequestException("Especie not found"));
-        pet.setEspecie(especie);
+        pet.setSpecie(specie);
 
-        Raca raca = racaRepository.findById(request.getRacaId())
+        Race race = racaRepository.findById(request.getRacaId())
                 .orElseThrow(() -> new BadRequestException("Raca not found"));
-        pet.setRaca(raca);
+        pet.setRace(race);
 
         Size size = sizeRepository.findById(request.getSizeId())
                 .orElseThrow(() -> new BadRequestException("Size not found"));
@@ -128,8 +128,8 @@ public class PetServiceImpl implements PetService {
                 .id(pet.getId())
                 .name(pet.getName())
                 .userId(pet.getUser().getId())
-                .especieId(pet.getEspecie().getId())
-                .racaId(pet.getRaca().getId())
+                .especieId(pet.getSpecie().getId())
+                .racaId(pet.getRace().getId())
                 .birthDate(pet.getBirthDate())
                 .sexo(pet.getSexo())
                 .color(pet.getColor())

@@ -30,12 +30,12 @@ public class Pet {
     // Relacionamento com Especie (muitos pets podem ter uma espécie)
     @ManyToOne
     @JoinColumn(name = "especie_id", nullable = false)
-    private Especie especie;
+    private Specie specie;
 
     // Relacionamento com Raca (muitos pets podem ter uma raça)
     @ManyToOne
     @JoinColumn(name = "raca_id", nullable = false)
-    private Raca raca;
+    private Race race;
 
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;

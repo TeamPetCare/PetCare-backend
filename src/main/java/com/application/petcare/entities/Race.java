@@ -5,20 +5,20 @@ import lombok.*;
 
 
 @Entity
-@Table(name = "tb_raca")
+@Table(name = "Race")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Raca {
+public class Race {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String tipoRaca;
+    private String raceType;
 
     @Column(nullable = false)
-    private Double preco;
+    private Double priece;
 }
