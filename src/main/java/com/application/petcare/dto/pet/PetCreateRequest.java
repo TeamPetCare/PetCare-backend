@@ -11,29 +11,32 @@ public class PetCreateRequest {
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotNull(message = "Customer ID is required")
-    private Integer userId;
-
-    @NotNull(message = "Especie ID is required")
-    private Integer especieId;
-
-    @NotNull(message = "Raca ID is required")
-    private Integer racaId;
-
-    @NotNull(message = "Birth date is required")
-    private LocalDate birthDate;
-
-    @NotBlank(message = "Sexo is required")
-    private String sexo;
+    @NotBlank(message = "Gender is required")
+    private String gender;
 
     @NotBlank(message = "Color is required")
     private String color;
 
-    @NotNull(message = "Weight is required")
-    private double weight;
+    @NotNull(message = "Estimated weight is required")
+    private double estimatedWeight;
+
+    @NotNull(message = "Birthdate is required")
+    private LocalDate birthdate;
+
+    @NotBlank(message = "Pet observations are required")
+    private String petObservations;
+
+    private String petImg;
+
+    @NotNull(message = "User ID is required")
+    private Integer userId;
+
+    @NotNull(message = "Specie ID is required")
+    private Integer specieId;
+
+    @NotNull(message = "Race ID is required")
+    private Integer raceId;
 
     @NotNull(message = "Size ID is required")
     private Integer sizeId;
-
-    private String notes;
 }

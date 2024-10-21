@@ -10,13 +10,15 @@ import java.time.LocalDate;
 public class PetResponse {
     private Integer id;
     private String name;
-    private Integer userId;
-    private Integer especieId;
-    private Integer racaId;
-    private LocalDate birthDate;
-    private String sexo;
+    private String gender;
     private String color;
-    private double weight;
+    private double estimatedWeight;
+    private LocalDate birthdate;
+    private String petObservations;
+    private String petImg;
+    private Integer userId;
+    private Integer specieId;
+    private Integer raceId;
     private Integer sizeId;
-    private String notes;
+
 }

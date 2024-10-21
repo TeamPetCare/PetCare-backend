@@ -12,6 +12,6 @@ import java.math.BigDecimal;
 public class SizeResponse {
 
     private Integer id;
-    private String tipoTamanho;
-    private BigDecimal preco;
+    private String sizeType;
+    private BigDecimal priece;
 }

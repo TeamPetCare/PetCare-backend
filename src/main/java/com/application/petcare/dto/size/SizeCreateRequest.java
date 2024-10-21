@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 public class SizeCreateRequest {
 
     @NotBlank(message = "Tipo Tamanho é obrigatório")
-    private String tipoTamanho;
+    private String sizeType;
 
     @NotNull(message = "Preco é obrigatório")
-    private BigDecimal preco;
+    private BigDecimal priece;
 }

@@ -7,9 +7,9 @@ import com.application.petcare.dto.services.ServicesUpdateRequest;
 import java.util.List;
 
 public interface ServicesService {
-    ServicesResponse createServico(ServicesCreateRequest request);
-    ServicesResponse updateServico(Integer id, ServicesUpdateRequest request);
-    void deleteServico(Integer id);
-    List<ServicesResponse> findAllServicos();
-    ServicesResponse getServicoById(Integer id);
+    ServicesResponse createService(ServicesCreateRequest request);
+    ServicesResponse updateService(Integer id, ServicesUpdateRequest request);
+    void deleteService(Integer id);
+    List<ServicesResponse> findAllServices();
+    ServicesResponse getServiceById(Integer id);
 }

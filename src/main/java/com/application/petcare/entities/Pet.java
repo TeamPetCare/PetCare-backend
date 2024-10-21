@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 @Entity
-@Table(name = "tb_pet")
+@Table(name = "Pet")
 @Data
 @Builder
 @AllArgsConstructor
@@ -21,6 +21,23 @@ public class Pet {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String gender;
+
+    @Column(nullable = false)
+    private String color;
+
+    @Column(nullable = false)
+    private double estimatedWeight;
+
+    @Column(name = "birthdate", nullable = true)
+    private LocalDate birthdate;
+
+    @Column(nullable = false)
+    private String petObservations;
+
+    private String petImg;
 
     // muitos pets podem pertencer a um cliente
     @ManyToOne
@@ -37,23 +54,8 @@ public class Pet {
     @JoinColumn(name = "raca_id", nullable = false)
     private Race race;
 
-    @Column(name = "birth_date", nullable = false)
-    private LocalDate birthDate;
-
-    @Column(nullable = false)
-    private String sexo;
-
-    @Column(nullable = false)
-    private String color;
-
-    @Column(nullable = false)
-    private double weight;
-
     // Relacionamento com Tamanho (Size)
     @ManyToOne
     @JoinColumn(name = "size_id", nullable = false)
     private Size size;
-
-    @Column(name = "notes")
-    private String notes;
 }

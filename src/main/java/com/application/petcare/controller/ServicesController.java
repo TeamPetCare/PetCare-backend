@@ -3,43 +3,35 @@ package com.application.petcare.controller;
 import com.application.petcare.dto.services.ServicesCreateRequest;
 import com.application.petcare.dto.services.ServicesResponse;
 import com.application.petcare.dto.services.ServicesUpdateRequest;
-import com.application.petcare.services.ServicesService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/servicos")
-@RequiredArgsConstructor
-public class ServicesController {
-    private final ServicesService servicesService;
-
+@Tag(name = "Services", description = "Gerenciar funcionários")
+@RequestMapping("/api/services")
+public interface ServicesController {
+    @Operation(summary = "Criar um novo serviço")
     @PostMapping
-    public ResponseEntity<ServicesResponse> createServico(@Valid @RequestBody ServicesCreateRequest request){
-        return ResponseEntity.ok(servicesService.createServico(request));
-    }
+    ResponseEntity<ServicesResponse> createService(@RequestBody ServicesCreateRequest servicesCreateRequest);
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ServicesResponse> updateServico
-            (@PathVariable Integer id,
-             @Valid @RequestBody ServicesUpdateRequest request){
-        return ResponseEntity.ok(servicesService.updateServico(id, request));
-    }
+    @Operation(summary = "Buscar serviços por ID")
+    @GetMapping("/{id}")
+    ResponseEntity<ServicesResponse> getServiceById(@PathVariable Integer id);
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteServico(@PathVariable Integer id){
-        servicesService.deleteServico(id);
-        return ResponseEntity.noContent().build();
-    }
-
+    @Operation(summary = "Buscar todos os serviços")
     @GetMapping
-    public ResponseEntity<List<ServicesResponse>> getAllServicos(){
-        List<ServicesResponse> servicos = servicesService.findAllServicos();
-        return ResponseEntity.status(HttpStatus.OK).body(servicos);
-    }
+    ResponseEntity<List<ServicesResponse>> getAllServices();
 
+    @Operation(summary = "Atualizar serviço por ID")
+    @PutMapping("/{id}")
+    ResponseEntity<ServicesResponse> updateService(
+            @PathVariable Integer id,
+            @RequestBody ServicesUpdateRequest servicesCreateRequest);
+
+    @Operation(summary = "Excluir serviço por ID")
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteService(@PathVariable Integer id);
 }

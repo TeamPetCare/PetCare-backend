@@ -22,7 +22,7 @@ public class PetServiceImpl implements PetService {
 
     private final PetRepository petRepository;
     private final UserRepository userRepository;
-    private final SpecieRepository especieRepository;
+    private final SpecieRepository specieRepository;
     private final RaceRepository racaRepository;
     private final SizeRepository sizeRepository;
 
@@ -33,10 +33,10 @@ public class PetServiceImpl implements PetService {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new BadRequestException("User not found"));
 
-        Specie specie = especieRepository.findById(request.getEspecieId())
+        Specie specie = specieRepository.findById(request.getSpecieId())
                 .orElseThrow(() -> new BadRequestException("Especie not found"));
 
-        Race race = racaRepository.findById(request.getRacaId())
+        Race race = racaRepository.findById(request.getRaceId())
                 .orElseThrow(() -> new BadRequestException("Raca not found"));
 
         Size size = sizeRepository.findById(request.getSizeId())
@@ -47,12 +47,13 @@ public class PetServiceImpl implements PetService {
                 .user(user)
                 .specie(specie)
                 .race(race)
-                .birthDate(request.getBirthDate())
-                .sexo(request.getSexo())
+                .petImg(request.getPetImg())
+                .birthdate(request.getBirthdate())
+                .gender(request.getGender())
                 .color(request.getColor())
-                .weight(request.getWeight())
+                .estimatedWeight(request.getEstimatedWeight())
                 .size(size)
-                .notes(request.getNotes())
+                .petObservations(request.getPetObservations())
                 .build();
 
         Pet savedPet = petRepository.save(pet);
@@ -67,30 +68,31 @@ public class PetServiceImpl implements PetService {
         Pet pet = petRepository.findById(id)
                 .orElseThrow(() -> new PetNotFoundException("Pet not found"));
 
-        // Atualizando as informações
-        pet.setName(request.getName());
-        pet.setBirthDate(request.getBirthDate());
-        pet.setSexo(request.getSexo());
-        pet.setColor(request.getColor());
-        pet.setWeight(request.getWeight());
-        pet.setNotes(request.getNotes());
-
-        // Relacionamentos
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new BadRequestException("User not found"));
-        pet.setUser(user);
-
-        Specie specie = especieRepository.findById(request.getEspecieId())
-                .orElseThrow(() -> new BadRequestException("Especie not found"));
-        pet.setSpecie(specie);
-
-        Race race = racaRepository.findById(request.getRacaId())
-                .orElseThrow(() -> new BadRequestException("Raca not found"));
-        pet.setRace(race);
 
         Size size = sizeRepository.findById(request.getSizeId())
                 .orElseThrow(() -> new BadRequestException("Size not found"));
+
+        Specie specie = specieRepository.findById(request.getSpecieId())
+                .orElseThrow(() -> new BadRequestException("Specie not found"));
+
+        Race race = racaRepository.findById(request.getRaceId())
+                .orElseThrow(() -> new BadRequestException("Race not found"));
+
+        // Atualizando as informações
+        pet.setName(request.getName());
+
+        pet.setPetImg(request.getPetImg());
+        pet.setBirthdate(request.getBirthdate());
+        pet.setGender(request.getGender());
+        pet.setColor(request.getColor());
+        pet.setEstimatedWeight(request.getEstimatedWeight());
+        pet.setPetObservations(request.getPetObservations());
+        pet.setUser(user);
         pet.setSize(size);
+        pet.setSpecie(specie);
+        pet.setRace(race);
 
         Pet updatedPet = petRepository.save(pet);
         log.info("Pet updated successfully: {}", updatedPet);
@@ -127,15 +129,16 @@ public class PetServiceImpl implements PetService {
         return PetResponse.builder()
                 .id(pet.getId())
                 .name(pet.getName())
-                .userId(pet.getUser().getId())
-                .especieId(pet.getSpecie().getId())
-                .racaId(pet.getRace().getId())
-                .birthDate(pet.getBirthDate())
-                .sexo(pet.getSexo())
+                .gender(pet.getGender())
                 .color(pet.getColor())
-                .weight(pet.getWeight())
+                .estimatedWeight(pet.getEstimatedWeight())
+                .birthdate(pet.getBirthdate())
+                .petObservations(pet.getPetObservations())
+                .petImg(pet.getPetImg())
+                .userId(pet.getUser().getId())
+                .specieId(pet.getSpecie().getId())
+                .raceId(pet.getRace().getId())
                 .sizeId(pet.getSize().getId())
-                .notes(pet.getNotes())
                 .build();
     }
 }

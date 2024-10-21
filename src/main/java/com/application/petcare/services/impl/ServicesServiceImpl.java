@@ -22,7 +22,7 @@ public class ServicesServiceImpl implements ServicesService {
     private final ServicesRepository servicesRepository;
 
     @Override
-    public ServicesResponse createServico(ServicesCreateRequest request) {
+    public ServicesResponse createService(ServicesCreateRequest request) {
         log.info("Creating service: {}", request);
 
         Services servico = Services.builder()
@@ -39,7 +39,7 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public ServicesResponse updateServico(Integer id, ServicesUpdateRequest request) {
+    public ServicesResponse updateService(Integer id, ServicesUpdateRequest request) {
         log.info("Updating service with id: {}", id);
 
         Services servico = servicesRepository.findById(id)
@@ -57,7 +57,7 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public void deleteServico(Integer id) {
+    public void deleteService(Integer id) {
         log.info("Deleting service with id: {}", id);
 
         if (!servicesRepository.existsById(id)) {
@@ -68,7 +68,7 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public List<ServicesResponse> findAllServicos() {
+    public List<ServicesResponse> findAllServices() {
         log.info("Fetching all services");
 
         return servicesRepository.findAll().stream()
@@ -77,7 +77,7 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public ServicesResponse getServicoById(Integer id) {
+    public ServicesResponse getServiceById(Integer id) {
         log.info("Fetching service by id: {}", id);
 
         Services servico = servicesRepository.findById(id)

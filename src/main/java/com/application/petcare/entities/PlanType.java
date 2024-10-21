@@ -3,23 +3,18 @@ package com.application.petcare.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
-
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "PlanType")
 @Builder
-@Table(name = "Size")
-public class Size {
-
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+@AllArgsConstructor
+public class PlanType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String name;
+    private Integer paymentInterval;
 
-    @Column(nullable = false)
-    private String sizeType;
-
-    @Column(nullable = false)
-    private BigDecimal priece;
 }

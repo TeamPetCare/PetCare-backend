@@ -13,9 +13,9 @@ public interface UserService {
 
     UserResponse updateUser(Integer id, UserUpdateRequest request);
 
-    UserResponse findUserById(Integer userId);
+    UserResponse findUserById(Integer planTypeId);
 
     List<UserResponse> findAllUsersById();
 
-    void deleteUser(Integer userId);
+    void deleteUser(Integer planTypeId);
 }

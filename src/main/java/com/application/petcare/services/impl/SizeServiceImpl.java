@@ -25,8 +25,8 @@ public class SizeServiceImpl implements SizeService {
         log.info("Creating size: {}", request);
 
         Size size = Size.builder()
-                .tipoTamanho(request.getTipoTamanho())
-                .preco(request.getPreco())
+                .sizeType(request.getSizeType())
+                .priece(request.getPriece())
                 .build();
 
         Size savedSize = sizeRepository.save(size);
@@ -41,8 +41,8 @@ public class SizeServiceImpl implements SizeService {
         Size size = sizeRepository.findById(id)
                 .orElseThrow(() -> new SizeNotFoundException("Tamanho não encontrado"));
 
-        size.setTipoTamanho(request.getTipoTamanho());
-        size.setPreco(request.getPreco());
+        size.setSizeType(request.getSizeType());
+        size.setPriece(request.getPriece());
         Size updatedSize = sizeRepository.save(size);
         log.info("Size updated successfully: {}", updatedSize);
         return mapToSizeResponse(updatedSize);
@@ -78,6 +78,6 @@ public class SizeServiceImpl implements SizeService {
     }
 
     private SizeResponse mapToSizeResponse(Size size) {
-        return new SizeResponse(size.getId(), size.getTipoTamanho(), size.getPreco());
+        return new SizeResponse(size.getId(), size.getSizeType(), size.getPriece());
     }
 }
