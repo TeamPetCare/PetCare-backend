@@ -6,33 +6,31 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.sql.Time;
 
+
 @Entity
-@Table(name = "Services")
+@Table(name = "Payment")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Services {
+public class Payment {
+
+    //Verificar a criação do conotroller
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String note;
-
-    @Column(nullable = false)
     private Double priece;
 
     @Column(nullable = false)
-    private Time estimatedTime;
+    private Date paymentDate;
 
-    @Column(nullable = false)
-    private Boolean disponibility;
+    //Fazer relacionamento
+    private User user;
 
 }

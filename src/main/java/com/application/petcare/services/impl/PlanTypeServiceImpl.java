@@ -47,7 +47,7 @@ public class PlanTypeServiceImpl implements PlanTypeService {
     }
 
     @Override
-    public List<PlanTypeResponse> findAllPlanTypesById() {
+    public List<PlanTypeResponse> findAllPlanTypes() {
         return repository.findAll().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
