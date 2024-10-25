@@ -1,17 +1,15 @@
 package com.application.petcare.dto.payment;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 
 @Getter
-@Setter
 @Builder
-@RequiredArgsConstructor
+@Setter
+@Data
+@AllArgsConstructor
 public class PaymentCreateRequest {
     @NotNull(message = "Priece is required")
     private Double priece;

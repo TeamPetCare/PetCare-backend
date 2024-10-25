@@ -2,17 +2,15 @@ package com.application.petcare.dto.payment;
 
 import com.application.petcare.entities.User;
 import jakarta.persistence.Column;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 
 @Getter
-@Setter
 @Builder
-@RequiredArgsConstructor
+@Setter
+@Data
+@AllArgsConstructor
 public class PaymentResponse {
     private Integer id;
     private Double priece;

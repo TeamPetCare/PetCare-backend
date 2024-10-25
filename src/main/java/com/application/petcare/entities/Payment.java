@@ -1,21 +1,17 @@
 package com.application.petcare.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Date;
-import java.sql.Time;
-
 
 @Entity
 @Table(name = "Payment")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Payment {
 
     //Verificar a criação do conotroller
@@ -30,7 +26,7 @@ public class Payment {
     @Column(nullable = false)
     private Date paymentDate;
 
-    //Fazer relacionamento
+    @OneToOne
     private User user;
 
 }

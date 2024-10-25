@@ -1,17 +1,15 @@
 package com.application.petcare.dto.plans;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
 @Builder
 @Setter
-@RequiredArgsConstructor
+@Data
+@AllArgsConstructor
 public class PlansCreateRequest {
     @NotNull(message = "Subscription date is required")
     private Date subscriptionDate;

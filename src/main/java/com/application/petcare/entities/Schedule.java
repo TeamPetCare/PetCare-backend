@@ -1,42 +1,48 @@
 package com.application.petcare.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "Payment")
+@Table(name = "Schedule")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Setter
-public class Plans {
+public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
-    private Date subscriptionDate;
+    private String scheduleStatus;
 
     @NotNull
-    private Double priece;
+    private Date scheduleDate;
 
     @NotNull
-    private Boolean active;
+    private Time scheduleTime;
 
     @NotNull
-    private int renewal;
+    private Date creationDate;
+
+    @NotBlank
+    private String scheduleNote;
 
     @NotNull
-    @ManyToOne
-    private PlanType planType;
+    @OneToMany
+    private List<Pet> pet;
 
     @NotNull
-    @ManyToOne
-    private Pet pet;
+    @OneToOne
+    private Payment payment;
 
 
 }

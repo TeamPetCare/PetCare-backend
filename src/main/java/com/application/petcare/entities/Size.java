@@ -6,11 +6,12 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "Size")
+@Getter
+@Setter
 public class Size {
 
     @Id
