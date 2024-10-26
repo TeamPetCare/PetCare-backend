@@ -17,5 +17,7 @@ public interface UserService {
 
     List<UserResponse> findAllUsersById();
 
+    void generateCsvFileCustomer();
+
     void deleteUser(Integer planTypeId);
 }

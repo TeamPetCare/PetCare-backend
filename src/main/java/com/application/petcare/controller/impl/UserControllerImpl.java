@@ -36,6 +36,12 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
+    public ResponseEntity<Void> generateCsvFileCustomer() {
+        userService.generateCsvFileCustomer();
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Override
     public ResponseEntity<UserResponse> updateUser(Integer id, UserUpdateRequest userUpdateRequest) {
         UserResponse updatedUser = userService.updateUser(id, userUpdateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(updatedUser);

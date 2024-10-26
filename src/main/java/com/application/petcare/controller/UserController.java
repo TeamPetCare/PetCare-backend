@@ -25,6 +25,10 @@ public interface UserController {
     @GetMapping
     ResponseEntity<List<UserResponse>> getAllUsers();
 
+    @Operation(summary = "Gerar relatório CSV de Clientes")
+    @GetMapping("/relatarioClientes")
+    ResponseEntity<Void> generateCsvFileCustomer();
+
     @Operation(summary = "Atualizar usuário por ID")
     @PutMapping("/{id}")
     ResponseEntity<UserResponse> updateUser(

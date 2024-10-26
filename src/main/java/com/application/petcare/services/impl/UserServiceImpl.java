@@ -12,7 +12,12 @@ import com.application.petcare.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.FormatterClosedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,6 +98,12 @@ public class UserServiceImpl implements UserService {
         return repository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
+    public void generateCsvFileCustomer() {
+        List<UserResponse> list = repository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
+        writeCsvFileCustomer(list, "reportCustomers");
+    }
+
+
     @Override
     public void deleteUser(Integer userId) {
         if (!repository.existsById(userId)) {
@@ -129,4 +140,63 @@ public class UserServiceImpl implements UserService {
                 .petIds(petIds)
                 .build();
     }
+
+    public static void writeCsvFileCustomer(List<UserResponse> lista, String nomeArq) {
+        FileWriter arq = null;
+        Formatter saida = null;
+        Boolean deuRuim = false;
+
+        nomeArq += ".csv";
+
+        try {
+            arq = new FileWriter(nomeArq);
+            saida = new Formatter(arq);
+
+        }
+        catch (IOException erro) {
+            System.out.println("Erro ao abrir o arquivo");
+            erro.printStackTrace();
+            System.exit(1);
+        }
+
+        try {
+            for (UserResponse userResponse : lista) {
+                saida.format("%d;%s;%s;%s;%s;%d;%s;%s;%s;%s;%s\n",
+                        userResponse.getId(),
+                        userResponse.getName(),
+                        userResponse.getEmail(),
+                        userResponse.getCellphone(),
+                        userResponse.getStreet(),
+                        userResponse.getNumber(),
+                        userResponse.getComplement(),
+                        userResponse.getCep(),
+                        userResponse.getDistrict(),
+                        userResponse.getCity(),
+                        userResponse.getCpfClient());
+            }
+
+            System.out.println("Arquivo CSV salvo em: " + new File(nomeArq).getAbsolutePath());
+        }
+        catch (FormatterClosedException erro) {
+            System.out.println("Erro ao gravar o arquivo");
+            erro.printStackTrace();
+            deuRuim = true;
+        }
+        finally {
+            saida.close();
+            try {
+                arq.close();
+            }
+            catch (IOException erro) {
+                System.out.println("Erro ao fechar o arquivo");
+                deuRuim = true;
+            }
+            if (deuRuim) {
+                System.exit(1);
+            }
+        }
+    }
+
+
+
 }
