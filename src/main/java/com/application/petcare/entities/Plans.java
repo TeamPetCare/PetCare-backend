@@ -1,13 +1,15 @@
 package com.application.petcare.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Table(name = "Payment")
+@Table(name = "Plans")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -19,7 +21,8 @@ public class Plans {
     private Integer id;
 
     @NotNull
-    private Date subscriptionDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime subscriptionDate;
 
     @NotNull
     private Double priece;
@@ -34,9 +37,6 @@ public class Plans {
     @ManyToOne
     private PlanType planType;
 
-    @NotNull
-    @ManyToOne
-    private Pet pet;
 
 
 }

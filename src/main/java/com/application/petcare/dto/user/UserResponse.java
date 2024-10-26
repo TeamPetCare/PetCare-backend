@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -28,5 +30,5 @@ public class UserResponse {
     private String roleEmployee;
     private Boolean disponibilityStatus;
     private String cpfClient;
-
+    private List<Integer> petIds;
 }

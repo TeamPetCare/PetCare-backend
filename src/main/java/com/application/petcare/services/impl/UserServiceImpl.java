@@ -6,11 +6,13 @@ import com.application.petcare.dto.user.UserUpdateRequest;
 import com.application.petcare.entities.User;
 import com.application.petcare.exceptions.BadRequestException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
+import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+
+    private final PetRepository petRepository;
 
     @Override
     public UserResponse createUser(UserCreateRequest request) {
@@ -39,6 +43,9 @@ public class UserServiceImpl implements UserService {
                 .roleEmployee(request.getRoleEmployee())
                 .disponibilityStatusEmployee(request.getDisponibilityStatus())
                 .cpfClient(request.getCpfClient())
+                .pet(petRepository.findAllByIdIn(request.getPetIds())
+                        .filter(pets -> !pets.isEmpty())
+                        .orElseThrow(() -> new ResourceNotFoundException("Pet not found")))
                 .build()
                 ;
         User savedUser = repository.save(user);
@@ -66,7 +73,9 @@ public class UserServiceImpl implements UserService {
         user.setRoleEmployee(request.getRoleEmployee());
         user.setDisponibilityStatusEmployee(request.getDisponibilityStatus());
         user.setCpfClient(request.getCpfClient());
-
+        user.setPet(petRepository.findAllByIdIn(request.getPetIds())
+                .filter(pets -> !pets.isEmpty())
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found")));
 
         User updatedUser = repository.save(user);
         return mapToResponse(updatedUser);
@@ -93,6 +102,12 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserResponse mapToResponse(User user) {
+
+        List<Integer> petIds = new ArrayList<>();
+        for (int i = 0; i < user.getPet().size(); i++) {
+        petIds.add(user.getPet().get(i).getId());
+        }
+
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
@@ -111,6 +126,7 @@ public class UserServiceImpl implements UserService {
                 .roleEmployee(user.getRoleEmployee())
                 .disponibilityStatus(user.getDisponibilityStatusEmployee())
                 .cpfClient(user.getCpfClient())
+                .petIds(petIds)
                 .build();
     }
 }

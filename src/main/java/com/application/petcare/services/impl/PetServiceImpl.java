@@ -4,6 +4,7 @@ import com.application.petcare.dto.pet.PetCreateRequest;
 import com.application.petcare.dto.pet.PetResponse;
 import com.application.petcare.entities.*;
 import com.application.petcare.exceptions.PetNotFoundException;
+import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.*;
 import com.application.petcare.services.PetService;
 import lombok.RequiredArgsConstructor;
@@ -21,30 +22,29 @@ import lombok.extern.slf4j.Slf4j;
 public class PetServiceImpl implements PetService {
 
     private final PetRepository petRepository;
-    private final UserRepository userRepository;
     private final SpecieRepository specieRepository;
-    private final RaceRepository racaRepository;
+    private final RaceRepository raceRepository;
     private final SizeRepository sizeRepository;
+    private final PlansRepository plansRepository;
 
     @Override
     public PetResponse createPet(PetCreateRequest request) {
         log.info("Creating pet: {}", request);
 
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new BadRequestException("User not found"));
-
         Specie specie = specieRepository.findById(request.getSpecieId())
                 .orElseThrow(() -> new BadRequestException("Especie not found"));
 
-        Race race = racaRepository.findById(request.getRaceId())
+        Race race = raceRepository.findById(request.getRaceId())
                 .orElseThrow(() -> new BadRequestException("Raca not found"));
 
         Size size = sizeRepository.findById(request.getSizeId())
                 .orElseThrow(() -> new BadRequestException("Size not found"));
 
+        Plans plans = plansRepository.findById(request.getPlanId())
+                .orElseThrow(() -> new ResourceNotFoundException("Plan not found"));
+
         Pet pet = Pet.builder()
                 .name(request.getName())
-                .user(user)
                 .specie(specie)
                 .race(race)
                 .petImg(request.getPetImg())
@@ -54,6 +54,8 @@ public class PetServiceImpl implements PetService {
                 .estimatedWeight(request.getEstimatedWeight())
                 .size(size)
                 .petObservations(request.getPetObservations())
+                .plan(plansRepository.findById(request.getPlanId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Plan not found")))
                 .build();
 
         Pet savedPet = petRepository.save(pet);
@@ -68,17 +70,17 @@ public class PetServiceImpl implements PetService {
         Pet pet = petRepository.findById(id)
                 .orElseThrow(() -> new PetNotFoundException("Pet not found"));
 
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new BadRequestException("User not found"));
-
         Size size = sizeRepository.findById(request.getSizeId())
-                .orElseThrow(() -> new BadRequestException("Size not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Size not found"));
 
         Specie specie = specieRepository.findById(request.getSpecieId())
-                .orElseThrow(() -> new BadRequestException("Specie not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Specie not found"));
 
-        Race race = racaRepository.findById(request.getRaceId())
-                .orElseThrow(() -> new BadRequestException("Race not found"));
+        Race race = raceRepository.findById(request.getRaceId())
+                .orElseThrow(() -> new ResourceNotFoundException("Race not found"));
+
+        Plans plans = plansRepository.findById(request.getPlanId())
+                .orElseThrow(() -> new ResourceNotFoundException("Plan not found"));
 
         // Atualizando as informações
         pet.setName(request.getName());
@@ -89,10 +91,10 @@ public class PetServiceImpl implements PetService {
         pet.setColor(request.getColor());
         pet.setEstimatedWeight(request.getEstimatedWeight());
         pet.setPetObservations(request.getPetObservations());
-        pet.setUser(user);
         pet.setSize(size);
         pet.setSpecie(specie);
         pet.setRace(race);
+        pet.setPlan(plans);
 
         Pet updatedPet = petRepository.save(pet);
         log.info("Pet updated successfully: {}", updatedPet);
@@ -135,10 +137,10 @@ public class PetServiceImpl implements PetService {
                 .birthdate(pet.getBirthdate())
                 .petObservations(pet.getPetObservations())
                 .petImg(pet.getPetImg())
-                .userId(pet.getUser().getId())
                 .specieId(pet.getSpecie().getId())
                 .raceId(pet.getRace().getId())
                 .sizeId(pet.getSize().getId())
+                .planId(pet.getPlan().getId())
                 .build();
     }
 }

@@ -2,6 +2,7 @@ package com.application.petcare.dto.plans;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -11,10 +12,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class PlansResponse {
     private Integer id;
-    private Date subscriptionDate;
+    private LocalDateTime subscriptionDate;
     private Double priece;
     private Boolean active;
     private int renewal;
     private Integer planTypeId;
-    private Integer petId;
 }

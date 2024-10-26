@@ -18,28 +18,28 @@ public class RaceControllerImpl implements RaceController {
     private final RaceService raceService;
 
     @Override
-    public ResponseEntity<RaceResponse> createRaca(@Valid RaceCreateRequest request) {
-        return ResponseEntity.ok(raceService.createRaca(request));
+    public ResponseEntity<RaceResponse> createRace(@Valid RaceCreateRequest request) {
+        return ResponseEntity.ok(raceService.createRace(request));
     }
 
     @Override
-    public ResponseEntity<RaceResponse> updateRaca(Integer id, @Valid RaceCreateRequest request) {
-        return ResponseEntity.ok(raceService.updateRaca(id, request));
+    public ResponseEntity<RaceResponse> updateRace(Integer id, @Valid RaceCreateRequest request) {
+        return ResponseEntity.ok(raceService.updateRace(id, request));
     }
 
     @Override
-    public ResponseEntity<RaceResponse> getRacaById(Integer id) {
-        return ResponseEntity.ok(raceService.getRacaById(id));
+    public ResponseEntity<RaceResponse> getRaceById(Integer id) {
+        return ResponseEntity.ok(raceService.getRaceById(id));
     }
 
     @Override
-    public ResponseEntity<List<RaceResponse>> getAllRacas() {
-        return ResponseEntity.ok(raceService.getAllRacas());
+    public ResponseEntity<List<RaceResponse>> getAllRaces() {
+        return ResponseEntity.ok(raceService.getAllRaces());
     }
 
     @Override
-    public ResponseEntity<Void> deleteRaca(Integer id) {
-        raceService.deleteRaca(id);
+    public ResponseEntity<Void> deleteRace(Integer id) {
+        raceService.deleteRace(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -6,9 +6,9 @@ import com.application.petcare.dto.race.RaceResponse;
 import java.util.List;
 
 public interface RaceService {
-    RaceResponse createRaca(RaceCreateRequest request);
-    RaceResponse updateRaca(Integer id, RaceCreateRequest request);
-    RaceResponse getRacaById(Integer id);
-    List<RaceResponse> getAllRacas();
-    void deleteRaca(Integer id);
+    RaceResponse createRace(RaceCreateRequest request);
+    RaceResponse updateRace(Integer id, RaceCreateRequest request);
+    RaceResponse getRaceById(Integer id);
+    List<RaceResponse> getAllRaces();
+    void deleteRace(Integer id);
 }

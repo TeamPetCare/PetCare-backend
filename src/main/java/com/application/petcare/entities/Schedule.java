@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -25,13 +26,13 @@ public class Schedule {
     private String scheduleStatus;
 
     @NotNull
-    private Date scheduleDate;
+    private LocalDateTime scheduleDate;
 
     @NotNull
     private Time scheduleTime;
 
     @NotNull
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     @NotBlank
     private String scheduleNote;

@@ -63,5 +63,8 @@ public class User {
 
     private String cpfClient;
 
+    @OneToMany
+    private List<Pet> pet;
+
 
 }

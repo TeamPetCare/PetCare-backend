@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -20,9 +21,9 @@ import java.util.List;
 public class ScheduleResponse {
     private Integer id;
     private String scheduleStatus;
-    private Date scheduleDate;
+    private LocalDateTime scheduleDate;
     private Time scheduleTime;
-    private Date creationDate;
+    private LocalDateTime creationDate;
     private String scheduleNote;
     private List<Integer> petIds;
     private Integer paymentId;

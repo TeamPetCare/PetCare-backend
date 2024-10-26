@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +24,13 @@ public class ScheduleCreateRequest {
     private String scheduleStatus;
 
     @NotNull(message = "Schedule date is required")
-    private Date scheduleDate;
+    private LocalDateTime scheduleDate;
 
     @NotNull(message = "Schedule time is required")
     private Time scheduleTime;
 
     @NotNull(message = "Creation date is required")
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     @NotBlank(message = "Schedule note is required")
     private String scheduleNote;

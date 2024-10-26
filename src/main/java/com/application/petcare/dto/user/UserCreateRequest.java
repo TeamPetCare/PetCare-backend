@@ -1,5 +1,6 @@
 package com.application.petcare.dto.user;
 
+import com.application.petcare.entities.Pet;
 import com.application.petcare.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -56,4 +59,6 @@ public class UserCreateRequest {
     private Boolean disponibilityStatus;
 
     private String cpfClient;
+
+    private List<Integer> petIds;
 }

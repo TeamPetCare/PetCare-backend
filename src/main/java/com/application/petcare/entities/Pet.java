@@ -37,23 +37,19 @@ public class Pet {
 
     private String petImg;
 
-    // muitos pets podem pertencer a um cliente
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private User user;
+    // Um pet um plano
+    @OneToOne
+    private Plans plan;
 
     // Relacionamento com Especie (muitos pets podem ter uma espécie)
     @ManyToOne
-    @JoinColumn(name = "especie_id", nullable = false)
     private Specie specie;
 
-    // Relacionamento com Raca (muitos pets podem ter uma raça)
+    // Relacionamento com Race (muitos pets podem ter uma raça)
     @ManyToOne
-    @JoinColumn(name = "raca_id", nullable = false)
     private Race race;
 
     // Relacionamento com Tamanho (Size)
     @ManyToOne
-    @JoinColumn(name = "size_id", nullable = false)
     private Size size;
 }

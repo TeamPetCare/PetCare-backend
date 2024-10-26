@@ -63,6 +63,7 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 
     public PlanTypeResponse mapToResponse(PlanType request){
         return PlanTypeResponse.builder()
+                .id(request.getId())
                 .name(request.getName())
                 .paymentInterval(request.getPaymentInterval()).build();
     }

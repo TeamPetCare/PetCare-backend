@@ -6,13 +6,17 @@ import com.application.petcare.entities.*;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.*;
 import com.application.petcare.services.PlansService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class PlansServiceImpl implements PlansService {
+
 
     private PlansRepository plansRepository;
 
@@ -28,8 +32,7 @@ public class PlansServiceImpl implements PlansService {
                 .renewal(request.getRenewal())
                 .planType(planTypeRepository.findById(request.getPlanTypeId())
                         .orElseThrow(() -> new ResourceNotFoundException("Plan Type not found")))
-                .pet(petRepository.findById(request.getPetId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Pet not found"))).build();
+                .build();
         Plans savedPlan = plansRepository.save(plans);
         return mapToResponse(savedPlan);
     }
@@ -45,8 +48,6 @@ public class PlansServiceImpl implements PlansService {
         plans.setRenewal(request.getRenewal());
         plans.setPlanType(planTypeRepository.findById(request.getPlanTypeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Plan type not found")));
-        plans.setPet(petRepository.findById(request.getPetId())
-                .orElseThrow(() -> new ResourceNotFoundException("Pet not found")));
 
         Plans updatedPlan = plansRepository.save(plans);
         return mapToResponse(updatedPlan);
@@ -79,7 +80,6 @@ public class PlansServiceImpl implements PlansService {
                 .active(plans.getActive())
                 .renewal(plans.getRenewal())
                 .planTypeId(plans.getPlanType().getId())
-                .petId(plans.getPet().getId())
                 .build();
     }
 }

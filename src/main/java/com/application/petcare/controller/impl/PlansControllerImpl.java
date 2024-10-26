@@ -4,12 +4,16 @@ import com.application.petcare.controller.PlansController;
 import com.application.petcare.dto.plans.PlansCreateRequest;
 import com.application.petcare.dto.plans.PlansResponse;
 import com.application.petcare.services.PlansService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@RestController
+@AllArgsConstructor
 public class PlansControllerImpl implements PlansController {
 
     private PlansService plansService;

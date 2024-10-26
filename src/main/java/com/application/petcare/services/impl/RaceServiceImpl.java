@@ -3,7 +3,7 @@ package com.application.petcare.services.impl;
 import com.application.petcare.dto.race.RaceCreateRequest;
 import com.application.petcare.dto.race.RaceResponse;
 import com.application.petcare.entities.Race;
-import com.application.petcare.exceptions.RacaNotFoundException;
+import com.application.petcare.exceptions.RaceNotFoundException;
 import com.application.petcare.repository.RaceRepository;
 import com.application.petcare.services.RaceService;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RaceServiceImpl implements RaceService {
 
-    private final RaceRepository racaRepository;
+    private final RaceRepository raceRepository;
 
     @Override
-    public RaceResponse createRaca(RaceCreateRequest request) {
+    public RaceResponse createRace(RaceCreateRequest request) {
         log.info("Creating raca: {}", request);
 
         Race race = Race.builder()
@@ -29,51 +29,51 @@ public class RaceServiceImpl implements RaceService {
                 .priece(request.getPriece())
                 .build();
 
-        Race savedRace = racaRepository.save(race);
+        Race savedRace = raceRepository.save(race);
         log.info("Raca created successfully: {}", savedRace);
         return mapToRacaResponse(savedRace);
     }
 
     @Override
-    public RaceResponse updateRaca(Integer id, RaceCreateRequest request) {
+    public RaceResponse updateRace(Integer id, RaceCreateRequest request) {
         log.info("Updating raca with id: {}", id);
 
-        Race race = racaRepository.findById(id)
-                .orElseThrow(() -> new RacaNotFoundException("Raça não encontrada"));
+        Race race = raceRepository.findById(id)
+                .orElseThrow(() -> new RaceNotFoundException("Raça não encontrada"));
 
         race.setRaceType(request.getRaceType());
         race.setPriece(request.getPriece());
-        Race updatedRace = racaRepository.save(race);
+        Race updatedRace = raceRepository.save(race);
         log.info("Raca updated successfully: {}", updatedRace);
         return mapToRacaResponse(updatedRace);
     }
 
     @Override
-    public RaceResponse getRacaById(Integer id) {
+    public RaceResponse getRaceById(Integer id) {
         log.info("Fetching raca by id: {}", id);
 
-        Race race = racaRepository.findById(id)
-                .orElseThrow(() -> new RacaNotFoundException("Raça não encontrada"));
+        Race race = raceRepository.findById(id)
+                .orElseThrow(() -> new RaceNotFoundException("Raça não encontrada"));
         return mapToRacaResponse(race);
     }
 
     @Override
-    public List<RaceResponse> getAllRacas() {
+    public List<RaceResponse> getAllRaces() {
         log.info("Fetching all racas");
 
-        return racaRepository.findAll().stream()
+        return raceRepository.findAll().stream()
                 .map(this::mapToRacaResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void deleteRaca(Integer id) {
+    public void deleteRace(Integer id) {
         log.info("Deleting raca with id: {}", id);
 
-        if (!racaRepository.existsById(id)) {
-            throw new RacaNotFoundException("Raça não encontrada");
+        if (!raceRepository.existsById(id)) {
+            throw new RaceNotFoundException("Raça não encontrada");
         }
-        racaRepository.deleteById(id);
+        raceRepository.deleteById(id);
         log.info("Raca deleted successfully with id: {}", id);
     }
 

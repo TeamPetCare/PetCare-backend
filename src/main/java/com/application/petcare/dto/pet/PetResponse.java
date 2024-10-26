@@ -16,7 +16,7 @@ public class PetResponse {
     private LocalDate birthdate;
     private String petObservations;
     private String petImg;
-    private Integer userId;
+    private Integer planId;
     private Integer specieId;
     private Integer raceId;
     private Integer sizeId;
