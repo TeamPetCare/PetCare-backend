@@ -5,7 +5,9 @@ import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.services.ScheduleService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +16,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class ScheduleControllerImpl implements ScheduleController {
 
     private ScheduleService scheduleService;

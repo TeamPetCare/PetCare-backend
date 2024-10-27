@@ -15,13 +15,16 @@ import com.application.petcare.repository.ServicesRepository;
 import com.application.petcare.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Service
 @AllArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
 
@@ -87,7 +90,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleResponse> findAllSchedules() {
-        return scheduleRepository.findAll().stream().map(this::mapToResponse).toList();
+        return scheduleRepository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
     @Override
