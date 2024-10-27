@@ -2,7 +2,9 @@ package com.application.petcare.services.impl;
 
 import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleResponse;
+import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
+import com.application.petcare.enums.StatusAgendamento;
 import com.application.petcare.exceptions.DuplicateScheduleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.PaymentRepository;
@@ -90,6 +92,19 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
         scheduleRepository.deleteById(id);
+    }
+
+    @Override
+    public ScheduleStatsResponse getScheduleStats() {
+        int totalAgendados = (int) scheduleRepository.count();
+        int totalConcluidos = (int) scheduleRepository.countByScheduleStatus(StatusAgendamento.CONCLUIDO);
+        int totalCancelados = (int) scheduleRepository.countByScheduleStatus(StatusAgendamento.CANCELADO);
+
+        return ScheduleStatsResponse.builder()
+                .totalAgendados(totalAgendados)
+                .totalConcluidos(totalConcluidos)
+                .totalCancelados(totalCancelados)
+                .build();
     }
 
 

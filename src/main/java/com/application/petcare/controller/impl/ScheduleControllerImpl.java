@@ -3,6 +3,7 @@ package com.application.petcare.controller.impl;
 import com.application.petcare.controller.ScheduleController;
 import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleResponse;
+import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.services.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,10 @@ public class ScheduleControllerImpl implements ScheduleController {
     public ResponseEntity<Void> deleteSchedule(Integer id) {
         scheduleService.deleteScheduleById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<ScheduleStatsResponse> getScheduleStats() {
+        return ResponseEntity.ok(scheduleService.getScheduleStats());
     }
 }

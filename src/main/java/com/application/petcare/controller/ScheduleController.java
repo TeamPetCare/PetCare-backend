@@ -2,6 +2,7 @@ package com.application.petcare.controller;
 
 import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleResponse;
+import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -33,4 +34,9 @@ public interface ScheduleController {
     @Operation(summary = "Excluir agendamento por ID")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteSchedule(@PathVariable Integer id);
+
+
+    @Operation(summary = "Obter estatísticas de agendamentos")
+    @GetMapping("/stats")
+    ResponseEntity<ScheduleStatsResponse> getScheduleStats();
 }
