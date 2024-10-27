@@ -1,9 +1,11 @@
 package com.application.petcare.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Time;
+import java.util.List;
 
 @Entity
 @Table(name = "Services")
@@ -32,5 +34,9 @@ public class Services {
 
     @Column(nullable = false)
     private Boolean disponibility;
+
+    @ManyToMany
+    @JsonManagedReference
+    private List<Schedule> schedules;
 
 }

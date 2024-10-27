@@ -2,10 +2,7 @@ package com.application.petcare.dto.user;
 
 import com.application.petcare.entities.Pet;
 import com.application.petcare.enums.Role;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 
@@ -39,7 +36,7 @@ public class UserCreateRequest {
     @NotNull(message = "Number is required")
     private Integer number;  // Corrigido para @NotNull
 
-    @NotBlank(message = "Complement is required")
+    @Size(max=255, message = "Complement is required")
     private String complement;
 
     @NotBlank(message = "CEP is required")

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Payment")
@@ -24,7 +25,7 @@ public class Payment {
     private Double priece;
 
     @Column(nullable = false)
-    private Date paymentDate;
+    private LocalDateTime paymentDate;
 
     @OneToOne
     private User user;

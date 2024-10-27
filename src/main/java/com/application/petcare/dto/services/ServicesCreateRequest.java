@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.sql.Time;
+import java.util.List;
 
 @Data
 public class ServicesCreateRequest {
@@ -24,5 +25,8 @@ public class ServicesCreateRequest {
 
     @NotNull(message = "Disponibility is required")
     private Boolean disponibility;
+
+    @NotNull(message = "Schedule is required")
+    private List<Integer> scheduleIds;
 
 }

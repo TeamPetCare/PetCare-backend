@@ -5,6 +5,7 @@ import com.application.petcare.dto.login.LoginResponseDto;
 import com.application.petcare.dto.register.RegisterRequestDto;
 import com.application.petcare.entities.User;
 import com.application.petcare.infra.security.TokenService;
+import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ import java.util.Optional;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
+
+    private final PetRepository petRepository;
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
@@ -58,6 +61,7 @@ public class AuthController {
             newUser.setRoleEmployee(body.roleEmployee());
             newUser.setDisponibilityStatusEmployee(body.disponibilityStatus());
             newUser.setCpfClient(body.cpfClient());
+            newUser.setPet(petRepository.findAllByIdIn(body.petIds()));
 
             this.repository.save(newUser);
             String token = this.tokenService.generateToken(newUser);

@@ -3,6 +3,7 @@ package com.application.petcare.dto.schedule;
 import com.application.petcare.entities.Payment;
 import com.application.petcare.entities.Pet;
 import com.application.petcare.entities.Services;
+import com.application.petcare.enums.StatusAgendamento;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import lombok.*;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,13 +23,13 @@ import java.util.List;
 @AllArgsConstructor
 public class ScheduleCreateRequest {
     @NotNull(message = "Schedule status is required")
-    private String scheduleStatus;
+    private StatusAgendamento scheduleStatus;
 
     @NotNull(message = "Schedule date is required")
     private LocalDateTime scheduleDate;
 
     @NotNull(message = "Schedule time is required")
-    private Time scheduleTime;
+    private LocalTime scheduleTime;
 
     @NotNull(message = "Creation date is required")
     private LocalDateTime creationDate;
@@ -36,8 +38,11 @@ public class ScheduleCreateRequest {
     private String scheduleNote;
 
     @NotNull(message = "Pet is required")
-    private List<Integer> petIds;
+    private Integer petId;
 
     @NotNull(message = "Payment is required")
     private Integer paymentId;
+
+    @NotNull(message = "Service is required")
+    private List<Integer> serviceIds;
 }

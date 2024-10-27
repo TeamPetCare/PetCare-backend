@@ -3,8 +3,11 @@ package com.application.petcare.services.impl;
 import com.application.petcare.dto.services.ServicesCreateRequest;
 import com.application.petcare.dto.services.ServicesResponse;
 import com.application.petcare.dto.services.ServicesUpdateRequest;
+import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.Services;
+import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.exceptions.ServicoNotFoundException;
+import com.application.petcare.repository.ScheduleRepository;
 import com.application.petcare.repository.ServicesRepository;
 import com.application.petcare.services.ServicesService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,8 @@ public class ServicesServiceImpl implements ServicesService {
 
     private final ServicesRepository servicesRepository;
 
+    private final ScheduleRepository scheduleRepository;
+
     @Override
     public ServicesResponse createService(ServicesCreateRequest request) {
         log.info("Creating service: {}", request);
@@ -31,6 +36,9 @@ public class ServicesServiceImpl implements ServicesService {
                 .priece(request.getPriece())
                 .estimatedTime(request.getEstimatedTime())
                 .disponibility(request.getDisponibility())
+                .schedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
+                        .filter(schedules -> !schedules.isEmpty())
+                        .orElseThrow(() -> new ResourceNotFoundException("Schedule not foun")))
                 .build();
 
         Services savedServico = servicesRepository.save(servico);
@@ -50,6 +58,9 @@ public class ServicesServiceImpl implements ServicesService {
         servico.setPriece(request.getPriece());
         servico.setEstimatedTime(request.getEstimatedTime());
         servico.setDisponibility(request.getDisponibility());
+        servico.setSchedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
+                .filter(schedules -> !schedules.isEmpty())
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule not foun")));
 
         Services updatedServico = servicesRepository.save(servico);
         log.info("Service updated successfully: {}", updatedServico);
@@ -63,6 +74,15 @@ public class ServicesServiceImpl implements ServicesService {
         if (!servicesRepository.existsById(id)) {
             throw new ServicoNotFoundException("Servico não encontrado");
         }
+
+        Services service = servicesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Service not found"));
+
+        for (Schedule schedule : service.getSchedules()) {
+            schedule.getServices().remove(service);
+            scheduleRepository.save(schedule);
+        }
+
         servicesRepository.deleteById(id);
         log.info("Service deleted successfully with id: {}", id);
     }
@@ -86,13 +106,20 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     private ServicesResponse mapToServicosResponse(Services services) {
+
+        Integer[] scheduleIds = new Integer[services.getSchedules().size()];
+        for (int i = 0; i < scheduleIds.length; i++) {
+            scheduleIds[i] = services.getSchedules().get(i).getId();
+        }
+
         return new ServicesResponse(
                 services.getId(),
                 services.getName(),
                 services.getNote(),
                 services.getPriece(),
                 services.getEstimatedTime(),
-                services.getDisponibility()
+                services.getDisponibility(),
+                List.of(scheduleIds)
         );
     }
 }

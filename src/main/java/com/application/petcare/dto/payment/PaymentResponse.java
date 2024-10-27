@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -14,6 +15,6 @@ import java.sql.Date;
 public class PaymentResponse {
     private Integer id;
     private Double priece;
-    private Date paymentDate;
+    private LocalDateTime paymentDate;
     private Integer userId;
 }

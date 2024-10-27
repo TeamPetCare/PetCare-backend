@@ -2,6 +2,8 @@ package com.application.petcare.dto.register;
 
 import com.application.petcare.enums.Role;
 
+import java.util.List;
+
 public record RegisterRequestDto(String name,
                                  String userImg,
                                  String email,
@@ -17,5 +19,6 @@ public record RegisterRequestDto(String name,
                                  String cnpjOwner,
                                  String roleEmployee,
                                  Boolean disponibilityStatus,
-                                 String cpfClient) {
+                                 String cpfClient,
+                                 List<Integer>petIds) {
 }

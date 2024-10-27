@@ -1,5 +1,7 @@
 package com.application.petcare.entities;
 
+import com.application.petcare.enums.StatusAgendamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +9,7 @@ import lombok.*;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +26,13 @@ public class Schedule {
     private Integer id;
 
     @NotNull
-    private String scheduleStatus;
+    private StatusAgendamento scheduleStatus;
 
     @NotNull
     private LocalDateTime scheduleDate;
 
     @NotNull
-    private Time scheduleTime;
+    private LocalTime scheduleTime;
 
     @NotNull
     private LocalDateTime creationDate;
@@ -38,12 +41,22 @@ public class Schedule {
     private String scheduleNote;
 
     @NotNull
-    @OneToMany
-    private List<Pet> pet;
+    @OneToOne
+    private Pet pet;
 
     @NotNull
     @OneToOne
     private Payment payment;
 
+    @ManyToMany
+    @JsonBackReference
+    @JoinTable(
+            name = "Schedule_has_Services",
+            joinColumns = @JoinColumn(name = "schedule_id"),
+            inverseJoinColumns = @JoinColumn(name = "services_id")
+    )
+    private List<Services> services;
 
-}
+    }
+
+

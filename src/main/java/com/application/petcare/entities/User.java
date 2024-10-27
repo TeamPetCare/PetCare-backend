@@ -43,7 +43,7 @@ public class User {
     @Column(nullable = false)
     private Integer number;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String complement;
 
     @Column(nullable = false)

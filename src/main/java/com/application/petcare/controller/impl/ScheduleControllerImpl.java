@@ -4,10 +4,14 @@ import com.application.petcare.controller.ScheduleController;
 import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.services.ScheduleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
+@RequiredArgsConstructor
 public class ScheduleControllerImpl implements ScheduleController {
 
     private ScheduleService scheduleService;

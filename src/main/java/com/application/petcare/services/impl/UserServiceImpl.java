@@ -48,11 +48,13 @@ public class UserServiceImpl implements UserService {
                 .roleEmployee(request.getRoleEmployee())
                 .disponibilityStatusEmployee(request.getDisponibilityStatus())
                 .cpfClient(request.getCpfClient())
-                .pet(petRepository.findAllByIdIn(request.getPetIds())
-                        .filter(pets -> !pets.isEmpty())
-                        .orElseThrow(() -> new ResourceNotFoundException("Pet not found")))
+                .pet(petRepository.findAllByIdIn(request.getPetIds()))
                 .build()
                 ;
+
+        if(user.getPet().isEmpty()){
+            throw new ResourceNotFoundException("Pets not found");
+        }
         User savedUser = repository.save(user);
         return mapToResponse(savedUser);
     }
@@ -78,9 +80,11 @@ public class UserServiceImpl implements UserService {
         user.setRoleEmployee(request.getRoleEmployee());
         user.setDisponibilityStatusEmployee(request.getDisponibilityStatus());
         user.setCpfClient(request.getCpfClient());
-        user.setPet(petRepository.findAllByIdIn(request.getPetIds())
-                .filter(pets -> !pets.isEmpty())
-                .orElseThrow(() -> new ResourceNotFoundException("Pet not found")));
+        user.setPet(petRepository.findAllByIdIn(request.getPetIds()));
+
+        if(user.getPet().isEmpty()){
+            throw new ResourceNotFoundException("Pets not found");
+        }
 
         User updatedUser = repository.save(user);
         return mapToResponse(updatedUser);

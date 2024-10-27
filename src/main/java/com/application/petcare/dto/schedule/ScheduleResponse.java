@@ -2,6 +2,7 @@ package com.application.petcare.dto.schedule;
 
 import com.application.petcare.entities.Payment;
 import com.application.petcare.entities.Pet;
+import com.application.petcare.enums.StatusAgendamento;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import lombok.*;
 
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -20,11 +22,12 @@ import java.util.List;
 @AllArgsConstructor
 public class ScheduleResponse {
     private Integer id;
-    private String scheduleStatus;
+    private StatusAgendamento scheduleStatus;
     private LocalDateTime scheduleDate;
-    private Time scheduleTime;
+    private LocalTime scheduleTime;
     private LocalDateTime creationDate;
     private String scheduleNote;
-    private List<Integer> petIds;
+    private Integer petId;
     private Integer paymentId;
+    private List<Integer> serviceIds;
 }

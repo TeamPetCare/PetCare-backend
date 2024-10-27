@@ -8,5 +8,5 @@ import java.util.Optional;
 
 
 public interface PetRepository extends JpaRepository<Pet, Integer> {
-    Optional<List<Pet>> findAllByIdIn(List<Integer> petIds);
+    List<Pet> findAllByIdIn(List<Integer> petIds);
 }

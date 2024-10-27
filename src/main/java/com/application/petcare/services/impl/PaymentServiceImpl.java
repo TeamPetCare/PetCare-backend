@@ -7,13 +7,14 @@ import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.PaymentRepository;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.PaymentService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
     private UserRepository userRepository;
@@ -69,6 +70,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .id(payment.getId())
                 .priece(payment.getPriece())
                 .paymentDate(payment.getPaymentDate())
-                .userId(payment.getUser().getId()).build();
+                .userId(payment.getUser().getId())
+                .build();
     }
 }

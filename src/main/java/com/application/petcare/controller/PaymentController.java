@@ -1,25 +1,42 @@
 package com.application.petcare.controller;
 
 
+
 import com.application.petcare.dto.mercadopago.PixPaymentRequest;
-import com.application.petcare.services.PixPaymentService;
+import com.application.petcare.dto.payment.PaymentCreateRequest;
+import com.application.petcare.dto.payment.PaymentResponse;
 import com.mercadopago.resources.payment.Payment;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/payments")
-public class PaymentController {
+public interface PaymentController {
 
-    @Autowired
-    private PixPaymentService pixPaymentService;
+    @Operation(summary = "Criar um novo pagamento")
+    @PostMapping
+    ResponseEntity<PaymentResponse> createPayment(@RequestBody PaymentCreateRequest request);
 
+    @Operation(summary = "Atualizar um pagamento existente")
+    @PutMapping("/{id}")
+    ResponseEntity<PaymentResponse> updatePayment(@PathVariable Integer id, @RequestBody PaymentCreateRequest request);
+
+    @Operation(summary = "Buscar um pagamento pelo ID")
+    @GetMapping("/{id}")
+    ResponseEntity<PaymentResponse> getPaymentById(@PathVariable Integer id);
+
+    @Operation(summary = "Listar todos os pagamentos")
+    @GetMapping
+    ResponseEntity<List<PaymentResponse>> getAllPayments();
+
+    @Operation(summary = "Deletar um pagamento")
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deletePayment(@PathVariable Integer id);
+
+    @Operation(summary = "Criar um novo pagamento pix")
     @PostMapping("/pix")
-    public ResponseEntity<Payment> createPixPayment(@RequestBody PixPaymentRequest request) {
-        Payment payment = pixPaymentService.createPixPayment(request.getAmount(), request.getEmail(), request.getName(), request.getCpf());
-        return ResponseEntity.ok(payment);
-    }
+    ResponseEntity<Payment> createPixPayment(@RequestBody PixPaymentRequest request, Integer userId);
 }
