@@ -4,6 +4,7 @@ import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
+import com.application.petcare.entities.Services;
 import com.application.petcare.enums.StatusAgendamento;
 import com.application.petcare.exceptions.DuplicateScheduleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
@@ -15,6 +16,8 @@ import com.application.petcare.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -106,6 +109,17 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .totalCancelados(totalCancelados)
                 .build();
     }
+
+    public List<ScheduleResponse> findSchedulesByDateAndTimeAndService(
+            LocalDateTime date, LocalTime startTime, LocalTime endTime, Integer serviceId) {
+
+        List<Schedule> schedules = scheduleRepository
+                .findByScheduleDateAndScheduleTimeBetweenAndServicesId(date, startTime, endTime, serviceId);
+
+        return schedules.stream().map(this::mapToResponse).toList();
+    }
+
+
 
 
     public ScheduleResponse mapToResponse(Schedule schedule){

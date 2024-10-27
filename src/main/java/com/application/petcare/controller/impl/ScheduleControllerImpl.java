@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -46,5 +48,16 @@ public class ScheduleControllerImpl implements ScheduleController {
     @Override
     public ResponseEntity<ScheduleStatsResponse> getScheduleStats() {
         return ResponseEntity.ok(scheduleService.getScheduleStats());
+    }
+
+
+    @Override
+    public ResponseEntity<List<ScheduleResponse>> getSchedulesByDateAndTimeAndService(
+            LocalDateTime date, LocalTime startTime, LocalTime endTime, Integer serviceId) {
+
+        List<ScheduleResponse> schedules = scheduleService
+                .findSchedulesByDateAndTimeAndService(date, startTime, endTime, serviceId);
+
+        return ResponseEntity.ok(schedules);
     }
 }

@@ -5,9 +5,12 @@ import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Tag(name = "Schedule", description = "Gerenciar agendamentos")
@@ -39,4 +42,14 @@ public interface ScheduleController {
     @Operation(summary = "Obter estatísticas de agendamentos")
     @GetMapping("/stats")
     ResponseEntity<ScheduleStatsResponse> getScheduleStats();
+
+    @Operation(summary = "Buscar agendamentos por data, hora de início, hora de fim e serviço")
+    @GetMapping("/filter-agendamento")
+    ResponseEntity<List<ScheduleResponse>> getSchedulesByDateAndTimeAndService(
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date,
+            @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
+            @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime,
+            @RequestParam("serviceId") Integer serviceId
+    );
+
 }
