@@ -3,6 +3,7 @@ package com.application.petcare.controller;
 import com.application.petcare.dto.user.UserCreateRequest;
 import com.application.petcare.dto.user.UserResponse;
 import com.application.petcare.dto.user.UserUpdateRequest;
+import com.application.petcare.entities.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -38,4 +39,8 @@ public interface UserController {
     @Operation(summary = "Excluir usuário por ID")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteUser(@PathVariable Integer id);
+
+    @Operation(summary = "Buscar todos os clientes")
+    @GetMapping("/customers")
+    ResponseEntity<List<User>> getAllCustomers();
 }

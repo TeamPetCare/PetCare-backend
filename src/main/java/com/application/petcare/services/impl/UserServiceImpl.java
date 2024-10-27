@@ -4,13 +4,14 @@ import com.application.petcare.dto.user.UserCreateRequest;
 import com.application.petcare.dto.user.UserResponse;
 import com.application.petcare.dto.user.UserUpdateRequest;
 import com.application.petcare.entities.User;
-import com.application.petcare.exceptions.BadRequestException;
+import com.application.petcare.enums.Role;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -114,6 +115,10 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("User not found with ID: " + userId);
         }
         repository.deleteById(userId);
+    }
+
+    public List<User> getAllCustomers(){
+        return repository.findByRole(Role.ROLE_CUSTOMER);
     }
 
     public UserResponse mapToResponse(User user) {
