@@ -4,6 +4,7 @@ import com.application.petcare.controller.UserController;
 import com.application.petcare.dto.user.UserCreateRequest;
 import com.application.petcare.dto.user.UserResponse;
 import com.application.petcare.dto.user.UserUpdateRequest;
+import com.application.petcare.entities.User;
 import com.application.petcare.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,11 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<Void> deleteUser(Integer id) {
         userService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Override
+    public ResponseEntity<List<User>> getAllCustomers() {
+        return ResponseEntity.ok().body(userService.getAllCustomers());
     }
 
 }
