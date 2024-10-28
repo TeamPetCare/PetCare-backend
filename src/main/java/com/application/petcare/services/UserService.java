@@ -21,5 +21,8 @@ public interface UserService {
     void generateCsvFileCustomer();
 
     void deleteUser(Integer planTypeId);
+
     List<User> getAllCustomers();
+
+    List<User> getAllCustumersSortedByName();
 }

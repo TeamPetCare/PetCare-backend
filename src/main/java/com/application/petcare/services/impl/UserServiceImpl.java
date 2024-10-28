@@ -9,6 +9,7 @@ import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.UserService;
+import com.application.petcare.utils.ListaObj;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,10 +51,9 @@ public class UserServiceImpl implements UserService {
                 .disponibilityStatusEmployee(request.getDisponibilityStatus())
                 .cpfClient(request.getCpfClient())
                 .pet(petRepository.findAllByIdIn(request.getPetIds()))
-                .build()
-                ;
+                .build();
 
-        if(user.getPet().isEmpty()){
+        if (user.getPet().isEmpty()) {
             throw new ResourceNotFoundException("Pets not found");
         }
         User savedUser = repository.save(user);
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
         user.setCpfClient(request.getCpfClient());
         user.setPet(petRepository.findAllByIdIn(request.getPetIds()));
 
-        if(user.getPet().isEmpty()){
+        if (user.getPet().isEmpty()) {
             throw new ResourceNotFoundException("Pets not found");
         }
 
@@ -117,15 +117,63 @@ public class UserServiceImpl implements UserService {
         repository.deleteById(userId);
     }
 
-    public List<User> getAllCustomers(){
+    public List<User> getAllCustomers() {
         return repository.findByRole(Role.ROLE_CUSTOMER);
     }
+
+    public List<User> getAllCustumersSortedByName() {
+        ListaObj<User> listaObj = new ListaObj<>(getAllCustomers().size());
+        listaObj.addAll(getAllCustomers());
+        mergeSortByName(listaObj, 0, listaObj.getTamanho() - 1);
+
+        return listaObj.convertToList();
+    }
+
+    private void mergeSortByName(ListaObj<User> lista, int inicio, int fim) {
+        if (inicio < fim) {
+            int meio = (inicio + fim) / 2;
+            mergeSortByName(lista, inicio, meio);
+            mergeSortByName(lista, meio + 1, fim);
+            merge(lista, inicio, meio, fim);
+        }
+    }
+
+    private void merge(ListaObj<User> lista, int inicio, int meio, int fim) {
+        int n1 = meio - inicio + 1;
+        int n2 = fim - meio;
+        User[] leftArray = new User[n1];
+        User[] rightArray = new User[n2];
+
+        for (int i = 0; i < n1; i++) {
+            leftArray[i] = lista.getElemento(inicio + i);
+        }
+        for (int j = 0; j < n2; j++) {
+            rightArray[j] = lista.getElemento(meio + 1 + j);
+        }
+
+        int i = 0, j = 0;
+        int k = inicio;
+
+        while (i < n1 && j < n2) {
+            if (leftArray[i].getName().compareToIgnoreCase(rightArray[j].getName()) <= 0) {
+                lista.set(k, leftArray[i++]);
+            } else {
+                lista.set(k, rightArray[j++]);
+            }
+            k++;
+        }
+
+        while (i < n1) lista.set(k++, leftArray[i++]);
+
+        while (j < n2) lista.set(k++, rightArray[j++]);
+    }
+
 
     public UserResponse mapToResponse(User user) {
 
         List<Integer> petIds = new ArrayList<>();
         for (int i = 0; i < user.getPet().size(); i++) {
-        petIds.add(user.getPet().get(i).getId());
+            petIds.add(user.getPet().get(i).getId());
         }
 
         return UserResponse.builder()
@@ -161,8 +209,7 @@ public class UserServiceImpl implements UserService {
             arq = new FileWriter(nomeArq);
             saida = new Formatter(arq);
 
-        }
-        catch (IOException erro) {
+        } catch (IOException erro) {
             System.out.println("Erro ao abrir o arquivo");
             erro.printStackTrace();
             System.exit(1);
@@ -185,18 +232,15 @@ public class UserServiceImpl implements UserService {
             }
 
             System.out.println("Arquivo CSV salvo em: " + new File(nomeArq).getAbsolutePath());
-        }
-        catch (FormatterClosedException erro) {
+        } catch (FormatterClosedException erro) {
             System.out.println("Erro ao gravar o arquivo");
             erro.printStackTrace();
             deuRuim = true;
-        }
-        finally {
+        } finally {
             saida.close();
             try {
                 arq.close();
-            }
-            catch (IOException erro) {
+            } catch (IOException erro) {
                 System.out.println("Erro ao fechar o arquivo");
                 deuRuim = true;
             }
@@ -207,5 +251,5 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
 }
+

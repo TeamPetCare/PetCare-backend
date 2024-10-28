@@ -59,4 +59,9 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok().body(userService.getAllCustomers());
     }
 
+    @Override
+    public ResponseEntity<List<User>> getAllCustomersSortedByName() {
+        return ResponseEntity.ok().body(userService.getAllCustumersSortedByName());
+    }
+
 }
