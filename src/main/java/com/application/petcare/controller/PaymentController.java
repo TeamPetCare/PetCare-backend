@@ -7,12 +7,14 @@ import com.application.petcare.dto.payment.PaymentCreateRequest;
 import com.application.petcare.dto.payment.PaymentResponse;
 import com.mercadopago.resources.payment.Payment;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 @RestController
+@Tag(name = "Payments", description = "Gerenciar pagamentos")
 @RequestMapping("/api/payments")
 public interface PaymentController {
 

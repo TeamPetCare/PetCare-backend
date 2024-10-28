@@ -28,7 +28,7 @@ public class SwaggerConfig {
                         .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                         .components(new io.swagger.v3.oas.models.Components()
                                 .addSecuritySchemes("bearerAuth", new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP) 
+                                        .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")
                                         .in(In.HEADER)

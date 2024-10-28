@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name = "User", description = "Gerenciar funcionários")
+@Tag(name = "User", description = "Gerenciar usuários")
 @RequestMapping("/api/users")
 public interface UserController {
     @Operation(summary = "Criar um novo usuário")

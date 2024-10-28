@@ -1,11 +1,13 @@
 package com.application.petcare.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+@Tag(name = "Images", description = "Gerenciar imagens do banco de imagens")
 @RequestMapping("/images")
 public interface ImagesController {
 

@@ -7,6 +7,7 @@ import com.application.petcare.entities.User;
 import com.application.petcare.infra.security.TokenService;
 import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.UserRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
+@Tag(name = "Auth", description = "Gerenciar autentificacao do security")
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
