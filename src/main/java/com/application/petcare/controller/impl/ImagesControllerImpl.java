@@ -16,9 +16,9 @@ public class ImagesControllerImpl implements ImagesController {
     private final ImageDatabase imageDatabase;
 
     @Override
-    public ResponseEntity<Void> uploadImage(MultipartFile file, Integer userId) {
+    public ResponseEntity<Void> uploadImage(MultipartFile file, Integer userId, Boolean isUser) {
         try {
-            imageDatabase.uploadImagem(file, userId);
+            imageDatabase.uploadImagem(file, userId, isUser);
             return ResponseEntity.ok().build();
         } catch (IOException e) {
             e.printStackTrace();
@@ -27,7 +27,7 @@ public class ImagesControllerImpl implements ImagesController {
     }
 
     @Override
-    public ResponseEntity<byte[]> downloadImage(Integer userId) {
-        return imageDatabase.downloadImagem(userId);
+    public ResponseEntity<byte[]> downloadImage(Integer userId, Boolean isUser) {
+        return imageDatabase.downloadImagem(userId, isUser);
     }
 }

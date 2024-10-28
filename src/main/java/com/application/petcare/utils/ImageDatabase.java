@@ -1,5 +1,6 @@
 package com.application.petcare.utils;
 
+import com.application.petcare.exceptions.BadRequestException;
 import com.azure.storage.blob.*;
 import com.azure.storage.blob.models.BlobHttpHeaders;
 import com.azure.storage.blob.models.BlobProperties;
@@ -20,18 +21,28 @@ public class ImageDatabase {
     // Nome do container no Azure Blob
     private final String CONTAINER_NAME = "imagens";
 
-    public void uploadImagem(MultipartFile file, Integer userId) throws IOException {
+    public void uploadImagem(MultipartFile file, Integer userId, Boolean isUser) throws IOException {
         // Cria o cliente do container do Blob
         BlobContainerClient containerClient = new BlobContainerClientBuilder()
                 .connectionString(CONNECTION_STRING)
                 .containerName(CONTAINER_NAME)
                 .buildClient();
 
+        String blobName;
+        if(isUser){
         // Gera um nome único para a imagem (você pode modificar como desejar)
-        String blobName = "imagem_usuario_" + userId; // Ou customizar o nome aqui com "usuario_foto_" etc.
+         blobName = "imagem_usuario_" + userId; // Ou customizar o nome aqui com "usuario_foto_" etc.
+        }else{
+            blobName = "imagem_pet_" + userId;
+        }
         // Obtém o BlobClient para o arquivo específico
         BlobClient blobClient = containerClient.getBlobClient(blobName);
         // Converte o MultipartFile para InputStream
+
+        if(blobClient.equals(null)){
+            throw new BadRequestException("isUser is null");
+        }
+
         try (InputStream inputStream = file.getInputStream()) {
             // Faz o upload da imagem para o Blob Storage
             blobClient.upload(inputStream, file.getSize(), true);
@@ -41,17 +52,26 @@ public class ImageDatabase {
         }
     }
 
-    public ResponseEntity<byte[]> downloadImagem(Integer userId) {
+    public ResponseEntity<byte[]> downloadImagem(Integer userId, Boolean isUser) {
         BlobContainerClient containerClient = new BlobContainerClientBuilder()
                 .connectionString(CONNECTION_STRING)
                 .containerName(CONTAINER_NAME)
                 .buildClient();
 
-        // Obtém o BlobClient para a imagem específica
-        BlobClient blobClient = containerClient.getBlobClient("imagem_usuario_" + userId);
+        BlobClient blobClient;
+        if (isUser) {
+            // Obtém o BlobClient para a imagem específica
+             blobClient = containerClient.getBlobClient("imagem_usuario_" + userId);
+        } else {
+             blobClient = containerClient.getBlobClient("imagem_pet_" + userId);
+        }
 
         // Prepara um byte array para armazenar os dados da imagem
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        if(blobClient.equals(null)){
+            throw new BadRequestException("isUser is null");
+        }
 
         try (InputStream inputStream = blobClient.openInputStream()) {
             byte[] buffer = new byte[1024];

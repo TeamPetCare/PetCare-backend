@@ -13,9 +13,9 @@ public interface ImagesController {
 
     @Operation(summary = "Criar uma nova imagem")
     @PostMapping("/upload")
-    ResponseEntity<Void> uploadImage(@RequestParam ("file") MultipartFile file, @RequestParam Integer userId);
+    ResponseEntity<Void> uploadImage(@RequestParam ("file") MultipartFile file, @RequestParam Integer userId, @RequestParam Boolean isUser);
 
     @Operation(summary = "Buscar uma imagem pelo id do usuario")
     @GetMapping("download/{id}")
-    ResponseEntity<byte[]> downloadImage(@PathVariable Integer id);
+    ResponseEntity<byte[]> downloadImage(@PathVariable Integer id, @RequestParam Boolean isUser);
 }
