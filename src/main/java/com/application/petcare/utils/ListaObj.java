@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Getter
 @Setter
-public class ListaObj <T>{
+public class ListaObj<T> implements Iterable<T> {
     private T[] vetor;
     private int nroElem;
 
@@ -18,21 +20,20 @@ public class ListaObj <T>{
     }
 
     public void adiciona(T elemento) {
-        if(elemento != null){
-            if(nroElem < vetor.length){
+        if (elemento != null) {
+            if (nroElem < vetor.length) {
                 vetor[nroElem++] = elemento;
             } else {
                 throw new IllegalStateException("Lista cheia");
             }
-        }else {
+        } else {
             throw new IllegalStateException("Não é um objeto válido");
         }
-
     }
 
-    public void addAll(List v){
-        for (int i = 0; i < v.size(); i++) {
-            adiciona( (T) v.get(i));
+    public void addAll(List<T> v) {
+        for (T item : v) {
+            adiciona(item);
         }
     }
 
@@ -44,9 +45,8 @@ public class ListaObj <T>{
         }
     }
 
-    public List convertToList(){
-        List list = new ArrayList<>();
-
+    public List<T> convertToList() {
+        List<T> list = new ArrayList<>();
         for (int i = 0; i < nroElem; i++) {
             list.add(vetor[i]);
         }
@@ -55,7 +55,7 @@ public class ListaObj <T>{
 
     public int busca(T elementoBuscado) {
         for (int i = 0; i < nroElem; i++) {
-            if(vetor[i].equals(elementoBuscado)){
+            if (vetor[i].equals(elementoBuscado)) {
                 return i;
             }
         }
@@ -63,7 +63,7 @@ public class ListaObj <T>{
     }
 
     public boolean removePeloIndice(int indice) {
-        if(indice >= 0 && indice < nroElem){
+        if (indice >= 0 && indice < nroElem) {
             for (int i = indice; i < nroElem - 1; i++) {
                 vetor[i] = vetor[i + 1];
             }
@@ -83,7 +83,7 @@ public class ListaObj <T>{
     }
 
     public T getElemento(int indice) {
-        if(indice >= 0 && indice < nroElem){
+        if (indice >= 0 && indice < nroElem) {
             return vetor[indice];
         }
         return null;
@@ -97,24 +97,47 @@ public class ListaObj <T>{
     }
 
     public void exibe() {
-        String stringExibir = "";
+        StringBuilder stringExibir = new StringBuilder();
         for (int i = 0; i < nroElem; i++) {
             if (i == 0) {
-                stringExibir += "[" + vetor[i];
+                stringExibir.append("[").append(vetor[i]);
             } else {
-                stringExibir += ", " + vetor[i];
+                stringExibir.append(", ").append(vetor[i]);
             }
-            if(i == nroElem -1){
-                stringExibir += vetor[i] + "]";
+            if (i == nroElem - 1) {
+                stringExibir.append("]");
             }
         }
-        if(nroElem == 0){
-            stringExibir = "A Lista está vazia";
+        if (nroElem == 0) {
+            stringExibir = new StringBuilder("A Lista está vazia");
         }
         System.out.println(stringExibir);
     }
 
     public T[] getVetor() {
         return vetor;
+    }
+
+    // Implementação do Iterator
+    @Override
+    public Iterator<T> iterator() {
+        return new ListaObjIterator();
+    }
+
+    private class ListaObjIterator implements Iterator<T> {
+        private int posicaoAtual = 0;
+
+        @Override
+        public boolean hasNext() {
+            return posicaoAtual < nroElem;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("Não há mais elementos.");
+            }
+            return vetor[posicaoAtual++];
+        }
     }
 }
