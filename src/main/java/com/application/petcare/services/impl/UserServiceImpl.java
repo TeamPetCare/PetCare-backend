@@ -9,6 +9,7 @@ import com.application.petcare.enums.Role;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.UserRepository;
+import com.application.petcare.services.PetService;
 import com.application.petcare.services.UserService;
 import com.application.petcare.utils.ListaObj;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository repository;
 
     private final PetRepository petRepository;
+
+    private PetService petService;
 
     @Override
     public UserResponse createUser(UserCreateRequest request) {
@@ -133,6 +136,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteSelectedCustomers(List<CustomerDeleteRequest> customerDeleteRequests) {
         for (int i = 0; i < customerDeleteRequests.size(); i++) {
+            UserResponse userResponse = findUserById(customerDeleteRequests.get(i).getId());
+            for (int j = 0; j < userResponse.getPetIds().size(); j++) {
+                petService.deletePet(userResponse.getPetIds().get(i));
+            }
             deleteUser(customerDeleteRequests.get(i).getId());
         }
     }
