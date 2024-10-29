@@ -1,5 +1,6 @@
 package com.application.petcare.services.impl;
 
+import com.application.petcare.dto.user.CustomerDeleteRequest;
 import com.application.petcare.dto.user.UserCreateRequest;
 import com.application.petcare.dto.user.UserResponse;
 import com.application.petcare.dto.user.UserUpdateRequest;
@@ -127,6 +128,13 @@ public class UserServiceImpl implements UserService {
         mergeSortByName(listaObj, 0, listaObj.getTamanho() - 1);
 
         return listaObj.convertToList();
+    }
+
+    @Override
+    public void deleteSelectedCustomers(List<CustomerDeleteRequest> customerDeleteRequests) {
+        for (int i = 0; i < customerDeleteRequests.size(); i++) {
+            deleteUser(customerDeleteRequests.get(i).getId());
+        }
     }
 
     private void mergeSortByName(ListaObj<User> lista, int inicio, int fim) {

@@ -1,6 +1,7 @@
 package com.application.petcare.controller.impl;
 
 import com.application.petcare.controller.UserController;
+import com.application.petcare.dto.user.CustomerDeleteRequest;
 import com.application.petcare.dto.user.UserCreateRequest;
 import com.application.petcare.dto.user.UserResponse;
 import com.application.petcare.dto.user.UserUpdateRequest;
@@ -62,6 +63,12 @@ public class UserControllerImpl implements UserController {
     @Override
     public ResponseEntity<List<User>> getAllCustomersSortedByName() {
         return ResponseEntity.ok().body(userService.getAllCustumersSortedByName());
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteSelectedCustomers(List<CustomerDeleteRequest> customerDeleteRequests) {
+        userService.deleteSelectedCustomers(customerDeleteRequests);
+        return ResponseEntity.noContent().build();
     }
 
 }

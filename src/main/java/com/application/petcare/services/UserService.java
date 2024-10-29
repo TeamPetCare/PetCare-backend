@@ -1,6 +1,7 @@
 package com.application.petcare.services;
 
 import com.application.petcare.dto.user.UserCreateRequest;
+import com.application.petcare.dto.user.CustomerDeleteRequest;
 import com.application.petcare.dto.user.UserResponse;
 import com.application.petcare.dto.user.UserUpdateRequest;
 import com.application.petcare.entities.User;
@@ -25,4 +26,6 @@ public interface UserService {
     List<User> getAllCustomers();
 
     List<User> getAllCustumersSortedByName();
+
+    void deleteSelectedCustomers(List<CustomerDeleteRequest> customerDeleteRequests);
 }

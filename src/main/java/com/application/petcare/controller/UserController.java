@@ -1,5 +1,6 @@
 package com.application.petcare.controller;
 
+import com.application.petcare.dto.user.CustomerDeleteRequest;
 import com.application.petcare.dto.user.UserCreateRequest;
 import com.application.petcare.dto.user.UserResponse;
 import com.application.petcare.dto.user.UserUpdateRequest;
@@ -47,4 +48,8 @@ public interface UserController {
     @Operation(summary = "Buscar todos os clientes ordenados por nome")
     @GetMapping("/customers/name")
     ResponseEntity<List<User>> getAllCustomersSortedByName();
+
+    @Operation(summary = "Deleta muitos clientes por ids")
+    @DeleteMapping("/customers/delete")
+    ResponseEntity<Void> deleteSelectedCustomers(@RequestBody List<CustomerDeleteRequest> customerDeleteRequests);
 }
