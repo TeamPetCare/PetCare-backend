@@ -6,11 +6,11 @@ import lombok.Data;
 @Data
 @Builder
 public class CustomerDeleteRequest {
-
-    private String customer;
-    private String  address;
+    
+    private String cliente;
+    private String endereco;
     private Integer id;
-    private Integer petQuantity;
-    private String cellphone;
+    private Integer numero_de_pets;
+    private String whatsapp;
 
 }
