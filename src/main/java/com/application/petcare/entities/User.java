@@ -3,6 +3,8 @@ package com.application.petcare.entities;
 import com.application.petcare.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Collection;
 import java.util.List;
@@ -55,12 +57,14 @@ public class User {
     @Column(nullable = false)
     private String city;
 
+    @CNPJ
     private String cnpjOwner;
 
     private String roleEmployee;
 
     private Boolean disponibilityStatusEmployee;
 
+    @CPF
     private String cpfClient;
 
     @OneToMany

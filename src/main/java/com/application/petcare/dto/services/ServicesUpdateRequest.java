@@ -25,6 +25,6 @@ public class ServicesUpdateRequest {
     @NotNull(message = "Disponibility is required")
     private Boolean disponibility;
 
-    @NotNull(message = "Schedule is required")
-    private List<Integer> scheduleIds;
+//    @NotNull(message = "Schedule is required")
+//    private List<Integer> scheduleIds;
 }

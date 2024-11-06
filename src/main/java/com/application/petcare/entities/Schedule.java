@@ -41,7 +41,7 @@ public class Schedule {
     private String scheduleNote;
 
     @NotNull
-    @OneToOne
+    @ManyToOne
     private Pet pet;
 
     @NotNull
@@ -56,7 +56,6 @@ public class Schedule {
             inverseJoinColumns = @JoinColumn(name = "services_id")
     )
     private List<Services> services;
-
     }
 
 

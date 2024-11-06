@@ -55,24 +55,25 @@ public class ScheduleServicesControllerImpl implements ScheduleServicesControlle
 
         // Adicionar o Schedule ao Service e vice-versa
 
-        Optional<Schedule> existingSchedule = scheduleRepository.findByScheduleDateAndScheduleTime(schedule.getScheduleDate(), schedule.getScheduleTime());
-        if (existingSchedule.isPresent()) {
-            throw new DuplicateScheduleException("Um agendamento para esta data e horário já existe.");
-        }
+//        Optional<Schedule> existingSchedule = scheduleRepository.findByScheduleDateAndScheduleTime(schedule.getScheduleDate(), schedule.getScheduleTime());
+//        if (existingSchedule.isPresent()) {
+//            throw new DuplicateScheduleException("Um agendamento para esta data e horário já existe.");
+//        }
 
         List<Services> servicesList = new ArrayList<>();
         List<Schedule> schedules = new ArrayList<>();
 
-        services.setSchedules(schedules);
+//        services.setSchedules(schedules);
         schedule.setServices(servicesList);
 
         services = servicesRepository.save(services);
         schedule = scheduleRepository.save(schedule);
 
-        services.getSchedules().add(schedule);
+//        services.getSchedules().add(schedule);
         schedule.getServices().add(services);
 
         servicesRepository.save(services);
+        scheduleRepository.save(schedule);
 
         return ResponseEntity.status(201).body(services);
     }

@@ -17,5 +17,5 @@ public class ServicesResponse {
     private Double priece;
     private Time estimatedTime;
     private Boolean disponibility;
-    private List<Integer> scheduleIds;
+//    private List<Integer> scheduleIds;
 }

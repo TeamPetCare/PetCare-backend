@@ -46,15 +46,13 @@ public class ScheduleServiceImpl implements ScheduleService {
                         .orElseThrow(() -> new ResourceNotFoundException("Pet not found")))
                 .payment(paymentRepository.findById(request.getPaymentId())
                         .orElseThrow(() -> new ResourceNotFoundException("Payment not found")))
-                .services(servicesRepository.findAllByIdIn(request.getServiceIds())
-                        .filter(services -> !services.isEmpty())
-                        .orElseThrow(() -> new ResourceNotFoundException("Service not found")))
+                .services(servicesRepository.findAllByIdIn(request.getServiceIds()))
                 .build();
 
-        Optional<Schedule> existingSchedule = scheduleRepository.findByScheduleDateAndScheduleTime(schedule.getScheduleDate(), schedule.getScheduleTime());
-        if (existingSchedule.isPresent()) {
-            throw new DuplicateScheduleException("Um agendamento para esta data e horário já existe.");
-        }
+//        Optional<Schedule> existingSchedule = scheduleRepository.findByScheduleDateAndScheduleTime(schedule.getScheduleDate(), schedule.getScheduleTime());
+//        if (existingSchedule.isPresent()) {
+//            throw new DuplicateScheduleException("Um agendamento para esta data e horário já existe.");
+//        }
             Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return mapToResponse(savedSchedule);
@@ -73,9 +71,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found")));
         schedule.setPayment(paymentRepository.findById(request.getPaymentId())
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found")));
-        schedule.setServices(servicesRepository.findAllByIdIn(request.getServiceIds())
-                .filter(services -> !services.isEmpty())
-                .orElseThrow(() -> new ResourceNotFoundException("Service not found")));
+        schedule.setServices(servicesRepository.findAllByIdIn(request.getServiceIds()));
 
         Schedule updatedSchedule = scheduleRepository.save(schedule);
         return mapToResponse(updatedSchedule);
@@ -133,6 +129,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
 
         return ScheduleResponse.builder()
+                .id(schedule.getId())
                 .scheduleStatus(schedule.getScheduleStatus())
                 .scheduleDate(schedule.getScheduleDate())
                 .scheduleTime(schedule.getScheduleTime())

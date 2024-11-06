@@ -36,9 +36,9 @@ public class ServicesServiceImpl implements ServicesService {
                 .priece(request.getPriece())
                 .estimatedTime(request.getEstimatedTime())
                 .disponibility(request.getDisponibility())
-                .schedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
-                        .filter(schedules -> !schedules.isEmpty())
-                        .orElseThrow(() -> new ResourceNotFoundException("Schedule not foun")))
+//                .schedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
+//                        .filter(schedules -> !schedules.isEmpty())
+//                        .orElseThrow(() -> new ResourceNotFoundException("Schedule not foun")))
                 .build();
 
         Services savedServico = servicesRepository.save(servico);
@@ -58,9 +58,9 @@ public class ServicesServiceImpl implements ServicesService {
         servico.setPriece(request.getPriece());
         servico.setEstimatedTime(request.getEstimatedTime());
         servico.setDisponibility(request.getDisponibility());
-        servico.setSchedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
-                .filter(schedules -> !schedules.isEmpty())
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule not foun")));
+//        servico.setSchedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
+//                .filter(schedules -> !schedules.isEmpty())
+//                .orElseThrow(() -> new ResourceNotFoundException("Schedule not foun")));
 
         Services updatedServico = servicesRepository.save(servico);
         log.info("Service updated successfully: {}", updatedServico);
@@ -78,10 +78,10 @@ public class ServicesServiceImpl implements ServicesService {
         Services service = servicesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Service not found"));
 
-        for (Schedule schedule : service.getSchedules()) {
-            schedule.getServices().remove(service);
-            scheduleRepository.save(schedule);
-        }
+//        for (Schedule schedule : service.getSchedules()) {
+//            schedule.getServices().remove(service);
+//            scheduleRepository.save(schedule);
+//        }
 
         servicesRepository.deleteById(id);
         log.info("Service deleted successfully with id: {}", id);
@@ -107,10 +107,10 @@ public class ServicesServiceImpl implements ServicesService {
 
     private ServicesResponse mapToServicosResponse(Services services) {
 
-        Integer[] scheduleIds = new Integer[services.getSchedules().size()];
-        for (int i = 0; i < scheduleIds.length; i++) {
-            scheduleIds[i] = services.getSchedules().get(i).getId();
-        }
+//        Integer[] scheduleIds = new Integer[services.getSchedules().size()];
+//        for (int i = 0; i < scheduleIds.length; i++) {
+//            scheduleIds[i] = services.getSchedules().get(i).getId();
+//        }
 
         return new ServicesResponse(
                 services.getId(),
@@ -118,8 +118,9 @@ public class ServicesServiceImpl implements ServicesService {
                 services.getNote(),
                 services.getPriece(),
                 services.getEstimatedTime(),
-                services.getDisponibility(),
-                List.of(scheduleIds)
+                services.getDisponibility()
+//                ,
+//                List.of(scheduleIds)
         );
     }
 }

@@ -38,7 +38,7 @@ public class Pet {
     private String petImg;
 
     // Um pet um plano
-    @OneToOne
+    @ManyToOne
     private Plans plan;
 
     // Relacionamento com Especie (muitos pets podem ter uma espécie)

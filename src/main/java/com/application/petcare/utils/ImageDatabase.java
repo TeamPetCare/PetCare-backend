@@ -31,9 +31,9 @@ public class ImageDatabase {
         String blobName;
         if(isUser){
         // Gera um nome único para a imagem (você pode modificar como desejar)
-         blobName = "imagem_usuario_" + userId; // Ou customizar o nome aqui com "usuario_foto_" etc.
+         blobName = "usuario/" + "imagem_usuario_" + userId + ".jpg"; // Ou customizar o nome aqui com "usuario_foto_" etc.
         }else{
-            blobName = "imagem_pet_" + userId;
+            blobName = "pet/" + "imagem_pet_" + userId + ".jpg";
         }
         // Obtém o BlobClient para o arquivo específico
         BlobClient blobClient = containerClient.getBlobClient(blobName);
@@ -61,9 +61,9 @@ public class ImageDatabase {
         BlobClient blobClient;
         if (isUser) {
             // Obtém o BlobClient para a imagem específica
-             blobClient = containerClient.getBlobClient("imagem_usuario_" + userId);
+             blobClient = containerClient.getBlobClient("usuario/" + "imagem_usuario_" + userId + ".jpg");
         } else {
-             blobClient = containerClient.getBlobClient("imagem_pet_" + userId);
+             blobClient = containerClient.getBlobClient("pet/" + "imagem_pet_" + userId + ".jpg");
         }
 
         // Prepara um byte array para armazenar os dados da imagem
@@ -89,6 +89,7 @@ public class ImageDatabase {
             // Retorna a imagem como um array de bytes
             return ResponseEntity.ok()
                     .contentType(org.springframework.http.MediaType.parseMediaType(contentType))
+//                    .header("Content-Disposition", "attachment; filename=\"" + "imagem" + contentType)
                     .body(outputStream.toByteArray());
         } catch (IOException e) {
             e.printStackTrace();
