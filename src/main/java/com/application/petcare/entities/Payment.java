@@ -27,6 +27,12 @@ public class Payment {
     @Column(nullable = false)
     private LocalDateTime paymentDate;
 
+    private String paymentId;
+
+    private String paymentMethod;
+
+    private String paymentStatus;
+
     @OneToOne
     private User user;
 

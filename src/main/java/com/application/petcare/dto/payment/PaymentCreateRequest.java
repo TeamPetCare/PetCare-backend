@@ -16,6 +16,12 @@ public class PaymentCreateRequest {
     private Double priece;
     @NotNull(message = "Payment date is required")
     private LocalDateTime paymentDate;
+    @NotNull(message = "Payment ID is required")
+    private String paymentId;
+    @NotNull(message = "Payment Method is required")
+    private String paymentMethod;
+    @NotNull(message = "Payment Status is required")
+    private String paymentStatus;
     @NotNull(message = "User id is required")
     private Integer userId;
 }

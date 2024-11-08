@@ -8,7 +8,6 @@ import com.application.petcare.repository.PaymentRepository;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.PaymentService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +24,9 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = Payment.builder()
                 .priece(request.getPriece())
                 .paymentDate(request.getPaymentDate())
+                .paymentId(request.getPaymentId())
+                .paymentStatus(request.getPaymentStatus())
+                .paymentMethod(request.getPaymentMethod())
                 .user(userRepository.findById(request.getUserId())
                         .orElseThrow(() -> new ResourceNotFoundException("User not found")))
                 .build();
@@ -39,6 +41,9 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setId(id);
         payment.setPriece(request.getPriece());
         payment.setPaymentDate(request.getPaymentDate());
+        payment.setPaymentId(request.getPaymentId());
+        payment.setPaymentStatus(request.getPaymentStatus());
+        payment.setPaymentMethod(request.getPaymentMethod());
         payment.setUser(userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found")));
 
@@ -70,6 +75,9 @@ public class PaymentServiceImpl implements PaymentService {
                 .id(payment.getId())
                 .priece(payment.getPriece())
                 .paymentDate(payment.getPaymentDate())
+                .paymentId(payment.getPaymentId())
+                .paymentStatus(payment.getPaymentStatus())
+                .paymentMethod(payment.getPaymentMethod())
                 .userId(payment.getUser().getId())
                 .build();
     }

@@ -35,8 +35,4 @@ public class Services {
     @Column(nullable = false)
     private Boolean disponibility;
 
-//    @ManyToMany
-//    @JsonManagedReference
-//    private List<Schedule> schedules;
-
 }
