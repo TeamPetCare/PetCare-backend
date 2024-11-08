@@ -13,5 +13,5 @@ public class SizeCreateRequest {
     private String sizeType;
 
     @NotNull(message = "Preco é obrigatório")
-    private BigDecimal priece;
+    private BigDecimal price;
 }

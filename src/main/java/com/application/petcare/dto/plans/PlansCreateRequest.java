@@ -17,7 +17,7 @@ public class PlansCreateRequest {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime subscriptionDate;
     @NotNull(message = "Priece is required")
-    private Double priece;
+    private Double price;
     @NotNull(message = "'Is active?' is required")
     private Boolean active;
     @NotNull(message = "Renewal is required")

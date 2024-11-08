@@ -21,5 +21,5 @@ public class Race {
     private String raceType;
 
     @Column(nullable = false)
-    private Double priece;
+    private Double price;
 }

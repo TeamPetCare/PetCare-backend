@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class PaymentCreateRequest {
-    @NotNull(message = "Priece is required")
-    private Double priece;
+    @NotNull(message = "Price is required")
+    private Double price;
     @NotNull(message = "Payment date is required")
     private LocalDateTime paymentDate;
     @NotNull(message = "Payment ID is required")

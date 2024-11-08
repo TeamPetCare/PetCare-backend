@@ -11,5 +11,5 @@ public class RaceCreateRequest {
     private String raceType;
 
     @NotNull(message = "Priece is required")
-    private Double priece;
+    private Double price;
 }

@@ -26,7 +26,7 @@ public class RaceServiceImpl implements RaceService {
 
         Race race = Race.builder()
                 .raceType(request.getRaceType())
-                .priece(request.getPriece())
+                .price(request.getPrice())
                 .build();
 
         Race savedRace = raceRepository.save(race);
@@ -42,7 +42,7 @@ public class RaceServiceImpl implements RaceService {
                 .orElseThrow(() -> new RaceNotFoundException("Raça não encontrada"));
 
         race.setRaceType(request.getRaceType());
-        race.setPriece(request.getPriece());
+        race.setPrice(request.getPrice());
         Race updatedRace = raceRepository.save(race);
         log.info("Raca updated successfully: {}", updatedRace);
         return mapToRacaResponse(updatedRace);
@@ -81,7 +81,7 @@ public class RaceServiceImpl implements RaceService {
         return new RaceResponse(
                 race.getId(),
                 race.getRaceType(),
-                race.getPriece()
+                race.getPrice()
         );
     }
 }

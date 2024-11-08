@@ -27,7 +27,7 @@ public class PlansServiceImpl implements PlansService {
     public PlansResponse createPlans(PlansCreateRequest request) {
         Plans plans = Plans.builder()
                 .subscriptionDate(request.getSubscriptionDate())
-                .priece(request.getPriece())
+                .price(request.getPrice())
                 .active(request.getActive())
                 .renewal(request.getRenewal())
                 .planType(planTypeRepository.findById(request.getPlanTypeId())
@@ -43,7 +43,7 @@ public class PlansServiceImpl implements PlansService {
                 .orElseThrow(() -> new  ResourceNotFoundException("Plan not found"));
 
         plans.setSubscriptionDate(request.getSubscriptionDate());
-        plans.setPriece(request.getPriece());
+        plans.setPrice(request.getPrice());
         plans.setActive(request.getActive());
         plans.setRenewal(request.getRenewal());
         plans.setPlanType(planTypeRepository.findById(request.getPlanTypeId())
@@ -76,7 +76,7 @@ public class PlansServiceImpl implements PlansService {
         return PlansResponse.builder()
                 .id(plans.getId())
                 .subscriptionDate(plans.getSubscriptionDate())
-                .priece(plans.getPriece())
+                .price(plans.getPrice())
                 .active(plans.getActive())
                 .renewal(plans.getRenewal())
                 .planTypeId(plans.getPlanType().getId())

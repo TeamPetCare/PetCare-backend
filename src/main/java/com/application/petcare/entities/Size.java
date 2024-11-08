@@ -22,5 +22,5 @@ public class Size {
     private String sizeType;
 
     @Column(nullable = false)
-    private BigDecimal priece;
+    private BigDecimal price;
 }

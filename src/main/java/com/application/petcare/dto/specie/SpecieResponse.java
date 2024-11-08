@@ -12,5 +12,5 @@ public class SpecieResponse {
 
     private Integer id;
     private String name;
-    private Double priece;
+    private Double price;
 }

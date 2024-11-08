@@ -27,7 +27,7 @@ public class Services {
     private String note;
 
     @Column(nullable = false)
-    private Double priece;
+    private Double price;
 
     @Column(nullable = false)
     private Time estimatedTime;

@@ -36,7 +36,7 @@ public class ScheduleServicesControllerImpl implements ScheduleServicesControlle
         Services services = new Services();
         services.setName(scheduleServicesCreateRequest.getServiceName());
         services.setNote(scheduleServicesCreateRequest.getServiceNote());
-        services.setPriece(scheduleServicesCreateRequest.getServicePrice());
+        services.setPrice(scheduleServicesCreateRequest.getServicePrice());
         services.setEstimatedTime(scheduleServicesCreateRequest.getServiceEstimatedTime());
         services.setDisponibility(scheduleServicesCreateRequest.getServiceDisponibility());
 

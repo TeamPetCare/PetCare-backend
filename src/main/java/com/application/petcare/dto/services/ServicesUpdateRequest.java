@@ -17,7 +17,7 @@ public class ServicesUpdateRequest {
     private String note;
 
     @NotNull(message = "Priece is required")
-    private Double priece;
+    private Double price;
 
     @NotNull(message = "Estimated time is required")
     private Time estimatedTime;

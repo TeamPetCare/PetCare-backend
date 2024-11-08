@@ -22,7 +22,7 @@ public class Payment {
     private Integer id;
 
     @Column(nullable = false)
-    private Double priece;
+    private Double price;
 
     @Column(nullable = false)
     private LocalDateTime paymentDate;

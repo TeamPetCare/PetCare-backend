@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PaymentResponse {
     private Integer id;
-    private Double priece;
+    private Double price;
     private LocalDateTime paymentDate;
     private String paymentId;
     private String paymentMethod;

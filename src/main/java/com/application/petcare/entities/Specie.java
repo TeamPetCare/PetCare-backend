@@ -22,5 +22,5 @@ public class Specie {
     private String name;
 
     @Column(nullable = false)
-    private Double priece;
+    private Double price;
 }

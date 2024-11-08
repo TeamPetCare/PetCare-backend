@@ -11,5 +11,5 @@ public class SpecieCreateRequest {
     private String name;
 
     @NotNull(message = "Priece is required")
-    private Double priece;
+    private Double price;
 }

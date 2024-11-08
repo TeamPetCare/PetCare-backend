@@ -26,7 +26,7 @@ public class SpecieServiceImpl implements SpecieService {
 
         Specie specie = Specie.builder()
                 .name(request.getName())
-                .priece(request.getPriece())
+                .price(request.getPrice())
                 .build();
 
         Specie savedSpecie = especieRepository.save(specie);
@@ -60,7 +60,7 @@ public class SpecieServiceImpl implements SpecieService {
                 .orElseThrow(() -> new EspecieNotFoundException("Espécie não encontrada!"));
 
         specie.setName(request.getName());
-        specie.setPriece(request.getPriece());
+        specie.setPrice(request.getPrice());
 
         Specie updatedSpecie = especieRepository.save(specie);
         log.info("Species updated successfully: {}", updatedSpecie);
@@ -81,6 +81,6 @@ public class SpecieServiceImpl implements SpecieService {
     private SpecieResponse mapToEspecieResponse(Specie specie) {
         return new SpecieResponse(specie.getId(),
                 specie.getName(),
-                specie.getPriece());
+                specie.getPrice());
     }
 }

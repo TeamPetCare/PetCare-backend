@@ -25,7 +25,7 @@ public class Plans {
     private LocalDateTime subscriptionDate;
 
     @NotNull
-    private Double priece;
+    private Double price;
 
     @NotNull
     private Boolean active;

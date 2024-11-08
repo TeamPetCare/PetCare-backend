@@ -26,7 +26,7 @@ public class SizeServiceImpl implements SizeService {
 
         Size size = Size.builder()
                 .sizeType(request.getSizeType())
-                .priece(request.getPriece())
+                .price(request.getPrice())
                 .build();
 
         Size savedSize = sizeRepository.save(size);
@@ -42,7 +42,7 @@ public class SizeServiceImpl implements SizeService {
                 .orElseThrow(() -> new SizeNotFoundException("Tamanho não encontrado"));
 
         size.setSizeType(request.getSizeType());
-        size.setPriece(request.getPriece());
+        size.setPrice(request.getPrice());
         Size updatedSize = sizeRepository.save(size);
         log.info("Size updated successfully: {}", updatedSize);
         return mapToSizeResponse(updatedSize);
@@ -78,6 +78,6 @@ public class SizeServiceImpl implements SizeService {
     }
 
     private SizeResponse mapToSizeResponse(Size size) {
-        return new SizeResponse(size.getId(), size.getSizeType(), size.getPriece());
+        return new SizeResponse(size.getId(), size.getSizeType(), size.getPrice());
     }
 }

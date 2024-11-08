@@ -13,7 +13,7 @@ import java.util.Date;
 public class PlansResponse {
     private Integer id;
     private LocalDateTime subscriptionDate;
-    private Double priece;
+    private Double price;
     private Boolean active;
     private int renewal;
     private Integer planTypeId;

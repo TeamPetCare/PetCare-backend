@@ -51,7 +51,7 @@ public class PaymentControllerImpl implements PaymentController {
         Payment payment = pixPaymentService.createPixPayment(request.getAmount(), request.getEmail(), request.getName(), request.getCpf());
         com.application.petcare.entities.Payment createdPayment = new com.application.petcare.entities.Payment();
         createdPayment.setPaymentDate(LocalDateTime.from(payment.getDateCreated().toInstant()));
-        createdPayment.setPriece( payment.getTransactionAmount().doubleValue());
+        createdPayment.setPrice( payment.getTransactionAmount().doubleValue());
         createdPayment.setUser(userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found")));
         createPayment(mapToPaymentResponse(createdPayment));
@@ -62,7 +62,7 @@ public class PaymentControllerImpl implements PaymentController {
     public PaymentCreateRequest mapToPaymentResponse (com.application.petcare.entities.Payment payment){
         return PaymentCreateRequest.builder()
                 .paymentDate(payment.getPaymentDate())
-                .priece(payment.getPriece())
+                .price(payment.getPrice())
                 .userId(payment.getUser().getId()).build();
     }
 }

@@ -22,7 +22,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentResponse createPayment(PaymentCreateRequest request) {
         Payment payment = Payment.builder()
-                .priece(request.getPriece())
+                .price(request.getPrice())
                 .paymentDate(request.getPaymentDate())
                 .paymentId(request.getPaymentId())
                 .paymentStatus(request.getPaymentStatus())
@@ -39,7 +39,7 @@ public class PaymentServiceImpl implements PaymentService {
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
         payment.setId(id);
-        payment.setPriece(request.getPriece());
+        payment.setPrice(request.getPrice());
         payment.setPaymentDate(request.getPaymentDate());
         payment.setPaymentId(request.getPaymentId());
         payment.setPaymentStatus(request.getPaymentStatus());
@@ -73,7 +73,7 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentResponse mapToPaymentResponse(Payment payment){
         return PaymentResponse.builder()
                 .id(payment.getId())
-                .priece(payment.getPriece())
+                .price(payment.getPrice())
                 .paymentDate(payment.getPaymentDate())
                 .paymentId(payment.getPaymentId())
                 .paymentStatus(payment.getPaymentStatus())

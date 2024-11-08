@@ -14,7 +14,7 @@ public class ServicesResponse {
     private Integer id;
     private String nome;
     private String note;
-    private Double priece;
+    private Double price;
     private Time estimatedTime;
     private Boolean disponibility;
 //    private List<Integer> scheduleIds;

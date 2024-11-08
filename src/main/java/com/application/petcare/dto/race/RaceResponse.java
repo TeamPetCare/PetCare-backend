@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class RaceResponse {
     private Integer id;
     private String raceType;
-    private Double priece;
+    private Double price;
 }

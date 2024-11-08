@@ -13,5 +13,5 @@ public class SizeResponse {
 
     private Integer id;
     private String sizeType;
-    private BigDecimal priece;
+    private BigDecimal price;
 }

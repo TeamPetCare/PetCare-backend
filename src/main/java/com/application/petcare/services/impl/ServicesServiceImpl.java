@@ -33,7 +33,7 @@ public class ServicesServiceImpl implements ServicesService {
         Services servico = Services.builder()
                 .name(request.getName())
                 .note(request.getNote())
-                .priece(request.getPriece())
+                .price(request.getPrice())
                 .estimatedTime(request.getEstimatedTime())
                 .disponibility(request.getDisponibility())
 //                .schedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
@@ -55,7 +55,7 @@ public class ServicesServiceImpl implements ServicesService {
 
         servico.setName(request.getName());
         servico.setNote(request.getNote());
-        servico.setPriece(request.getPriece());
+        servico.setPrice(request.getPrice());
         servico.setEstimatedTime(request.getEstimatedTime());
         servico.setDisponibility(request.getDisponibility());
 //        servico.setSchedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
@@ -116,7 +116,7 @@ public class ServicesServiceImpl implements ServicesService {
                 services.getId(),
                 services.getName(),
                 services.getNote(),
-                services.getPriece(),
+                services.getPrice(),
                 services.getEstimatedTime(),
                 services.getDisponibility()
 //                ,
