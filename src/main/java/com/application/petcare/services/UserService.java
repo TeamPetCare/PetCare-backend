@@ -27,5 +27,7 @@ public interface UserService {
 
     List<User> getAllCustumersSortedByName();
 
+    String getCsvFilePath();
+
     void deleteSelectedCustomers(List<CustomerDeleteRequest> customerDeleteRequests);
 }

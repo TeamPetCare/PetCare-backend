@@ -37,6 +37,8 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private static final String CSV_FILE_PATH = "reportCustomersAndPets.csv";
+
     private PetService petService;
 
     @Override
@@ -288,6 +290,10 @@ public class UserServiceImpl implements UserService {
                 System.exit(1);
             }
         }
+    }
+
+    public String getCsvFilePath() {
+        return CSV_FILE_PATH;
     }
 
 
