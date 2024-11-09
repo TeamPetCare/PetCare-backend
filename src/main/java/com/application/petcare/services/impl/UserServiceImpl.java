@@ -13,6 +13,7 @@ import com.application.petcare.services.PetService;
 import com.application.petcare.services.UserService;
 import com.application.petcare.utils.ListaObj;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -33,6 +34,8 @@ public class UserServiceImpl implements UserService {
 
     private final PetRepository petRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     private PetService petService;
 
     @Override
@@ -41,7 +44,7 @@ public class UserServiceImpl implements UserService {
                 .name(request.getName())
                 .userImg(request.getUserImg())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))
                 .cellphone(request.getCellphone())
                 .role(request.getRole())
                 .street(request.getStreet())
@@ -72,7 +75,7 @@ public class UserServiceImpl implements UserService {
         user.setName(request.getName());
         user.setUserImg(request.getUserImg());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCellphone(request.getCellphone());
         user.setRole(request.getRole());
         user.setStreet(request.getStreet());
