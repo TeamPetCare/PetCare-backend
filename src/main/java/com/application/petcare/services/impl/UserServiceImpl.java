@@ -4,6 +4,7 @@ import com.application.petcare.dto.user.CustomerDeleteRequest;
 import com.application.petcare.dto.user.UserCreateRequest;
 import com.application.petcare.dto.user.UserResponse;
 import com.application.petcare.dto.user.UserUpdateRequest;
+import com.application.petcare.entities.Pet;
 import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
 import com.application.petcare.exceptions.ResourceNotFoundException;
@@ -110,9 +111,9 @@ public class UserServiceImpl implements UserService {
         return repository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
-    public void generateCsvFileCustomer() {
-        List<UserResponse> list = repository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
-        writeCsvFileCustomer(list, "reportCustomers");
+    public void generateCsvFileCustomerAndPets() {
+        List<User> list = repository.findAll();
+        writeCsvFileCustomerAndPets(list, "reportCustomersAndPets");
     }
 
 
@@ -216,10 +217,10 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    public static void writeCsvFileCustomer(List<UserResponse> lista, String nomeArq) {
+    public static void writeCsvFileCustomerAndPets(List<User> lista, String nomeArq) {
         FileWriter arq = null;
         Formatter saida = null;
-        Boolean deuRuim = false;
+        boolean deuRuim = false;
 
         nomeArq += ".csv";
 
@@ -227,37 +228,58 @@ public class UserServiceImpl implements UserService {
             arq = new FileWriter(nomeArq);
             saida = new Formatter(arq);
 
-        } catch (IOException erro) {
-            System.out.println("Erro ao abrir o arquivo");
-            erro.printStackTrace();
-            System.exit(1);
-        }
+            // Cabeçalho do CSV
+            saida.format("ID;Nome;Email;Celular;Rua;Número;Complemento;CEP;Bairro;Cidade;CPF Cliente;Nome do Pet;Raça;Nascimento;Porte;Observações\n");
 
-        try {
-            for (UserResponse userResponse : lista) {
-                saida.format("%d;%s;%s;%s;%s;%d;%s;%s;%s;%s;%s\n",
-                        userResponse.getId(),
-                        userResponse.getName(),
-                        userResponse.getEmail(),
-                        userResponse.getCellphone(),
-                        userResponse.getStreet(),
-                        userResponse.getNumber(),
-                        userResponse.getComplement(),
-                        userResponse.getCep(),
-                        userResponse.getDistrict(),
-                        userResponse.getCity(),
-                        userResponse.getCpfClient());
+            // Iteração sobre os clientes e seus pets
+            for (User userResponse : lista) {
+                if (userResponse.getPet() != null && !userResponse.getPet().isEmpty()) {
+                    // Itera sobre cada pet do cliente
+                    for (Pet pet : userResponse.getPet()) {
+                        saida.format("%d;%s;%s;%s;%s;%d;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
+                                userResponse.getId(),
+                                userResponse.getName(),
+                                userResponse.getEmail(),
+                                userResponse.getCellphone(),
+                                userResponse.getStreet(),
+                                userResponse.getNumber(),
+                                userResponse.getComplement(),
+                                userResponse.getCep(),
+                                userResponse.getDistrict(),
+                                userResponse.getCity(),
+                                userResponse.getCpfClient(),
+                                pet.getName(),
+                                pet.getRace().getRaceType(),
+                                pet.getBirthdate(),
+                                pet.getSize().getSizeType(),
+                                pet.getPetObservations());
+                    }
+                } else {
+                    // Caso o cliente não tenha pets, preenche apenas os dados do cliente
+                    saida.format("%d;%s;%s;%s;%s;%d;%s;%s;%s;%s;%s;;;;;\n",
+                            userResponse.getId(),
+                            userResponse.getName(),
+                            userResponse.getEmail(),
+                            userResponse.getCellphone(),
+                            userResponse.getStreet(),
+                            userResponse.getNumber(),
+                            userResponse.getComplement(),
+                            userResponse.getCep(),
+                            userResponse.getDistrict(),
+                            userResponse.getCity(),
+                            userResponse.getCpfClient());
+                }
             }
 
             System.out.println("Arquivo CSV salvo em: " + new File(nomeArq).getAbsolutePath());
-        } catch (FormatterClosedException erro) {
+        } catch (IOException | FormatterClosedException erro) {
             System.out.println("Erro ao gravar o arquivo");
             erro.printStackTrace();
             deuRuim = true;
         } finally {
-            saida.close();
+            if (saida != null) saida.close();
             try {
-                arq.close();
+                if (arq != null) arq.close();
             } catch (IOException erro) {
                 System.out.println("Erro ao fechar o arquivo");
                 deuRuim = true;
@@ -267,6 +289,7 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
+
 
 
 }

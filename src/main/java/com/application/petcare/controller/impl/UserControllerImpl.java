@@ -38,8 +38,8 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<Void> generateCsvFileCustomer() {
-        userService.generateCsvFileCustomer();
+    public ResponseEntity<Void> generateCsvFileCustomerAndPets() {
+        userService.generateCsvFileCustomerAndPets();
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

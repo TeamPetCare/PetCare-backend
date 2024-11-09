@@ -11,6 +11,7 @@ public class CustomerDeleteRequest {
     private Integer numero;
     private String rua;
     private String bairro;
+    private String complemento;
     private Integer id;
     private Integer numero_de_pets;
     private String whatsapp;

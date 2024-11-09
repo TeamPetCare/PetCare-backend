@@ -28,8 +28,8 @@ public interface UserController {
     ResponseEntity<List<UserResponse>> getAllUsers();
 
     @Operation(summary = "Gerar relatório CSV de Clientes")
-    @GetMapping("/relatarioClientes")
-    ResponseEntity<Void> generateCsvFileCustomer();
+    @GetMapping("/reportCustumersAndPets")
+    ResponseEntity<Void> generateCsvFileCustomerAndPets();
 
     @Operation(summary = "Atualizar usuário por ID")
     @PutMapping("/{id}")

@@ -19,7 +19,7 @@ public interface UserService {
 
     List<UserResponse> findAllUsersById();
 
-    void generateCsvFileCustomer();
+    void generateCsvFileCustomerAndPets();
 
     void deleteUser(Integer planTypeId);
 
