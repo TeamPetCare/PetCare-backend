@@ -2,11 +2,14 @@ package com.application.petcare.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Plans")
@@ -24,6 +27,9 @@ public class Plans {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime subscriptionDate;
 
+    @NotBlank
+    private String name;
+
     @NotNull
     private Double price;
 
@@ -33,9 +39,18 @@ public class Plans {
     @NotNull
     private int renewal;
 
+    @NotBlank
+    private String description;
+
     @NotNull
     @ManyToOne
     private PlanType planType;
+
+    @NotNull
+    @OneToMany
+    private List<Services> services = new ArrayList<>();
+
+    private List<Integer> repeatQuantity = new ArrayList<>();
 
 
 

@@ -43,4 +43,9 @@ public class PlansControllerImpl implements PlansController {
         plansService.deletePlans(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Override
+    public ResponseEntity<Double> applyDiscountInPlan(Integer id) {
+        return ResponseEntity.ok().body(plansService.applyDiscountInPlan(id));
+    }
 }

@@ -33,4 +33,8 @@ public interface PlansController {
     @Operation(summary = "Excluir plano por ID")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deletePlan(@PathVariable Integer id);
+
+    @Operation(summary = "Aplicar desconto em plano por ID")
+    @GetMapping("/apply-discount/{id}")
+    ResponseEntity<Double> applyDiscountInPlan(@PathVariable Integer id);
 }

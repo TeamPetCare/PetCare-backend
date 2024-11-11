@@ -2,9 +2,11 @@ package com.application.petcare.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,5 +36,6 @@ public class Services {
 
     @Column(nullable = false)
     private Boolean disponibility;
+
 
 }

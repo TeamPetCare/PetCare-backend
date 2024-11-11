@@ -15,4 +15,6 @@ public interface PlansService {
     List<PlansResponse> findAllPlans();
 
     void deletePlans(Integer planId);
+
+    Double applyDiscountInPlan(Integer planId);
 }
