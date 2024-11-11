@@ -22,4 +22,5 @@ public class PlansResponse {
     private Integer planTypeId;
     private List<Integer> servicesIds;
     private List<Integer> repeatQuantity;
+    private List<Integer> paymentIds;
 }

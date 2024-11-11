@@ -25,6 +25,7 @@ public class PlansServiceImpl implements PlansService {
 
     private PlanTypeRepository planTypeRepository;
     private ServicesRepository servicesRepository;
+    private PaymentRepository paymentRepository;
 
     private final Map<Integer, PlansStrategy> mapStrategy = Map.of(
             15, new FortnighPlanStrategy(),
@@ -44,6 +45,7 @@ public class PlansServiceImpl implements PlansService {
                         .orElseThrow(() -> new ResourceNotFoundException("Plan Type not found")))
                 .services(servicesRepository.findAllByIdIn(request.getServicesIds()))
                 .repeatQuantity(request.getRepeatQuantity())
+                .payments(paymentRepository.findByIdIn(request.getPaymentIds()))
                 .build();
         Plans savedPlan = plansRepository.save(plans);
         return mapToResponse(savedPlan);
@@ -64,6 +66,7 @@ public class PlansServiceImpl implements PlansService {
                 .orElseThrow(() -> new ResourceNotFoundException("Plan type not found")));
         plans.setServices(servicesRepository.findAllByIdIn(request.getServicesIds()));
         plans.setRepeatQuantity(request.getRepeatQuantity());
+        plans.setPayments(paymentRepository.findByIdIn(request.getPaymentIds()));
 
         Plans updatedPlan = plansRepository.save(plans);
         return mapToResponse(updatedPlan);
@@ -103,6 +106,11 @@ public class PlansServiceImpl implements PlansService {
             services.add(plans.getServices().get(i).getId());
         }
 
+        List<Integer> payments = new ArrayList<>();
+        for (int i = 0; i < plans.getPayments().size(); i++) {
+            payments.add(plans.getPayments().get(i).getId());
+        }
+
         return PlansResponse.builder()
                 .id(plans.getId())
                 .subscriptionDate(plans.getSubscriptionDate())
@@ -114,6 +122,7 @@ public class PlansServiceImpl implements PlansService {
                 .planTypeId(plans.getPlanType().getId())
                 .servicesIds(services)
                 .repeatQuantity(plans.getRepeatQuantity())
+                .paymentIds(payments)
                 .build();
     }
 }

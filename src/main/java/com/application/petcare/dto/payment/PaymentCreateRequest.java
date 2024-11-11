@@ -1,10 +1,12 @@
 package com.application.petcare.dto.payment;
 
+import com.application.petcare.entities.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder

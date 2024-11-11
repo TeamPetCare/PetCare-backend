@@ -52,6 +52,8 @@ public class Plans {
 
     private List<Integer> repeatQuantity = new ArrayList<>();
 
-
+    @NotNull
+    @OneToMany
+    private List<Payment> payments;
 
 }

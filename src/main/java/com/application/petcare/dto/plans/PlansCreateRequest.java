@@ -34,4 +34,6 @@ public class PlansCreateRequest {
     private List<Integer> servicesIds;
     @NotNull(message = "Repeat quantity is required")
     private List<Integer> repeatQuantity;
+    @NotNull(message = "Payment Ids is required")
+    private List<Integer> paymentIds;
 }
