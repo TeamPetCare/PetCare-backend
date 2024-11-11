@@ -3,6 +3,7 @@ package com.application.petcare.controller;
 import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
+import com.application.petcare.entities.Schedule;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +28,10 @@ public interface ScheduleController {
     @Operation(summary = "Buscar todos os agendamentos")
     @GetMapping
     ResponseEntity<List<ScheduleResponse>> getAllSchedules();
+
+    @Operation(summary = "Buscar todos os agendamentos mensais")
+    @GetMapping("/monthly-schedules")
+    ResponseEntity<List<Schedule>> getAllMonthlySchedules();
 
     @Operation(summary = "Atualiza agendamento por ID")
     @PutMapping("/{id}")
