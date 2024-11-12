@@ -1,9 +1,7 @@
 package com.application.petcare.services.impl;
 
-import com.application.petcare.dto.user.CustomerDeleteRequest;
-import com.application.petcare.dto.user.UserCreateRequest;
-import com.application.petcare.dto.user.UserResponse;
-import com.application.petcare.dto.user.UserUpdateRequest;
+import com.application.petcare.dto.pet.PetPetsListResponse;
+import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.Pet;
 import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
@@ -16,15 +14,13 @@ import com.application.petcare.utils.ListaObj;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.FormatterClosedException;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository repository;
 
     private final PetRepository petRepository;
+    private final PetServiceImpl petServiceImpl;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -127,12 +124,12 @@ public class UserServiceImpl implements UserService {
         repository.deleteById(userId);
     }
 
-    public List<User> getAllCustomers() {
-        return repository.findByRole(Role.ROLE_CUSTOMER);
+    public List<UserCustomerResponse> getAllCustomers() {
+        return mapToUserCustomerResponse(repository.findByRole(Role.ROLE_CUSTOMER));
     }
 
-    public List<User> getAllCustumersSortedByName() {
-        ListaObj<User> listaObj = new ListaObj<>(getAllCustomers().size());
+    public List<UserCustomerResponse> getAllCustumersSortedByName() {
+        ListaObj<UserCustomerResponse> listaObj = new ListaObj<>(getAllCustomers().size());
         listaObj.addAll(getAllCustomers());
         mergeSortByName(listaObj, 0, listaObj.getTamanho() - 1);
 
@@ -140,17 +137,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteSelectedCustomers(List<CustomerDeleteRequest> customerDeleteRequests) {
-        for (int i = 0; i < customerDeleteRequests.size(); i++) {
-            UserResponse userResponse = findUserById(customerDeleteRequests.get(i).getId());
+    public List<UserEmployeeResponse> getAllEmployees() {
+        return mapToUserEmployeeResponse(repository.findByRole(Role.ROLE_EMPLOYEE));
+    }
+
+    @Override
+    public void deleteSelectedCustomers(List<UserCustomerDeleteRequest> userCustomerDeleteRequests) {
+        for (int i = 0; i < userCustomerDeleteRequests.size(); i++) {
+            UserResponse userResponse = findUserById(userCustomerDeleteRequests.get(i).getId());
             for (int j = 0; j < userResponse.getPetIds().size(); j++) {
                 petService.deletePet(userResponse.getPetIds().get(i));
             }
-            deleteUser(customerDeleteRequests.get(i).getId());
+            deleteUser(userCustomerDeleteRequests.get(i).getId());
         }
     }
 
-    private void mergeSortByName(ListaObj<User> lista, int inicio, int fim) {
+    private void mergeSortByName(ListaObj<UserCustomerResponse> lista, int inicio, int fim) {
         if (inicio < fim) {
             int meio = (inicio + fim) / 2;
             mergeSortByName(lista, inicio, meio);
@@ -159,11 +161,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void merge(ListaObj<User> lista, int inicio, int meio, int fim) {
+    private void merge(ListaObj<UserCustomerResponse> lista, int inicio, int meio, int fim) {
         int n1 = meio - inicio + 1;
         int n2 = fim - meio;
-        User[] leftArray = new User[n1];
-        User[] rightArray = new User[n2];
+        UserCustomerResponse[] leftArray = new UserCustomerResponse[n1];
+        UserCustomerResponse[] rightArray = new UserCustomerResponse[n2];
 
         for (int i = 0; i < n1; i++) {
             leftArray[i] = lista.getElemento(inicio + i);
@@ -189,6 +191,69 @@ public class UserServiceImpl implements UserService {
         while (j < n2) lista.set(k++, rightArray[j++]);
     }
 
+
+    private List<UserEmployeeResponse> mapToUserEmployeeResponse(List<User> users){
+        List<UserEmployeeResponse> userEmployeeResponses = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            userEmployeeResponses.add(UserEmployeeResponse.builder()
+                    .id(users.get(i).getId())
+                    .name(users.get(i).getName())
+                    .userImg(users.get(i).getUserImg())
+                    .email(users.get(i).getEmail())
+                    .password(users.get(i).getPassword())
+                    .cellphone(users.get(i).getCellphone())
+                    .role(users.get(i).getRole())
+                    .street(users.get(i).getStreet())
+                    .number(users.get(i).getNumber())
+                    .complement(users.get(i).getComplement())
+                    .cep(users.get(i).getCep())
+                    .district(users.get(i).getDistrict())
+                    .city(users.get(i).getCity())
+                    .roleEmployee(users.get(i).getRoleEmployee())
+                    .disponibilityStatusEmployee(users.get(i).getDisponibilityStatusEmployee())
+                    .build());
+        }
+        return userEmployeeResponses;
+    }
+
+    public List<UserCustomerResponse> mapToUserCustomerResponse(List<User> user){
+        List<UserCustomerResponse> userCustomerResponses = new ArrayList<>();
+        for (int i = 0; i < user.size(); i++) {
+            List<PetPetsListResponse> petPetsListResponses = petServiceImpl.maptoPetPetsListResponse(user.get(i).getPet());
+            petPetsListResponses.sort(Comparator.comparing(PetPetsListResponse::getLastSchedule).reversed());
+            LocalDateTime lastSchedule;
+            if(petPetsListResponses.size() >= 1){
+                 lastSchedule = petPetsListResponses.get(0).getLastSchedule();
+            }else{
+                 lastSchedule = null;
+            }
+
+
+            userCustomerResponses.add(UserCustomerResponse.builder()
+                    .id(user.get(i).getId())
+                    .name(user.get(i).getName())
+                    .userImg(user.get(i).getUserImg())
+                    .email(user.get(i).getEmail())
+                    .password(user.get(i).getPassword())
+                    .cellphone(user.get(i).getCellphone())
+                    .role(user.get(i).getRole())
+                    .street(user.get(i).getStreet())
+                    .number(user.get(i).getNumber())
+                    .complement(user.get(i).getComplement())
+                    .cep(user.get(i).getCep())
+                    .district(user.get(i).getDistrict())
+                    .city(user.get(i).getCity())
+                    .cnpjOwner(user.get(i).getCnpjOwner())
+                    .roleEmployee(user.get(i).getRoleEmployee())
+                    .disponibilityStatusEmployee(user.get(i).getDisponibilityStatusEmployee())
+                    .cpfClient(user.get(i).getCpfClient())
+                    .pet(petServiceImpl.maptoPetPetsListResponse(user.get(i).getPet()))
+                    .lastSchedule(lastSchedule)
+                    .totalSchedules(petPetsListResponses.stream().mapToInt(PetPetsListResponse::getTotalSchedules).sum())
+                    .build());
+        }
+        return userCustomerResponses;
+    }
 
     public UserResponse mapToResponse(User user) {
 

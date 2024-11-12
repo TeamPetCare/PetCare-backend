@@ -2,7 +2,9 @@ package com.application.petcare.controller.impl;
 
 import com.application.petcare.controller.PetController;
 import com.application.petcare.dto.pet.PetCreateRequest;
+import com.application.petcare.dto.pet.PetPetsListResponse;
 import com.application.petcare.dto.pet.PetResponse;
+import com.application.petcare.entities.Pet;
 import com.application.petcare.services.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,11 @@ public class PetControllerImpl implements PetController {
     @Override
     public ResponseEntity<List<PetResponse>> getAllPets() {
         return ResponseEntity.ok(petService.getAllPets());
+    }
+
+    @Override
+    public ResponseEntity<List<PetPetsListResponse>> getAllPetsPetsList() {
+        return ResponseEntity.ok().body(petService.getAllPetsPetsList());
     }
 
     @Override

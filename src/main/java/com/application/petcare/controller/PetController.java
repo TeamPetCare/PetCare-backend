@@ -1,7 +1,9 @@
 package com.application.petcare.controller;
 
 import com.application.petcare.dto.pet.PetCreateRequest;
+import com.application.petcare.dto.pet.PetPetsListResponse;
 import com.application.petcare.dto.pet.PetResponse;
+import com.application.petcare.entities.Pet;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,11 @@ public interface PetController {
     @Operation(summary = "Listar todos os pets")
     @GetMapping
     ResponseEntity<List<PetResponse>> getAllPets();
+
+    @Operation(summary = "Listar todos os pets na tela Clientes e Pets")
+    @GetMapping("/pets-list")
+    ResponseEntity<List<PetPetsListResponse>> getAllPetsPetsList();
+
 
     @Operation(summary = "Deletar um pet")
     @DeleteMapping("/{id}")

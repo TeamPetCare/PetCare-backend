@@ -1,12 +1,12 @@
 package com.application.petcare.dto.payment;
 
-import com.application.petcare.entities.User;
+import com.application.petcare.enums.PaymentMethod;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Builder
@@ -21,9 +21,10 @@ public class PaymentCreateRequest {
     @NotNull(message = "Payment ID is required")
     private String paymentId;
     @NotNull(message = "Payment Method is required")
-    private String paymentMethod;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
     @NotNull(message = "Payment Status is required")
-    private String paymentStatus;
+    private Boolean paymentStatus;
     @NotNull(message = "User id is required")
     private Integer userId;
 }

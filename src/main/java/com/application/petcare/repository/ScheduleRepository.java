@@ -1,5 +1,6 @@
 package com.application.petcare.repository;
 
+import com.application.petcare.entities.Pet;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.Services;
 import com.application.petcare.enums.StatusAgendamento;
@@ -16,6 +17,11 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     Optional<Schedule> findByScheduleDateAndScheduleTime(LocalDateTime scheduleDate, LocalTime scheduleTime);
 
     long countByScheduleStatus(StatusAgendamento status);
+
+    Schedule findTopByPetIdOrderByScheduleDateDesc(Integer petId);
+    Integer countByPetId(Integer petId);
+
+
 
     List<Schedule> findByScheduleDateAndScheduleTimeBetweenAndServicesId(
             LocalDateTime scheduleDate,

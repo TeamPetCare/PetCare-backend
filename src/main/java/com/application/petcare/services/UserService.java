@@ -1,9 +1,6 @@
 package com.application.petcare.services;
 
-import com.application.petcare.dto.user.UserCreateRequest;
-import com.application.petcare.dto.user.CustomerDeleteRequest;
-import com.application.petcare.dto.user.UserResponse;
-import com.application.petcare.dto.user.UserUpdateRequest;
+import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.User;
 
 
@@ -23,11 +20,14 @@ public interface UserService {
 
     void deleteUser(Integer planTypeId);
 
-    List<User> getAllCustomers();
+    List<UserCustomerResponse> getAllCustomers();
 
-    List<User> getAllCustumersSortedByName();
+    List<UserCustomerResponse> getAllCustumersSortedByName();
+
+    List<UserEmployeeResponse> getAllEmployees();
+
 
     String getCsvFilePath();
 
-    void deleteSelectedCustomers(List<CustomerDeleteRequest> customerDeleteRequests);
+    void deleteSelectedCustomers(List<UserCustomerDeleteRequest> userCustomerDeleteRequests);
 }

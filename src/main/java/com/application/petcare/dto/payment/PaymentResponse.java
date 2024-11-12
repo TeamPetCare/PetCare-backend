@@ -1,7 +1,11 @@
 package com.application.petcare.dto.payment;
 
 import com.application.petcare.entities.User;
+import com.application.petcare.enums.PaymentMethod;
+import com.application.petcare.enums.StatusAgendamento;
 import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.sql.Date;
@@ -18,7 +22,8 @@ public class PaymentResponse {
     private Double price;
     private LocalDateTime paymentDate;
     private String paymentId;
-    private String paymentMethod;
-    private String paymentStatus;
+    private Boolean paymentStatus;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
     private Integer userId;
 }

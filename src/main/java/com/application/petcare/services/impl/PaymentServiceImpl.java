@@ -25,8 +25,8 @@ public class PaymentServiceImpl implements PaymentService {
                 .price(request.getPrice())
                 .paymentDate(request.getPaymentDate())
                 .paymentId(request.getPaymentId())
-                .paymentStatus(request.getPaymentStatus())
                 .paymentMethod(request.getPaymentMethod())
+                .paymentStatus(request.getPaymentStatus())
                 .user(userRepository.findById(request.getUserId())
                         .orElseThrow(() -> new ResourceNotFoundException("User not found")))
                 .build();
@@ -42,8 +42,8 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setPrice(request.getPrice());
         payment.setPaymentDate(request.getPaymentDate());
         payment.setPaymentId(request.getPaymentId());
-        payment.setPaymentStatus(request.getPaymentStatus());
         payment.setPaymentMethod(request.getPaymentMethod());
+        payment.setPaymentStatus(request.getPaymentStatus());
         payment.setUser(userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found")));
 

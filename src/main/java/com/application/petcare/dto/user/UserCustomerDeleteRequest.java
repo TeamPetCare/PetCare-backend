@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CustomerDeleteRequest {
+public class UserCustomerDeleteRequest {
     
     private String cliente;
     private Integer numero;

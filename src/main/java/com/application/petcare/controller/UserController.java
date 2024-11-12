@@ -1,9 +1,6 @@
 package com.application.petcare.controller;
 
-import com.application.petcare.dto.user.CustomerDeleteRequest;
-import com.application.petcare.dto.user.UserCreateRequest;
-import com.application.petcare.dto.user.UserResponse;
-import com.application.petcare.dto.user.UserUpdateRequest;
+import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,15 +38,21 @@ public interface UserController {
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteUser(@PathVariable Integer id);
 
+
+
     @Operation(summary = "Buscar todos os clientes")
     @GetMapping("/customers")
-    ResponseEntity<List<User>> getAllCustomers();
+    ResponseEntity<List<UserCustomerResponse>> getAllCustomers();
 
     @Operation(summary = "Buscar todos os clientes ordenados por nome")
     @GetMapping("/customers/name")
-    ResponseEntity<List<User>> getAllCustomersSortedByName();
+    ResponseEntity<List<UserCustomerResponse>> getAllCustomersSortedByName();
+
+    @Operation(summary = "Buscar todos os funcionarios")
+    @GetMapping("/employees")
+    ResponseEntity<List<UserEmployeeResponse>> getAllEmployees();
 
     @Operation(summary = "Deleta muitos clientes por ids")
     @DeleteMapping("/customers/delete")
-    ResponseEntity<Void> deleteSelectedCustomers(@RequestBody List<CustomerDeleteRequest> customerDeleteRequests);
+    ResponseEntity<Void> deleteSelectedCustomers(@RequestBody List<UserCustomerDeleteRequest> userCustomerDeleteRequests);
 }

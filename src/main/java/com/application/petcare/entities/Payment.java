@@ -1,12 +1,11 @@
 package com.application.petcare.entities;
 
+import com.application.petcare.enums.PaymentMethod;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "Payment")
@@ -31,9 +30,10 @@ public class Payment {
 
     private String paymentId;
 
-    private String paymentMethod;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
-    private String paymentStatus;
+    private Boolean paymentStatus;
 
     @NotNull
     @ManyToOne

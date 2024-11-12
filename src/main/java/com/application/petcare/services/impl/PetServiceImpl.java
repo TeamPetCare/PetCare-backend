@@ -1,6 +1,7 @@
 package com.application.petcare.services.impl;
 
 import com.application.petcare.dto.pet.PetCreateRequest;
+import com.application.petcare.dto.pet.PetPetsListResponse;
 import com.application.petcare.dto.pet.PetResponse;
 import com.application.petcare.entities.*;
 import com.application.petcare.exceptions.PetNotFoundException;
@@ -10,6 +11,7 @@ import com.application.petcare.services.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,7 @@ public class PetServiceImpl implements PetService {
     private final RaceRepository raceRepository;
     private final SizeRepository sizeRepository;
     private final PlansRepository plansRepository;
+    private final ScheduleRepository scheduleRepository;
 
     @Override
     public PetResponse createPet(PetCreateRequest request) {
@@ -118,6 +121,11 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    public List<PetPetsListResponse> getAllPetsPetsList() {
+        return maptoPetPetsListResponse(petRepository.findAll().stream().collect(Collectors.toList()));
+    }
+
+    @Override
     public void deletePet(Integer id) {
         log.info("Deleting pet with id: {}", id);
         if (!petRepository.existsById(id)) {
@@ -125,6 +133,29 @@ public class PetServiceImpl implements PetService {
         }
         petRepository.deleteById(id);
         log.info("Pet deleted successfully with id: {}", id);
+    }
+
+    public List<PetPetsListResponse> maptoPetPetsListResponse(List<Pet> pets){
+        List<PetPetsListResponse> petPetsListResponses = new ArrayList<>();
+        for (int i = 0; i < pets.size(); i++) {
+            petPetsListResponses.add(PetPetsListResponse.builder()
+                    .id(pets.get(i).getId())
+                    .name(pets.get(i).getName())
+                    .gender(pets.get(i).getGender())
+                    .color(pets.get(i).getColor())
+                    .estimatedWeight(pets.get(i).getEstimatedWeight())
+                    .birthdate(pets.get(i).getBirthdate())
+                    .petObservations(pets.get(i).getPetObservations())
+                    .petImg(pets.get(i).getPetImg())
+                    .plan(pets.get(i).getPlan())
+                    .specie(pets.get(i).getSpecie())
+                    .race(pets.get(i).getRace())
+                    .size(pets.get(i).getSize())
+                    .lastSchedule(scheduleRepository.findTopByPetIdOrderByScheduleDateDesc(pets.get(i).getId()).getScheduleDate())
+                    .totalSchedules(scheduleRepository.countByPetId(pets.get(i).getId())).build()
+            );
+        }
+        return petPetsListResponses;
     }
 
     private PetResponse mapToResponse(Pet pet) {
