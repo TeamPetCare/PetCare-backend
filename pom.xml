@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.application.petcare</groupId>
-    <artifactId>PetCareRest</artifactId>
+    <artifactId>PetCareRestApplication</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>PetCareRest</name>
     <description>Api Rest Pet Care</description>
