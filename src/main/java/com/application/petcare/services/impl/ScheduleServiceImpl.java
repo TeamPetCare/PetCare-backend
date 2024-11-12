@@ -4,9 +4,7 @@ import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
-import com.application.petcare.entities.Services;
 import com.application.petcare.enums.StatusAgendamento;
-import com.application.petcare.exceptions.DuplicateScheduleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.PaymentRepository;
 import com.application.petcare.repository.PetRepository;
@@ -14,15 +12,11 @@ import com.application.petcare.repository.ScheduleRepository;
 import com.application.petcare.repository.ServicesRepository;
 import com.application.petcare.services.ScheduleService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -49,10 +43,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .services(servicesRepository.findAllByIdIn(request.getServiceIds()))
                 .build();
 
-//        Optional<Schedule> existingSchedule = scheduleRepository.findByScheduleDateAndScheduleTime(schedule.getScheduleDate(), schedule.getScheduleTime());
-//        if (existingSchedule.isPresent()) {
-//            throw new DuplicateScheduleException("Um agendamento para esta data e horário já existe.");
-//        }
             Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return mapToResponse(savedSchedule);
@@ -86,7 +76,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleResponse> findAllSchedules() {
-        return scheduleRepository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
+        return scheduleRepository.findAll().stream().map(this::mapToResponse).toList();
+    }
+
+    @Override
+    public List<Schedule> findAllMonthlySchedules() {
+        return scheduleRepository.findAll();
     }
 
     @Override

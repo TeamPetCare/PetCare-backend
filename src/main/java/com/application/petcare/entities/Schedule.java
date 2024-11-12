@@ -2,6 +2,7 @@ package com.application.petcare.entities;
 
 import com.application.petcare.enums.StatusAgendamento;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -49,7 +50,7 @@ public class Schedule {
     private Payment payment;
 
     @ManyToMany
-    @JsonBackReference
+    @JsonManagedReference
     @JoinTable(
             name = "Schedule_has_Services",
             joinColumns = @JoinColumn(name = "schedule_id"),
