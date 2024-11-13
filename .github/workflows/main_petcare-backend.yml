@@ -59,6 +59,6 @@ jobs:
         with:
           app-name: 'petcare-backend'
           slot-name: 'Production'
-          package: './target/petcare-backend.jar'
+          package: './target/PetCareRestApplication-0.0.1-SNAPSHOT.jar'
 
           
