@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @Tag(name = "Auth", description = "Gerenciar autentificacao do security")
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
