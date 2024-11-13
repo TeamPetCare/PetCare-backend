@@ -45,9 +45,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-app
-
-      - name: Extract jar file from zip
-        run: unzip java-app.zip
+          path: './'  # Define o diretório onde o artefato é baixado
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -62,4 +60,4 @@ jobs:
         with:
           app-name: 'petcare-backend'
           slot-name: 'Production'
-          package: './PetCareRestApplication-0.0.1-SNAPSHOT.jar'
+          package: './java-app/PetCareRestApplication-0.0.1-SNAPSHOT.jar' # Caminho para o .jar extraído do artefato
