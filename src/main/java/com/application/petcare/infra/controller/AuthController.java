@@ -4,6 +4,7 @@ import com.application.petcare.dto.login.LoginRequestDto;
 import com.application.petcare.dto.login.LoginResponseDto;
 import com.application.petcare.dto.register.RegisterRequestDto;
 import com.application.petcare.entities.User;
+import com.application.petcare.exceptions.DuplicateEntryFoundException;
 import com.application.petcare.infra.security.TokenService;
 import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.UserRepository;
@@ -45,7 +46,6 @@ public class AuthController {
     public ResponseEntity<LoginResponseDto> register(@RequestBody RegisterRequestDto body){
         Optional<User> possibleUser = this.repository.findByEmail(body.email());
         if(possibleUser.isEmpty()){
-
             User newUser = new User();
             newUser.setName(body.name());
             newUser.setUserImg(body.userImg());
@@ -69,6 +69,6 @@ public class AuthController {
             String token = this.tokenService.generateToken(newUser);
             return ResponseEntity.ok().body(new LoginResponseDto(newUser.getName(), token));
         }
-        return ResponseEntity.badRequest().build();
+        throw new DuplicateEntryFoundException("Email is already used by another user");
     }
 }

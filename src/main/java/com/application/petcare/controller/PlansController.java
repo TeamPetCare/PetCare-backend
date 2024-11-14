@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Tag(name = "Plans", description = "Gerenciar planos")
-@RequestMapping("/api/plans")
+@RequestMapping("employee/api/plans")
 public interface PlansController {
     @Operation(summary = "Criar um novo plano")
     @PostMapping

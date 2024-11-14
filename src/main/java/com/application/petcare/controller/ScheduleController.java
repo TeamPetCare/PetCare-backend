@@ -15,7 +15,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Tag(name = "Schedule", description = "Gerenciar agendamentos")
-@RequestMapping("/api/schedules")
+@RequestMapping("admin/api/schedules")
 public interface ScheduleController {
     @Operation(summary = "Criar um novo agendamento")
     @PostMapping

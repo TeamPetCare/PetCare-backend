@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Tag(name = "Plan Type", description = "Gerenciar tipos de planos")
-@RequestMapping("/api/plan-types")
+@RequestMapping("employee/api/plan-types")
 public interface PlanTypeController {
 
     @Operation(summary = "Criar um novo tipo plano")

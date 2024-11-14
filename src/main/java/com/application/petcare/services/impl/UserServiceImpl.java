@@ -5,6 +5,7 @@ import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.Pet;
 import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
+import com.application.petcare.exceptions.DuplicateEntryFoundException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.UserRepository;
@@ -62,6 +63,10 @@ public class UserServiceImpl implements UserService {
 
         if (user.getPet().isEmpty()) {
             throw new ResourceNotFoundException("Pets not found");
+        }
+        User existingUser = repository.findByEmail(user.getEmail()).get();
+        if (user.getEmail().equals(existingUser.getEmail())){
+            throw new DuplicateEntryFoundException("Email is already used by another user");
         }
         User savedUser = repository.save(user);
         return mapToResponse(savedUser);
