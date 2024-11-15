@@ -4,6 +4,8 @@ import com.application.petcare.dto.login.LoginRequestDto;
 import com.application.petcare.dto.login.LoginResponseDto;
 import com.application.petcare.dto.register.RegisterRequestDto;
 import com.application.petcare.entities.User;
+import com.application.petcare.enums.Role;
+import com.application.petcare.exceptions.BadRoleException;
 import com.application.petcare.exceptions.DuplicateEntryFoundException;
 import com.application.petcare.infra.security.TokenService;
 import com.application.petcare.repository.PetRepository;
@@ -34,6 +36,9 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto body){
         User user = this.repository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
+        if(user.getRole().equals(Role.ROLE_CUSTOMER)){
+            throw new BadRoleException("Customer is not allowed");
+        }
         if(passwordEncoder.matches(body.password(), user.getPassword())){
             String token = this.tokenService.generateToken(user);
             return ResponseEntity.ok().body(new LoginResponseDto(user.getName(), token));
