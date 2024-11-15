@@ -54,7 +54,7 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/webjars/**",
                                 "/v3/api-docs/**"
-                        ).hasRole("ADMIN").permitAll()
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/swagger-ui/index.html#").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
