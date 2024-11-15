@@ -82,7 +82,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(false);
         configuration.addAllowedOrigin("*"); // Permitir o frontend
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
