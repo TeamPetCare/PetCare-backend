@@ -12,7 +12,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @Tag(name = "Size", description = "Gerenciar tamanhos de pets")
-@RequestMapping("employee/api/sizes")
+@RequestMapping("/api/sizes")
 public interface SizeController {
 
     @Operation(summary = "Criar um novo tamanho")

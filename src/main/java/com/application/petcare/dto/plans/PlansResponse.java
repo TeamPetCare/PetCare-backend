@@ -23,4 +23,5 @@ public class PlansResponse {
     private List<Integer> servicesIds;
     private List<Integer> repeatQuantity;
     private List<Integer> paymentIds;
+    private List<Integer> petIds;
 }

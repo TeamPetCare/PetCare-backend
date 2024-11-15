@@ -1,6 +1,7 @@
 package com.application.petcare.entities;
 
 import com.application.petcare.enums.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
@@ -68,6 +69,7 @@ public class User {
     private String cpfClient;
 
     @OneToMany
+    @JsonManagedReference
     private List<Pet> pet;
 
 

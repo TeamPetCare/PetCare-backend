@@ -26,6 +26,7 @@ public class PlansServiceImpl implements PlansService {
     private PlanTypeRepository planTypeRepository;
     private ServicesRepository servicesRepository;
     private PaymentRepository paymentRepository;
+    private PetRepository petRepository;
 
     private final Map<Integer, PlansStrategy> mapStrategy = Map.of(
             15, new FortnighPlanStrategy(),
@@ -46,6 +47,7 @@ public class PlansServiceImpl implements PlansService {
                 .services(servicesRepository.findAllByIdIn(request.getServicesIds()))
                 .repeatQuantity(request.getRepeatQuantity())
                 .payments(paymentRepository.findByIdIn(request.getPaymentIds()))
+                .pets(petRepository.findAllByIdIn(request.getPetIds()))
                 .build();
         Plans savedPlan = plansRepository.save(plans);
         return mapToResponse(savedPlan);
@@ -67,6 +69,7 @@ public class PlansServiceImpl implements PlansService {
         plans.setServices(servicesRepository.findAllByIdIn(request.getServicesIds()));
         plans.setRepeatQuantity(request.getRepeatQuantity());
         plans.setPayments(paymentRepository.findByIdIn(request.getPaymentIds()));
+        plans.setPets(petRepository.findAllByIdIn(request.getPetIds()));
 
         Plans updatedPlan = plansRepository.save(plans);
         return mapToResponse(updatedPlan);
@@ -111,6 +114,11 @@ public class PlansServiceImpl implements PlansService {
             payments.add(plans.getPayments().get(i).getId());
         }
 
+        List<Integer> pets = new ArrayList<>();
+        for (int i = 0; i < plans.getPets().size(); i++) {
+            pets.add(plans.getPets().get(i).getId());
+        }
+
         return PlansResponse.builder()
                 .id(plans.getId())
                 .subscriptionDate(plans.getSubscriptionDate())
@@ -123,6 +131,7 @@ public class PlansServiceImpl implements PlansService {
                 .servicesIds(services)
                 .repeatQuantity(plans.getRepeatQuantity())
                 .paymentIds(payments)
+                .petIds(pets)
                 .build();
     }
 }

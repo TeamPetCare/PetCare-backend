@@ -30,4 +30,5 @@ public class ScheduleResponse {
     private Integer petId;
     private Integer paymentId;
     private List<Integer> serviceIds;
+    private Integer employeeId;
 }

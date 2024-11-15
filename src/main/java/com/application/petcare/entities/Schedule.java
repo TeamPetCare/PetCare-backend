@@ -57,6 +57,9 @@ public class Schedule {
             inverseJoinColumns = @JoinColumn(name = "services_id")
     )
     private List<Services> services;
+
+    @ManyToOne
+    private User employee;
     }
 
 

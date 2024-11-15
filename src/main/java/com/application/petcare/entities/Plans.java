@@ -1,5 +1,6 @@
 package com.application.petcare.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -55,5 +56,10 @@ public class Plans {
     @NotNull
     @OneToMany
     private List<Payment> payments;
+
+    @OneToMany
+    @JoinColumn(name = "pet_id", nullable = true)
+    @JsonBackReference
+    private List<Pet> pets;
 
 }

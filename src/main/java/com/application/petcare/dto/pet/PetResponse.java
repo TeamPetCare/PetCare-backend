@@ -20,5 +20,5 @@ public class PetResponse {
     private Integer specieId;
     private Integer raceId;
     private Integer sizeId;
-
+    private Integer userId;
 }

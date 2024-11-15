@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Tag(name = "ScheduleService", description = "Criar um agendamento e serviço ao mesmo tempo")
-@RequestMapping("admin/api/schedule-services")
+@RequestMapping("/api/schedule-services")
 public interface ScheduleServicesController {
     @Operation(summary = "Criar um novo agendamento e serviço")
     @PostMapping

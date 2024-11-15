@@ -36,7 +36,7 @@ public class SecurityConfig {
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
         // Define a hierarquia: OWNER > EMPLOYEE > CUSTOMER
-        roleHierarchy.setHierarchy("ROLE_OWNER > ROLE_EMPLOYEE \n ROLE_EMPLOYEE > ROLE_CUSTOMER");
+        roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_EMPLOYEE \n ROLE_EMPLOYEE > ROLE_CUSTOMER");
         return roleHierarchy;
     }
 
@@ -58,9 +58,19 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/swagger-ui/index.html#").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/employee/**").hasRole("EMPLOYEE")
-                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
+                        .requestMatchers("/images").permitAll()
+                        .requestMatchers("/validate-token").permitAll()
+                        .requestMatchers("/api/notifications").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/payments").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/pets").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/plans").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/plan-types").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/races").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/schedules").hasRole("ADMIN")
+                        .requestMatchers("/api/services").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/species").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/sizes").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/users").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )
@@ -73,7 +83,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.addAllowedOrigin("http://localhost:3000"); // Permitir o frontend
+        configuration.addAllowedOrigin("*"); // Permitir o frontend
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
 

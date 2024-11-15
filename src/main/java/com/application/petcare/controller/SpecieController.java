@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @Tag(name = "Specie", description = "Gerenciar especies de pets")
-@RequestMapping("employee/api/species")
+@RequestMapping("/api/species")
 public interface SpecieController {
 
     @Operation(summary = "Criar uma nova espécie", description = "Cria uma nova espécie com os dados fornecidos.")

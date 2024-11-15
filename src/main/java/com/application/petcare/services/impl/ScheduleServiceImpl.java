@@ -4,12 +4,12 @@ import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
+import com.application.petcare.entities.User;
+import com.application.petcare.enums.Role;
 import com.application.petcare.enums.StatusAgendamento;
+import com.application.petcare.exceptions.BadRoleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
-import com.application.petcare.repository.PaymentRepository;
-import com.application.petcare.repository.PetRepository;
-import com.application.petcare.repository.ScheduleRepository;
-import com.application.petcare.repository.ServicesRepository;
+import com.application.petcare.repository.*;
 import com.application.petcare.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,9 +27,17 @@ public class ScheduleServiceImpl implements ScheduleService {
     private PetRepository petRepository;
     private PaymentRepository paymentRepository;
     private ServicesRepository servicesRepository;
+    private UserRepository userRepository;
 
     @Override
     public ScheduleResponse createSchedule(ScheduleCreateRequest request) {
+
+        User possibleEmployee = userRepository.findById(request.getEmployeeId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        if(possibleEmployee.getRole().equals(Role.ROLE_CUSTOMER)){
+            throw new BadRoleException("User is a customer");
+        }
+
         Schedule schedule = Schedule.builder()
                 .scheduleStatus(request.getScheduleStatus())
                 .scheduleDate(request.getScheduleDate())
@@ -41,6 +49,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .payment(paymentRepository.findById(request.getPaymentId())
                         .orElseThrow(() -> new ResourceNotFoundException("Payment not found")))
                 .services(servicesRepository.findAllByIdIn(request.getServiceIds()))
+                .employee(possibleEmployee)
                 .build();
 
             Schedule savedSchedule = scheduleRepository.save(schedule);
@@ -50,6 +59,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ScheduleResponse updateSchedule(Integer id, ScheduleCreateRequest request) {
+
+        User possibleEmployee = userRepository.findById(request.getEmployeeId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        if(possibleEmployee.getRole().equals(Role.ROLE_CUSTOMER)){
+            throw new BadRoleException("User is a customer");
+        }
+
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
         schedule.setScheduleStatus(request.getScheduleStatus());
@@ -62,6 +78,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setPayment(paymentRepository.findById(request.getPaymentId())
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found")));
         schedule.setServices(servicesRepository.findAllByIdIn(request.getServiceIds()));
+        schedule.setEmployee(possibleEmployee);
 
         Schedule updatedSchedule = scheduleRepository.save(schedule);
         return mapToResponse(updatedSchedule);
@@ -133,6 +150,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .petId(schedule.getPet().getId())
                 .paymentId(schedule.getPayment().getId())
                 .serviceIds(List.of(serviceIds))
+                .employeeId(schedule.getEmployee().getId())
                 .build();
     }
 }

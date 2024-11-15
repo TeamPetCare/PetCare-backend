@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Tag(name = "Services", description = "Gerenciar funcionários")
-@RequestMapping("employee/api/services")
+@RequestMapping("/api/services")
 public interface ServicesController {
     @Operation(summary = "Criar um novo serviço")
     @PostMapping

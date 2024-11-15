@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @Tag(name = "Race", description = "Gerenciar raças de pets")
-@RequestMapping("employee/api/races")
+@RequestMapping("/api/races")
 public interface RaceController {
 
     @Operation(summary = "Criar uma nova raça", description = "Cria uma nova raça com os dados fornecidos.")

@@ -4,6 +4,8 @@ import com.application.petcare.dto.pet.PetCreateRequest;
 import com.application.petcare.dto.pet.PetPetsListResponse;
 import com.application.petcare.dto.pet.PetResponse;
 import com.application.petcare.entities.*;
+import com.application.petcare.enums.Role;
+import com.application.petcare.exceptions.BadRoleException;
 import com.application.petcare.exceptions.PetNotFoundException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.*;
@@ -29,10 +31,17 @@ public class PetServiceImpl implements PetService {
     private final SizeRepository sizeRepository;
     private final PlansRepository plansRepository;
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
     @Override
     public PetResponse createPet(PetCreateRequest request) {
         log.info("Creating pet: {}", request);
+
+        User possibleCustomer = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        if(!possibleCustomer.getRole().equals(Role.ROLE_CUSTOMER)){
+            throw new BadRoleException("User is not a customer");
+        }
 
         Specie specie = specieRepository.findById(request.getSpecieId())
                 .orElseThrow(() -> new BadRequestException("Especie not found"));
@@ -59,6 +68,7 @@ public class PetServiceImpl implements PetService {
                 .petObservations(request.getPetObservations())
                 .plan(plansRepository.findById(request.getPlanId())
                         .orElseThrow(() -> new ResourceNotFoundException("Plan not found")))
+                .user(possibleCustomer)
                 .build();
 
         Pet savedPet = petRepository.save(pet);
@@ -69,6 +79,12 @@ public class PetServiceImpl implements PetService {
     @Override
     public PetResponse updatePet(Integer id, PetCreateRequest request) {
         log.info("Updating pet with id: {}", id);
+
+        User possibleCustomer = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        if(!possibleCustomer.getRole().equals(Role.ROLE_CUSTOMER)){
+            throw new BadRoleException("User is not a customer");
+        }
 
         Pet pet = petRepository.findById(id)
                 .orElseThrow(() -> new PetNotFoundException("Pet not found"));
@@ -98,6 +114,7 @@ public class PetServiceImpl implements PetService {
         pet.setSpecie(specie);
         pet.setRace(race);
         pet.setPlan(plans);
+        pet.setUser(possibleCustomer);
 
         Pet updatedPet = petRepository.save(pet);
         log.info("Pet updated successfully: {}", updatedPet);
@@ -151,6 +168,7 @@ public class PetServiceImpl implements PetService {
                     .specie(pets.get(i).getSpecie())
                     .race(pets.get(i).getRace())
                     .size(pets.get(i).getSize())
+                            .userId(pets.get(i).getUser().getId())
                     .lastSchedule(scheduleRepository.findTopByPetIdOrderByScheduleDateDesc(pets.get(i).getId()).getScheduleDate())
                     .totalSchedules(scheduleRepository.countByPetId(pets.get(i).getId())).build()
             );
@@ -172,6 +190,7 @@ public class PetServiceImpl implements PetService {
                 .raceId(pet.getRace().getId())
                 .sizeId(pet.getSize().getId())
                 .planId(pet.getPlan().getId())
+                .userId(pet.getUser().getId())
                 .build();
     }
 }

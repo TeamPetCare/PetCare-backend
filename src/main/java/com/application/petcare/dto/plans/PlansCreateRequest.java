@@ -36,4 +36,6 @@ public class PlansCreateRequest {
     private List<Integer> repeatQuantity;
     @NotNull(message = "Payment Ids is required")
     private List<Integer> paymentIds;
+    @NotNull(message = "Pet ID is required")
+    private List<Integer> petIds;
 }

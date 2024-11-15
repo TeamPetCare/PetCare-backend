@@ -39,4 +39,7 @@ public class PetCreateRequest {
 
     @NotNull(message = "Size ID is required")
     private Integer sizeId;
+
+    @NotNull(message = "User ID is required")
+    private Integer userId;
 }

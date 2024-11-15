@@ -1,5 +1,7 @@
 package com.application.petcare.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,6 +41,7 @@ public class Pet {
 
     // Um pet um plano
     @ManyToOne
+    @JsonManagedReference
     private Plans plan;
 
     // Relacionamento com Especie (muitos pets podem ter uma espécie)
@@ -52,4 +55,9 @@ public class Pet {
     // Relacionamento com Tamanho (Size)
     @ManyToOne
     private Size size;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "user_id")
+    private User user;
 }

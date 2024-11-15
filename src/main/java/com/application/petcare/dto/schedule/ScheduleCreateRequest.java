@@ -45,4 +45,7 @@ public class ScheduleCreateRequest {
 
     @NotNull(message = "Service is required")
     private List<Integer> serviceIds;
+
+    @NotNull(message = "Employee is required")
+    private Integer employeeId;
 }

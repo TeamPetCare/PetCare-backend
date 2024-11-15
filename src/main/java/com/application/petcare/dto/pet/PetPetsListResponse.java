@@ -25,6 +25,7 @@ public class PetPetsListResponse {
     private Specie specie;
     private Race race;
     private Size size;
+    private Integer userId;
     private LocalDateTime lastSchedule;
     private Integer totalSchedules;
 }
