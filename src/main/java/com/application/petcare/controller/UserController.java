@@ -37,7 +37,7 @@ public interface UserController {
 
     @Operation(summary = "Atualizar cliente por ID")
     @PutMapping("/customers/{id}")
-    ResponseEntity<UserResponse> updateCustomer(Integer id, UserCustomerUpdateRequest request);
+    ResponseEntity<UserResponse> updateCustomer(@PathVariable Integer id, @RequestBody UserCustomerUpdateRequest request);
 
 
     @Operation(summary = "Excluir usuário por ID")
@@ -63,8 +63,8 @@ public interface UserController {
     ResponseEntity<Void> deleteSelectedCustomers(@RequestBody List<UserCustomerDeleteRequest> userCustomerDeleteRequests);
 
     @Operation(summary = "Pega as informacoes do usuario")
-    @DeleteMapping("/info")
-    ResponseEntity<UserInfosResponse> getUserInfo(Integer id);
+    @GetMapping("/info/{id}")
+    ResponseEntity<UserInfosResponse> getUserInfo(@PathVariable Integer id);
 }
 
 

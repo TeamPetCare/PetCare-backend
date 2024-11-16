@@ -195,6 +195,23 @@ public class PetServiceImpl implements PetService {
         log.info("Pet deleted successfully with id: {}", id);
     }
 
+    @Override
+    public void deletePetPetsList(List<Integer> petIds) {
+        List<Integer> notFoundPets = new ArrayList<>();
+        for (int i = 0; i < petIds.size(); i++) {
+            if (!petRepository.existsById(petIds.get(i))) {
+                notFoundPets.add(petIds.get(i));
+            } else {
+                petRepository.deleteById(petIds.get(i));
+            }
+        }
+
+        if (!notFoundPets.isEmpty()) {
+            throw new PetNotFoundException("Pets not found: " + notFoundPets.toString());
+        }
+    }
+
+
     public List<PetPetsListResponse> maptoPetPetsListResponse(List<Pet> pets){
         List<PetPetsListResponse> petPetsListResponses = new ArrayList<>();
         for (int i = 0; i < pets.size(); i++) {

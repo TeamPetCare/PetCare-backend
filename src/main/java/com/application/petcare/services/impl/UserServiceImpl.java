@@ -180,7 +180,7 @@ public class UserServiceImpl implements UserService {
     public UserInfosResponse getUserInfo(Integer id) {
         User possibleUser = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        return null;
+        return mapToUserInfoResponse(possibleUser);
     }
 
     private void mergeSortByName(ListaObj<UserCustomerResponse> lista, int inicio, int fim) {

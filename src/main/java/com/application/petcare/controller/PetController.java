@@ -26,7 +26,7 @@ public interface PetController {
 
     @Operation(summary = "Atualizar um pet na tela Clientes e Pets existente")
     @PutMapping("pets-list/{id}")
-    ResponseEntity<PetResponse> updatePetPetsList(Integer id, PetPetsListUpdateRequest request);
+    ResponseEntity<PetResponse> updatePetPetsList(@PathVariable Integer id,@RequestBody PetPetsListUpdateRequest request);
 
         @Operation(summary = "Buscar um pet pelo ID")
     @GetMapping("/{id}")
@@ -44,4 +44,9 @@ public interface PetController {
     @Operation(summary = "Deletar um pet")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deletePet(@PathVariable Integer id);
+
+    @Operation(summary = "Deletar uma lista de pets")
+    @DeleteMapping("/pets-list/{id}")
+    ResponseEntity<Void> deletePetPetsList(@RequestBody List<Integer> ids);
+
 }

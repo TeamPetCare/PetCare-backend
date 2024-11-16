@@ -69,6 +69,11 @@ public class ImageDatabase {
         // Prepara um byte array para armazenar os dados da imagem
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
+        if (!blobClient.exists()) {
+            return "Not found";
+        }
+
+
         if(blobClient.equals(null)){
             throw new BadRequestException("isUser is null");
         }
