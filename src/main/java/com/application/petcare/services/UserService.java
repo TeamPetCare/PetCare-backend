@@ -12,6 +12,8 @@ public interface UserService {
 
     UserResponse updateUser(Integer id, UserUpdateRequest request);
 
+    UserResponse updateCustomer(Integer id, UserCustomerUpdateRequest request);
+
     UserResponse findUserById(Integer planTypeId);
 
     List<UserResponse> findAllUsersById();
@@ -27,4 +29,6 @@ public interface UserService {
     List<UserEmployeeResponse> getAllEmployees();
 
     void deleteSelectedCustomers(List<UserCustomerDeleteRequest> userCustomerDeleteRequests);
+
+    UserInfosResponse getUserInfo(Integer id);
 }

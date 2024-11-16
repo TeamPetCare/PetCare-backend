@@ -52,7 +52,7 @@ public class ImageDatabase {
         }
     }
 
-    public ResponseEntity<byte[]> downloadImagem(Integer userId, Boolean isUser) {
+    public String downloadImagem(Integer userId, Boolean isUser) {
         BlobContainerClient containerClient = new BlobContainerClientBuilder()
                 .connectionString(CONNECTION_STRING)
                 .containerName(CONTAINER_NAME)
@@ -86,14 +86,19 @@ public class ImageDatabase {
             BlobProperties properties = blobClient.getProperties();
             String contentType = properties.getContentType();
 
+            if (!blobClient.exists()) {
+                throw new BadRequestException("Imagem não encontrada");
+            }
+
             // Retorna a imagem como um array de bytes
-            return ResponseEntity.ok()
-                    .contentType(org.springframework.http.MediaType.parseMediaType(contentType))
-//                    .header("Content-Disposition", "attachment; filename=\"" + "imagem" + contentType)
-                    .body(outputStream.toByteArray());
+//            return ResponseEntity.ok()
+//                    .contentType(org.springframework.http.MediaType.parseMediaType(contentType))
+//                    .header("Content-Disposition", "inline; filename=\"imagem_" + userId + ".jpg\"")
+//                    .body(outputStream.toByteArray());
+            return blobClient.getBlobUrl();
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).build(); // Retorna um erro interno do servidor
+            throw new BadRequestException("Error while getting blob image");
         }
     }
 }

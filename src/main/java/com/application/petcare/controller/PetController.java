@@ -2,6 +2,7 @@ package com.application.petcare.controller;
 
 import com.application.petcare.dto.pet.PetCreateRequest;
 import com.application.petcare.dto.pet.PetPetsListResponse;
+import com.application.petcare.dto.pet.PetPetsListUpdateRequest;
 import com.application.petcare.dto.pet.PetResponse;
 import com.application.petcare.entities.Pet;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +24,11 @@ public interface PetController {
     @PutMapping("/{id}")
     ResponseEntity<PetResponse> updatePet(@PathVariable Integer id, @RequestBody PetCreateRequest request);
 
-    @Operation(summary = "Buscar um pet pelo ID")
+    @Operation(summary = "Atualizar um pet na tela Clientes e Pets existente")
+    @PutMapping("pets-list/{id}")
+    ResponseEntity<PetResponse> updatePetPetsList(Integer id, PetPetsListUpdateRequest request);
+
+        @Operation(summary = "Buscar um pet pelo ID")
     @GetMapping("/{id}")
     ResponseEntity<PetResponse> getPetById(@PathVariable Integer id);
 

@@ -2,6 +2,7 @@ package com.application.petcare.services;
 
 import com.application.petcare.dto.pet.PetCreateRequest;
 import com.application.petcare.dto.pet.PetPetsListResponse;
+import com.application.petcare.dto.pet.PetPetsListUpdateRequest;
 import com.application.petcare.dto.pet.PetResponse;
 import com.application.petcare.entities.Pet;
 
@@ -11,6 +12,8 @@ public interface PetService {
     PetResponse createPet(PetCreateRequest request);
 
     PetResponse updatePet(Integer id, PetCreateRequest request);
+
+    PetResponse updatePetPetsList(Integer id, PetPetsListUpdateRequest request);
 
     PetResponse getPetById(Integer id);
 

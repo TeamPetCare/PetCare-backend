@@ -2,6 +2,7 @@ package com.application.petcare.services.impl;
 
 import com.application.petcare.dto.pet.PetCreateRequest;
 import com.application.petcare.dto.pet.PetPetsListResponse;
+import com.application.petcare.dto.pet.PetPetsListUpdateRequest;
 import com.application.petcare.dto.pet.PetResponse;
 import com.application.petcare.entities.*;
 import com.application.petcare.enums.Role;
@@ -118,6 +119,48 @@ public class PetServiceImpl implements PetService {
 
         Pet updatedPet = petRepository.save(pet);
         log.info("Pet updated successfully: {}", updatedPet);
+        return mapToResponse(updatedPet);
+    }
+
+    @Override
+    public PetResponse updatePetPetsList(Integer id, PetPetsListUpdateRequest request) {
+        User possibleCustomer = userRepository.findById(request.getDono())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        if(!possibleCustomer.getRole().equals(Role.ROLE_CUSTOMER)){
+            throw new BadRoleException("User is not a customer");
+        }
+
+        Pet pet = petRepository.findById(id)
+                .orElseThrow(() -> new PetNotFoundException("Pet not found"));
+
+        Size size = sizeRepository.findById(request.getPorte())
+                .orElseThrow(() -> new ResourceNotFoundException("Size not found"));
+
+        Specie specie = specieRepository.findById(request.getEspecie())
+                .orElseThrow(() -> new ResourceNotFoundException("Specie not found"));
+
+        Race race = raceRepository.findById(request.getRaca())
+                .orElseThrow(() -> new ResourceNotFoundException("Race not found"));
+
+        Plans plans = plansRepository.findById(request.getPlano())
+                .orElseThrow(() -> new ResourceNotFoundException("Plan not found"));
+
+        // Atualizando as informações
+        pet.setName(request.getPet());
+
+//        pet.setPetImg(request.());
+        pet.setBirthdate(request.getDtNascimento());
+        pet.setGender(request.getSexo());
+        pet.setColor(request.getCor());
+        pet.setEstimatedWeight(request.getPesoEstimado());
+        pet.setPetObservations(request.getObservacoes());
+        pet.setSize(size);
+        pet.setSpecie(specie);
+        pet.setRace(race);
+        pet.setPlan(plans);
+        pet.setUser(possibleCustomer);
+
+        Pet updatedPet = petRepository.save(pet);
         return mapToResponse(updatedPet);
     }
 

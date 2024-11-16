@@ -76,6 +76,12 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
+    public ResponseEntity<UserResponse> updateCustomer(Integer id, UserCustomerUpdateRequest request) {
+        UserResponse updatedUser = userService.updateCustomer(id, request);
+        return ResponseEntity.ok().body(updatedUser);
+    }
+
+    @Override
     public ResponseEntity<Void> deleteUser(Integer id) {
         userService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -100,6 +106,11 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<Void> deleteSelectedCustomers(List<UserCustomerDeleteRequest> userCustomerDeleteRequests) {
         userService.deleteSelectedCustomers(userCustomerDeleteRequests);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<UserInfosResponse> getUserInfo(Integer id) {
+        return ResponseEntity.ok().body(userService.getUserInfo(id));
     }
 
 }

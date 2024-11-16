@@ -3,6 +3,7 @@ package com.application.petcare.controller.impl;
 import com.application.petcare.controller.PetController;
 import com.application.petcare.dto.pet.PetCreateRequest;
 import com.application.petcare.dto.pet.PetPetsListResponse;
+import com.application.petcare.dto.pet.PetPetsListUpdateRequest;
 import com.application.petcare.dto.pet.PetResponse;
 import com.application.petcare.entities.Pet;
 import com.application.petcare.services.PetService;
@@ -26,6 +27,11 @@ public class PetControllerImpl implements PetController {
     @Override
     public ResponseEntity<PetResponse> updatePet(Integer id, PetCreateRequest request) {
         return ResponseEntity.ok(petService.updatePet(id, request));
+    }
+
+    @Override
+    public ResponseEntity<PetResponse> updatePetPetsList(Integer id, PetPetsListUpdateRequest request) {
+        return ResponseEntity.ok().body(petService.updatePetPetsList(id, request));
     }
 
     @Override

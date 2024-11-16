@@ -27,7 +27,7 @@ public class ImagesControllerImpl implements ImagesController {
     }
 
     @Override
-    public ResponseEntity<byte[]> downloadImage(Integer userId, Boolean isUser) {
-        return imageDatabase.downloadImagem(userId, isUser);
+    public ResponseEntity<String> downloadImage(Integer userId, Boolean isUser) {
+        return ResponseEntity.ok().body(imageDatabase.downloadImagem(userId, isUser));
     }
 }

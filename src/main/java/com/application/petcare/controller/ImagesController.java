@@ -17,5 +17,5 @@ public interface ImagesController {
 
     @Operation(summary = "Buscar uma imagem pelo id do usuario")
     @GetMapping("/download/{userId}")
-    ResponseEntity<byte[]> downloadImage(@PathVariable Integer userId, @RequestParam Boolean isUser);
+    ResponseEntity<String> downloadImage(@PathVariable Integer userId, @RequestParam Boolean isUser);
 }

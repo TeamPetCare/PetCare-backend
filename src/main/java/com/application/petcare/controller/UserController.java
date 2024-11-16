@@ -35,6 +35,11 @@ public interface UserController {
             @PathVariable Integer id,
             @RequestBody UserUpdateRequest userUpdateRequest);
 
+    @Operation(summary = "Atualizar cliente por ID")
+    @PutMapping("/customers/{id}")
+    ResponseEntity<UserResponse> updateCustomer(Integer id, UserCustomerUpdateRequest request);
+
+
     @Operation(summary = "Excluir usuário por ID")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteUser(@PathVariable Integer id);
@@ -56,4 +61,10 @@ public interface UserController {
     @Operation(summary = "Deleta muitos clientes por ids")
     @DeleteMapping("/customers/delete")
     ResponseEntity<Void> deleteSelectedCustomers(@RequestBody List<UserCustomerDeleteRequest> userCustomerDeleteRequests);
+
+    @Operation(summary = "Pega as informacoes do usuario")
+    @DeleteMapping("/info")
+    ResponseEntity<UserInfosResponse> getUserInfo(Integer id);
 }
+
+

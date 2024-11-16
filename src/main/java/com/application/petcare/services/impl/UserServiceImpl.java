@@ -11,6 +11,7 @@ import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.PetService;
 import com.application.petcare.services.UserService;
+import com.application.petcare.utils.ImageDatabase;
 import com.application.petcare.utils.ListaObj;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,6 +35,8 @@ public class UserServiceImpl implements UserService {
     private final PetServiceImpl petServiceImpl;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final ImageDatabase imageDatabase;
 
     private PetService petService;
 
@@ -102,6 +105,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserResponse updateCustomer(Integer id, UserCustomerUpdateRequest request) {
+        User user = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
+
+        user.setName(request.getCliente());
+        user.setCellphone(request.getWhatsApp());
+        user.setStreet(request.getRua());
+        user.setNumber(request.getNumero());
+        user.setComplement(request.getComplemento());
+        user.setCep(request.getCep());
+        user.setDistrict(request.getBairro());
+
+        User updatedUser = repository.save(user);
+        return mapToResponse(updatedUser);
+    }
+
+    @Override
     public UserResponse findUserById(Integer userId) {
         User user = repository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
@@ -156,6 +176,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public UserInfosResponse getUserInfo(Integer id) {
+        User possibleUser = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return null;
+    }
+
     private void mergeSortByName(ListaObj<UserCustomerResponse> lista, int inicio, int fim) {
         if (inicio < fim) {
             int meio = (inicio + fim) / 2;
@@ -195,6 +222,14 @@ public class UserServiceImpl implements UserService {
         while (j < n2) lista.set(k++, rightArray[j++]);
     }
 
+    private UserInfosResponse mapToUserInfoResponse(User user){
+        return UserInfosResponse.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .userImage(imageDatabase.downloadImagem(user.getId(), true))
+                .build();
+    }
 
     private List<UserEmployeeResponse> mapToUserEmployeeResponse(List<User> users){
         List<UserEmployeeResponse> userEmployeeResponses = new ArrayList<>();
@@ -202,7 +237,7 @@ public class UserServiceImpl implements UserService {
             userEmployeeResponses.add(UserEmployeeResponse.builder()
                     .id(users.get(i).getId())
                     .name(users.get(i).getName())
-                    .userImg(users.get(i).getUserImg())
+                    .userImg(imageDatabase.downloadImagem(users.get(i).getId(), true))
                     .email(users.get(i).getEmail())
                     .password(users.get(i).getPassword())
                     .cellphone(users.get(i).getCellphone())
@@ -236,7 +271,7 @@ public class UserServiceImpl implements UserService {
             userCustomerResponses.add(UserCustomerResponse.builder()
                     .id(user.get(i).getId())
                     .name(user.get(i).getName())
-                    .userImg(user.get(i).getUserImg())
+                    .userImg(imageDatabase.downloadImagem(user.get(i).getId(), true))
                     .email(user.get(i).getEmail())
                     .password(user.get(i).getPassword())
                     .cellphone(user.get(i).getCellphone())
@@ -269,7 +304,7 @@ public class UserServiceImpl implements UserService {
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
-                .userImg(user.getUserImg())
+                .userImg(imageDatabase.downloadImagem(user.getId(), true))
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .cellphone(user.getCellphone())
