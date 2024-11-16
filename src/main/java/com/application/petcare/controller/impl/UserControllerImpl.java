@@ -37,24 +37,37 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
+//    @Override
+//    public ResponseEntity generateCsvFileCustomerAndPets() {
+//        // Gerando o CSV com dados mockados
+//        userService.generateCsvFileCustomerAndPets();
+//
+//        // Criando um recurso de arquivo para o CSV gerado
+//        FileSystemResource fileResource = new FileSystemResource(userService.getCsvFilePath());
+//
+//        // Configurando os cabeçalhos para o download
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"reportCustomersAndPets.csv\"")
+//                .contentType(MediaType.parseMediaType("text/csv"))
+//                .body(fileResource);
+//    }
+
     @Override
-    public ResponseEntity generateCsvFileCustomerAndPets() {
-        // Gerando o CSV com dados mockados
-        userService.generateCsvFileCustomerAndPets();
+    public ResponseEntity<byte[]> generateCsvFileCustomerAndPets() {
+        // Gerando o CSV com dados dos clientes e pets em memória
+        byte[] csvData = userService.generateCsvFileCustomerAndPets();
 
-        // Criando um recurso de arquivo para o CSV gerado
-        FileSystemResource fileResource = new FileSystemResource(userService.getCsvFilePath());
+        // Verifica se o arquivo foi gerado corretamente
+        if (csvData == null) {
+            return ResponseEntity.status(500).body("Erro ao gerar o arquivo CSV".getBytes());
+        }
 
-        // Configurando os cabeçalhos para o download
+        // Retorna o CSV como resposta de download
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"reportCustomersAndPets.csv\"")
                 .contentType(MediaType.parseMediaType("text/csv"))
-                .body(fileResource);
+                .body(csvData);  // Envia o arquivo CSV diretamente nos bytes
     }
-//    public ResponseEntity<Void> () {
-//        userService.generateCsvFileCustomerAndPets();
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
 
     @Override
     public ResponseEntity<UserResponse> updateUser(Integer id, UserUpdateRequest userUpdateRequest) {

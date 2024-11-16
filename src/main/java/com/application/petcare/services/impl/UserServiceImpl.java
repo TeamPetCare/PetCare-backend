@@ -16,13 +16,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import com.opencsv.CSVWriter;
+
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +34,6 @@ public class UserServiceImpl implements UserService {
     private final PetServiceImpl petServiceImpl;
 
     private final PasswordEncoder passwordEncoder;
-
-    private static final String CSV_FILE_PATH = "reportCustomersAndPets.csv";
 
     private PetService petService;
 
@@ -115,9 +113,10 @@ public class UserServiceImpl implements UserService {
         return repository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
-    public void generateCsvFileCustomerAndPets() {
+    @Override
+    public byte[] generateCsvFileCustomerAndPets() {
         List<User> list = repository.findAll();
-        writeCsvFileCustomerAndPets(list, "reportCustomersAndPets");
+        return writeCsvFileCustomerAndPets(list);
     }
 
 
@@ -289,32 +288,27 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    public static void writeCsvFileCustomerAndPets(List<User> lista, String nomeArq) {
-        FileWriter arq = null;
-        Formatter saida = null;
-        boolean deuRuim = false;
+    private byte[] writeCsvFileCustomerAndPets(List<User> lista) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        nomeArq += ".csv";
-
-        try {
-            arq = new FileWriter(nomeArq);
-            saida = new Formatter(arq);
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(byteArrayOutputStream))) {
 
             // Cabeçalho do CSV
-            saida.format("ID;Nome;Email;Celular;Rua;Número;Complemento;CEP;Bairro;Cidade;CPF Cliente;Nome do Pet;Raça;Nascimento;Porte;Observações\n");
+            String[] header = { "ID", "Nome", "Email", "Celular", "Rua", "Número", "Complemento", "CEP", "Bairro", "Cidade", "CPF Cliente", "Nome do Pet", "Raça", "Nascimento", "Porte", "Observações" };
+            writer.writeNext(header);
 
             // Iteração sobre os clientes e seus pets
             for (User userResponse : lista) {
                 if (userResponse.getPet() != null && !userResponse.getPet().isEmpty()) {
                     // Itera sobre cada pet do cliente
                     for (Pet pet : userResponse.getPet()) {
-                        saida.format("%d;%s;%s;%s;%s;%d;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n",
-                                userResponse.getId(),
+                        String[] record = {
+                                String.valueOf(userResponse.getId()),
                                 userResponse.getName(),
                                 userResponse.getEmail(),
                                 userResponse.getCellphone(),
                                 userResponse.getStreet(),
-                                userResponse.getNumber(),
+                                String.valueOf(userResponse.getNumber()),
                                 userResponse.getComplement(),
                                 userResponse.getCep(),
                                 userResponse.getDistrict(),
@@ -322,48 +316,38 @@ public class UserServiceImpl implements UserService {
                                 userResponse.getCpfClient(),
                                 pet.getName(),
                                 pet.getRace().getRaceType(),
-                                pet.getBirthdate(),
+                                pet.getBirthdate().toString(),
                                 pet.getSize().getSizeType(),
-                                pet.getPetObservations());
+                                pet.getPetObservations()
+                        };
+                        writer.writeNext(record);
                     }
                 } else {
                     // Caso o cliente não tenha pets, preenche apenas os dados do cliente
-                    saida.format("%d;%s;%s;%s;%s;%d;%s;%s;%s;%s;%s;;;;;\n",
-                            userResponse.getId(),
+                    String[] record = {
+                            String.valueOf(userResponse.getId()),
                             userResponse.getName(),
                             userResponse.getEmail(),
                             userResponse.getCellphone(),
                             userResponse.getStreet(),
-                            userResponse.getNumber(),
+                            String.valueOf(userResponse.getNumber()),
                             userResponse.getComplement(),
                             userResponse.getCep(),
                             userResponse.getDistrict(),
                             userResponse.getCity(),
-                            userResponse.getCpfClient());
+                            userResponse.getCpfClient(),
+                            "", "", "", "", ""
+                    };
+                    writer.writeNext(record);
                 }
             }
 
-            System.out.println("Arquivo CSV salvo em: " + new File(nomeArq).getAbsolutePath());
-        } catch (IOException | FormatterClosedException erro) {
-            System.out.println("Erro ao gravar o arquivo");
-            erro.printStackTrace();
-            deuRuim = true;
-        } finally {
-            if (saida != null) saida.close();
-            try {
-                if (arq != null) arq.close();
-            } catch (IOException erro) {
-                System.out.println("Erro ao fechar o arquivo");
-                deuRuim = true;
-            }
-            if (deuRuim) {
-                System.exit(1);
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-    }
 
-    public String getCsvFilePath() {
-        return CSV_FILE_PATH;
+        return byteArrayOutputStream.toByteArray();  // Retorna o CSV como um array de bytes
     }
 
 

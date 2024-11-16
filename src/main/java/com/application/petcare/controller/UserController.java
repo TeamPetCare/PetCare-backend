@@ -2,6 +2,7 @@ package com.application.petcare.controller;
 
 import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.User;
+import com.azure.core.management.Resource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public interface UserController {
 
     @Operation(summary = "Gerar relatório CSV de Clientes")
     @GetMapping(value = "/reportCustumersAndPets", produces = "text/csv")
-    ResponseEntity<ResponseEntity> generateCsvFileCustomerAndPets();
+    ResponseEntity<byte[]> generateCsvFileCustomerAndPets();
 
     @Operation(summary = "Atualizar usuário por ID")
     @PutMapping("/{id}")

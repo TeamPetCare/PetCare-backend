@@ -16,7 +16,7 @@ public interface UserService {
 
     List<UserResponse> findAllUsersById();
 
-    void generateCsvFileCustomerAndPets();
+    byte[] generateCsvFileCustomerAndPets();
 
     void deleteUser(Integer planTypeId);
 
@@ -25,9 +25,6 @@ public interface UserService {
     List<UserCustomerResponse> getAllCustumersSortedByName();
 
     List<UserEmployeeResponse> getAllEmployees();
-
-
-    String getCsvFilePath();
 
     void deleteSelectedCustomers(List<UserCustomerDeleteRequest> userCustomerDeleteRequests);
 }
