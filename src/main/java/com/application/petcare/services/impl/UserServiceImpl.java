@@ -291,7 +291,12 @@ public class UserServiceImpl implements UserService {
     private byte[] writeCsvFileCustomerAndPets(List<User> lista) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(byteArrayOutputStream))) {
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(byteArrayOutputStream),
+                ';', // Delimitador
+                CSVWriter.DEFAULT_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END)) {
+
 
             // Cabeçalho do CSV
             String[] header = { "ID", "Nome", "Email", "Celular", "Rua", "Número", "Complemento", "CEP", "Bairro", "Cidade", "CPF Cliente", "Nome do Pet", "Raça", "Nascimento", "Porte", "Observações" };
