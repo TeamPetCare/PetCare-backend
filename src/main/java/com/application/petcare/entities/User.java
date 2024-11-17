@@ -68,7 +68,7 @@ public class User {
     @CPF
     private String cpfClient;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<Pet> pet;
 
