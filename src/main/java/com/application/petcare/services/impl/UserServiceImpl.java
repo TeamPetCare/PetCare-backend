@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEmployeeResponse> getAllEmployees() {
-        return mapToUserEmployeeResponse(repository.findByRole(Role.ROLE_EMPLOYEE));
+        return mapToUserEmployeeResponse(repository.findByRoleNot(Role.ROLE_CUSTOMER));
     }
 
     @Override
