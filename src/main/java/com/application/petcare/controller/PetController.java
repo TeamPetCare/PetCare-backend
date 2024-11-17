@@ -46,7 +46,7 @@ public interface PetController {
     ResponseEntity<Void> deletePet(@PathVariable Integer id);
 
     @Operation(summary = "Deletar uma lista de pets")
-    @DeleteMapping("/pets-list/{id}")
+    @DeleteMapping("/pets-list")
     ResponseEntity<Void> deletePetPetsList(@RequestBody List<Integer> ids);
 
 }
