@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "Pet")
 @Builder
@@ -39,25 +41,33 @@ public class Pet {
 
     private String petImg;
 
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
+
     // Um pet um plano
     @ManyToOne
+    @JoinColumn(name = "plan_id", nullable = true)
     @JsonManagedReference
     private Plans plan;
 
+
     // Relacionamento com Especie (muitos pets podem ter uma espécie)
     @ManyToOne
+    @JoinColumn(name = "specie_id", nullable = false)
     private Specie specie;
 
     // Relacionamento com Race (muitos pets podem ter uma raça)
     @ManyToOne
+    @JoinColumn(name = "race_id", nullable = false)
     private Race race;
 
     // Relacionamento com Tamanho (Size)
     @ManyToOne
+    @JoinColumn(name = "size_id", nullable = false)
     private Size size;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

@@ -44,11 +44,12 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .scheduleTime(request.getScheduleTime())
                 .creationDate(request.getCreationDate())
                 .scheduleNote(request.getScheduleNote())
+                .deletedAt(null)
                 .pet(petRepository.findById(request.getPetId())
                         .orElseThrow(() -> new ResourceNotFoundException("Pet not found")))
                 .payment(paymentRepository.findById(request.getPaymentId())
                         .orElseThrow(() -> new ResourceNotFoundException("Payment not found")))
-                .services(servicesRepository.findAllByIdIn(request.getServiceIds()))
+                .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()))
                 .employee(possibleEmployee)
                 .build();
 
@@ -77,7 +78,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found")));
         schedule.setPayment(paymentRepository.findById(request.getPaymentId())
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found")));
-        schedule.setServices(servicesRepository.findAllByIdIn(request.getServiceIds()));
+        schedule.setServices(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()));
         schedule.setEmployee(possibleEmployee);
 
         Schedule updatedSchedule = scheduleRepository.save(schedule);
@@ -105,7 +106,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     public void deleteScheduleById(Integer id) {
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
-        scheduleRepository.deleteById(id);
+        schedule.setDeletedAt(LocalDateTime.now());
+        scheduleRepository.save(schedule);
     }
 
     @Override

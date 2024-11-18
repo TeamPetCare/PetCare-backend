@@ -1,6 +1,7 @@
 package com.application.petcare.entities;
 
 import com.application.petcare.enums.PaymentMethod;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -35,8 +36,14 @@ public class Payment {
 
     private Boolean paymentStatus;
 
+
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
+
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
 }

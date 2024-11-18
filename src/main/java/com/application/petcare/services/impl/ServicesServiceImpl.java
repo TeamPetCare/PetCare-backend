@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +37,7 @@ public class ServicesServiceImpl implements ServicesService {
                 .price(request.getPrice())
                 .estimatedTime(request.getEstimatedTime())
                 .disponibility(request.getDisponibility())
+                .deletedAt(null)
 //                .schedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
 //                        .filter(schedules -> !schedules.isEmpty())
 //                        .orElseThrow(() -> new ResourceNotFoundException("Schedule not foun")))
@@ -71,10 +73,6 @@ public class ServicesServiceImpl implements ServicesService {
     public void deleteService(Integer id) {
         log.info("Deleting service with id: {}", id);
 
-        if (!servicesRepository.existsById(id)) {
-            throw new ServicoNotFoundException("Servico não encontrado");
-        }
-
         Services service = servicesRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Service not found"));
 
@@ -82,8 +80,8 @@ public class ServicesServiceImpl implements ServicesService {
 //            schedule.getServices().remove(service);
 //            scheduleRepository.save(schedule);
 //        }
-
-        servicesRepository.deleteById(id);
+        service.setDeletedAt(LocalDateTime.now());
+        servicesRepository.save(service);
         log.info("Service deleted successfully with id: {}", id);
     }
 

@@ -3,6 +3,7 @@ package com.application.petcare.services.impl;
 import com.application.petcare.dto.size.SizeCreateRequest;
 import com.application.petcare.dto.size.SizeResponse;
 import com.application.petcare.entities.Size;
+import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.exceptions.SizeNotFoundException;
 import com.application.petcare.repository.SizeRepository;
 import com.application.petcare.services.SizeService;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,7 @@ public class SizeServiceImpl implements SizeService {
         Size size = Size.builder()
                 .sizeType(request.getSizeType())
                 .price(request.getPrice())
+                .deletedAt(null)
                 .build();
 
         Size savedSize = sizeRepository.save(size);
@@ -52,10 +55,10 @@ public class SizeServiceImpl implements SizeService {
     public void deleteSize(Integer id) {
         log.info("Deleting size with id: {}", id);
 
-        if (!sizeRepository.existsById(id)) {
-            throw new SizeNotFoundException("Tamanho não encontrado");
-        }
-        sizeRepository.deleteById(id);
+       Size size = sizeRepository.findById(id)
+                       .orElseThrow(() -> new ResourceNotFoundException("Size not found"));
+       size.setDeletedAt(LocalDateTime.now());
+       sizeRepository.save(size);
         log.info("Size deleted successfully with id: {}", id);
     }
 

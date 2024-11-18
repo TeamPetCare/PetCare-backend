@@ -1,12 +1,14 @@
 package com.application.petcare.entities;
 
 import com.application.petcare.enums.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -68,9 +70,17 @@ public class User {
     @CPF
     private String cpfClient;
 
-    @OneToMany(mappedBy = "user")
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
+
+    @OneToMany
     @JsonManagedReference
-    private List<Pet> pet;
+    private List<Pet> pets;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Payment> payments;
+
 
 
 }

@@ -3,6 +3,8 @@ package com.application.petcare.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "Race")
@@ -22,4 +24,7 @@ public class Race {
 
     @Column(nullable = false)
     private Double price;
+
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
 }

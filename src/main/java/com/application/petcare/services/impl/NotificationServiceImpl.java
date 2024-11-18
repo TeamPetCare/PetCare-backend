@@ -9,6 +9,7 @@ import com.application.petcare.services.NotificationService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .notificationDate(request.getNotificationDate())
+                .deletedAt(null)
                 .build();
         Notification savedNotification = notificationRepository.save(notification);
         return mapNotificationToNotificationResponse(savedNotification);
@@ -58,7 +60,8 @@ public class NotificationServiceImpl implements NotificationService {
     public void deleteNotification(Integer id) {
         Notification notification = notificationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Notification not found"));
-        notificationRepository.deleteById(id);
+        notification.setDeletedAt(LocalDateTime.now());
+        notificationRepository.save(notification);
     }
 
     public NotificationResponse mapNotificationToNotificationResponse(Notification request){

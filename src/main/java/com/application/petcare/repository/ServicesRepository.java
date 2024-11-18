@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ServicesRepository extends JpaRepository<Services, Integer> {
-    List<Services> findAllByIdIn (List<Integer> ids);
+    List<Services> findAllByIdInAndDeletedAtIsNull (List<Integer> ids);
 }

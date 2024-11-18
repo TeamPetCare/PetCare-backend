@@ -10,6 +10,7 @@ import com.application.petcare.services.PaymentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,6 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .paymentId(request.getPaymentId())
                 .paymentMethod(request.getPaymentMethod())
                 .paymentStatus(request.getPaymentStatus())
+                .deletedAt(null)
                 .user(userRepository.findById(request.getUserId())
                         .orElseThrow(() -> new ResourceNotFoundException("User not found")))
                 .build();
@@ -67,7 +69,8 @@ public class PaymentServiceImpl implements PaymentService {
     public void deletePayment(Integer id) {
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
-        paymentRepository.deleteById(id);
+        payment.setDeletedAt(LocalDateTime.now());
+        Payment updatedPayment = paymentRepository.save(payment);
     }
 
     public PaymentResponse mapToPaymentResponse(Payment payment){

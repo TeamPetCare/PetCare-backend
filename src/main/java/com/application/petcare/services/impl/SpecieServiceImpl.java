@@ -4,12 +4,14 @@ import com.application.petcare.dto.specie.SpecieCreateRequest;
 import com.application.petcare.dto.specie.SpecieResponse;
 import com.application.petcare.entities.Specie;
 import com.application.petcare.exceptions.EspecieNotFoundException;
+import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.SpecieRepository;
 import com.application.petcare.services.SpecieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,7 @@ public class SpecieServiceImpl implements SpecieService {
         Specie specie = Specie.builder()
                 .name(request.getName())
                 .price(request.getPrice())
+                .deletedAt(null)
                 .build();
 
         Specie savedSpecie = especieRepository.save(specie);
@@ -71,10 +74,10 @@ public class SpecieServiceImpl implements SpecieService {
     public void deleteEspecie(Integer id) {
         log.info("Deleting species with id: {}", id);
 
-        if (!especieRepository.existsById(id)) {
-            throw new EspecieNotFoundException("Espécie não encontrada!");
-        }
-        especieRepository.deleteById(id);
+        Specie specie = especieRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Specie not found"));
+        specie.setDeletedAt(LocalDateTime.now());
+        especieRepository.save(specie);
         log.info("Species deleted successfully with id: {}", id);
     }
 

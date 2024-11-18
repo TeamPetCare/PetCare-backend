@@ -4,12 +4,14 @@ import com.application.petcare.dto.race.RaceCreateRequest;
 import com.application.petcare.dto.race.RaceResponse;
 import com.application.petcare.entities.Race;
 import com.application.petcare.exceptions.RaceNotFoundException;
+import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.RaceRepository;
 import com.application.petcare.services.RaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,7 @@ public class RaceServiceImpl implements RaceService {
         Race race = Race.builder()
                 .raceType(request.getRaceType())
                 .price(request.getPrice())
+                .deletedAt(null)
                 .build();
 
         Race savedRace = raceRepository.save(race);
@@ -69,11 +72,10 @@ public class RaceServiceImpl implements RaceService {
     @Override
     public void deleteRace(Integer id) {
         log.info("Deleting raca with id: {}", id);
-
-        if (!raceRepository.existsById(id)) {
-            throw new RaceNotFoundException("Raça não encontrada");
-        }
-        raceRepository.deleteById(id);
+        Race race = raceRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Race not found"));
+        race.setDeletedAt(LocalDateTime.now());
+        raceRepository.save(race);
         log.info("Raca deleted successfully with id: {}", id);
     }
 

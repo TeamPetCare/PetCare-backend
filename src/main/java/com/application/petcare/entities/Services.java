@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,9 @@ public class Services {
 
     @Column(nullable = false)
     private Boolean disponibility;
+
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
 
 
 }

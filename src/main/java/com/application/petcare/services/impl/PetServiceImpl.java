@@ -14,6 +14,7 @@ import com.application.petcare.services.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,6 +67,7 @@ public class PetServiceImpl implements PetService {
                 .color(request.getColor())
                 .estimatedWeight(request.getEstimatedWeight())
                 .size(size)
+                .deletedAt(null)
                 .petObservations(request.getPetObservations())
                 .plan(plansRepository.findById(request.getPlanId())
                         .orElseThrow(() -> new ResourceNotFoundException("Plan not found")))
@@ -188,10 +190,10 @@ public class PetServiceImpl implements PetService {
     @Override
     public void deletePet(Integer id) {
         log.info("Deleting pet with id: {}", id);
-        if (!petRepository.existsById(id)) {
-            throw new PetNotFoundException("Pet not found");
-        }
-        petRepository.deleteById(id);
+        Pet pet = petRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+        pet.setDeletedAt(LocalDateTime.now());
+        petRepository.save(pet);
         log.info("Pet deleted successfully with id: {}", id);
     }
 
@@ -202,6 +204,9 @@ public class PetServiceImpl implements PetService {
             if (!petRepository.existsById(petIds.get(i))) {
                 notFoundPets.add(petIds.get(i));
             } else {
+                Pet pet = petRepository.findById(petIds.get(i))
+                                .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
+                pet.setDeletedAt(LocalDateTime.now());
                 petRepository.deleteById(petIds.get(i));
             }
         }

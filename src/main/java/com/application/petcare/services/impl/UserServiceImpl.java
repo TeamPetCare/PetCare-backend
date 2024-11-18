@@ -56,17 +56,17 @@ public class UserServiceImpl implements UserService {
                 .district(request.getDistrict())
                 .city(request.getCity())
                 .cnpjOwner(request.getCnpjOwner())
+                .deletedAt(null)
                 .roleEmployee(request.getRoleEmployee())
                 .disponibilityStatusEmployee(request.getDisponibilityStatus())
                 .cpfClient(request.getCpfClient())
-                .pet(petRepository.findAllByIdIn(request.getPetIds()))
+                .pets(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()))
                 .build();
 
-        if (user.getPet().isEmpty()) {
+        if (user.getPets().isEmpty()) {
             throw new ResourceNotFoundException("Pets not found");
         }
-        User existingUser = repository.findByEmail(user.getEmail()).get();
-        if (user.getEmail().equals(existingUser.getEmail())){
+        if (repository.findByEmailAndDeletedAtIsNull(user.getEmail()).isPresent()){
             throw new DuplicateEntryFoundException("Email is already used by another user");
         }
         User savedUser = repository.save(user);
@@ -94,9 +94,9 @@ public class UserServiceImpl implements UserService {
         user.setRoleEmployee(request.getRoleEmployee());
         user.setDisponibilityStatusEmployee(request.getDisponibilityStatus());
         user.setCpfClient(request.getCpfClient());
-        user.setPet(petRepository.findAllByIdIn(request.getPetIds()));
+        user.setPets(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()));
 
-        if (user.getPet().isEmpty()) {
+        if (user.getPets().isEmpty()) {
             throw new ResourceNotFoundException("Pets not found");
         }
 
@@ -142,14 +142,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Integer userId) {
-        if (!repository.existsById(userId)) {
-            throw new ResourceNotFoundException("User not found with ID: " + userId);
-        }
-        repository.deleteById(userId);
+        User user = repository.findById(userId)
+                        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        user.setDeletedAt(LocalDateTime.now());
+        repository.save(user);
     }
 
     public List<UserCustomerResponse> getAllCustomers() {
-        return mapToUserCustomerResponse(repository.findByRole(Role.ROLE_CUSTOMER));
+        return mapToUserCustomerResponse(repository.findByRoleAndDeletedAtIsNull(Role.ROLE_CUSTOMER));
     }
 
     public List<UserCustomerResponse> getAllCustumersSortedByName() {
@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEmployeeResponse> getAllEmployees() {
-        return mapToUserEmployeeResponse(repository.findByRoleNot(Role.ROLE_CUSTOMER));
+        return mapToUserEmployeeResponse(repository.findByRoleNotAndDeletedAtIsNull(Role.ROLE_CUSTOMER));
     }
 
     @Override
@@ -258,13 +258,13 @@ public class UserServiceImpl implements UserService {
     public List<UserCustomerResponse> mapToUserCustomerResponse(List<User> user){
         List<UserCustomerResponse> userCustomerResponses = new ArrayList<>();
         for (int i = 0; i < user.size(); i++) {
-            List<PetPetsListResponse> petPetsListResponses = petServiceImpl.maptoPetPetsListResponse(user.get(i).getPet());
+            List<PetPetsListResponse> petPetsListResponses = petServiceImpl.maptoPetPetsListResponse(user.get(i).getPets());
             petPetsListResponses.sort(Comparator.comparing(PetPetsListResponse::getLastSchedule).reversed());
             LocalDateTime lastSchedule;
-            if(petPetsListResponses.size() >= 1){
-                 lastSchedule = petPetsListResponses.get(0).getLastSchedule();
+            if(petPetsListResponses.isEmpty()){
+                lastSchedule = null;
             }else{
-                 lastSchedule = null;
+                lastSchedule = petPetsListResponses.get(0).getLastSchedule();
             }
 
 
@@ -286,7 +286,7 @@ public class UserServiceImpl implements UserService {
                     .roleEmployee(user.get(i).getRoleEmployee())
                     .disponibilityStatusEmployee(user.get(i).getDisponibilityStatusEmployee())
                     .cpfClient(user.get(i).getCpfClient())
-                    .pet(petServiceImpl.maptoPetPetsListResponse(user.get(i).getPet()))
+                    .pet(petServiceImpl.maptoPetPetsListResponse(user.get(i).getPets()))
                     .lastSchedule(lastSchedule)
                     .totalSchedules(petPetsListResponses.stream().mapToInt(PetPetsListResponse::getTotalSchedules).sum())
                     .build());
@@ -297,8 +297,8 @@ public class UserServiceImpl implements UserService {
     public UserResponse mapToResponse(User user) {
 
         List<Integer> petIds = new ArrayList<>();
-        for (int i = 0; i < user.getPet().size(); i++) {
-            petIds.add(user.getPet().get(i).getId());
+        for (int i = 0; i < user.getPets().size(); i++) {
+            petIds.add(user.getPets().get(i).getId());
         }
 
         return UserResponse.builder()
@@ -339,9 +339,9 @@ public class UserServiceImpl implements UserService {
 
             // Iteração sobre os clientes e seus pets
             for (User userResponse : lista) {
-                if (userResponse.getPet() != null && !userResponse.getPet().isEmpty()) {
+                if (userResponse.getPets() != null && !userResponse.getPets().isEmpty()) {
                     // Itera sobre cada pet do cliente
-                    for (Pet pet : userResponse.getPet()) {
+                    for (Pet pet : userResponse.getPets()) {
                         String[] record = {
                                 String.valueOf(userResponse.getId()),
                                 userResponse.getName(),

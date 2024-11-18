@@ -25,4 +25,6 @@ public class Notification {
     private String description;
     @Column(nullable = false)
     private LocalDateTime notificationDate;
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
 }

@@ -41,6 +41,9 @@ public class Schedule {
     @NotBlank
     private String scheduleNote;
 
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
+
     @NotNull
     @ManyToOne
     private Pet pet;
@@ -52,7 +55,6 @@ public class Schedule {
     @ManyToMany
     @JsonManagedReference
     @JoinTable(
-            name = "Schedule_has_Services",
             joinColumns = @JoinColumn(name = "schedule_id"),
             inverseJoinColumns = @JoinColumn(name = "services_id")
     )

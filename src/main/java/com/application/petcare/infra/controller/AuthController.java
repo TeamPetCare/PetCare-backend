@@ -35,7 +35,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto body){
-        User user = this.repository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = this.repository.findByEmailAndDeletedAtIsNull(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
         if(user.getRole().equals(Role.ROLE_CUSTOMER)){
             throw new BadRoleException("Customer is not allowed");
         }
@@ -49,7 +49,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<LoginResponseDto> register(@RequestBody RegisterRequestDto body){
-        Optional<User> possibleUser = this.repository.findByEmail(body.email());
+        Optional<User> possibleUser = this.repository.findByEmailAndDeletedAtIsNull(body.email());
         if(possibleUser.isEmpty()){
             User newUser = new User();
             newUser.setName(body.name());
@@ -68,7 +68,7 @@ public class AuthController {
             newUser.setRoleEmployee(body.roleEmployee());
             newUser.setDisponibilityStatusEmployee(body.disponibilityStatus());
             newUser.setCpfClient(body.cpfClient());
-            newUser.setPet(petRepository.findAllByIdIn(body.petIds()));
+            newUser.setPets(petRepository.findAllByIdInAndDeletedAtIsNull(body.petIds()));
 
             this.repository.save(newUser);
             String token = this.tokenService.generateToken(newUser);

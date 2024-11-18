@@ -10,5 +10,5 @@ import java.util.Optional;
 
 
 public interface PetRepository extends JpaRepository<Pet, Integer> {
-    List<Pet> findAllByIdIn(List<Integer> petIds);
+    List<Pet> findAllByIdInAndDeletedAtIsNull(List<Integer> petIds);
 }

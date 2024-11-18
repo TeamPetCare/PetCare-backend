@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
-    Optional<List<Schedule>> findAllByIdIn (List<Integer> ids);
+    Optional<List<Schedule>> findAllByIdInAndDeletedAtIsNull (List<Integer> ids);
     Optional<Schedule> findByScheduleDateAndScheduleTime(LocalDateTime scheduleDate, LocalTime scheduleTime);
 
     long countByScheduleStatus(StatusAgendamento status);

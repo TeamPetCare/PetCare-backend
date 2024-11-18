@@ -53,13 +53,15 @@ public class Plans {
 
     private List<Integer> repeatQuantity = new ArrayList<>();
 
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
+
     @NotNull
     @OneToMany
     private List<Payment> payments;
 
-    @OneToMany
-    @JoinColumn(name = "pet_id", nullable = true)
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
-    private List<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
 
 }

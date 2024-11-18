@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -23,4 +24,7 @@ public class Size {
 
     @Column(nullable = false)
     private BigDecimal price;
+
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
 }

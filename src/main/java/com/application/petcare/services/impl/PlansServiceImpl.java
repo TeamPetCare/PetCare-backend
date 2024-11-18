@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,12 +43,13 @@ public class PlansServiceImpl implements PlansService {
                 .active(request.getActive())
                 .renewal(request.getRenewal())
                 .description(request.getDescription())
+                .deletedAt(null)
                 .planType(planTypeRepository.findById(request.getPlanTypeId())
                         .orElseThrow(() -> new ResourceNotFoundException("Plan Type not found")))
-                .services(servicesRepository.findAllByIdIn(request.getServicesIds()))
+                .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServicesIds()))
                 .repeatQuantity(request.getRepeatQuantity())
-                .payments(paymentRepository.findByIdIn(request.getPaymentIds()))
-                .pets(petRepository.findAllByIdIn(request.getPetIds()))
+                .payments(paymentRepository.findByIdInAndDeletedAtIsNull(request.getPaymentIds()))
+                .pets(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()))
                 .build();
         Plans savedPlan = plansRepository.save(plans);
         return mapToResponse(savedPlan);
@@ -66,10 +68,10 @@ public class PlansServiceImpl implements PlansService {
         plans.setDescription(request.getDescription());
         plans.setPlanType(planTypeRepository.findById(request.getPlanTypeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Plan type not found")));
-        plans.setServices(servicesRepository.findAllByIdIn(request.getServicesIds()));
+        plans.setServices(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServicesIds()));
         plans.setRepeatQuantity(request.getRepeatQuantity());
-        plans.setPayments(paymentRepository.findByIdIn(request.getPaymentIds()));
-        plans.setPets(petRepository.findAllByIdIn(request.getPetIds()));
+        plans.setPayments(paymentRepository.findByIdInAndDeletedAtIsNull(request.getPaymentIds()));
+        plans.setPets(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()));
 
         Plans updatedPlan = plansRepository.save(plans);
         return mapToResponse(updatedPlan);
@@ -91,7 +93,8 @@ public class PlansServiceImpl implements PlansService {
     public void deletePlans(Integer planId) {
         Plans plans = plansRepository.findById(planId)
                 .orElseThrow(() -> new ResourceNotFoundException("Plan not found"));
-        plansRepository.deleteById(planId);
+        plans.setDeletedAt(LocalDateTime.now());
+        plansRepository.save(plans);
     }
 
     @Override

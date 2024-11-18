@@ -4,6 +4,8 @@ package com.application.petcare.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "Specie")
@@ -23,4 +25,7 @@ public class Specie {
 
     @Column(nullable = false)
     private Double price;
+
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
 }

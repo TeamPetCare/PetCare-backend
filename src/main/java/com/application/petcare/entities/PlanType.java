@@ -3,6 +3,8 @@ package com.application.petcare.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Table(name = "PlanType")
 @Entity
 @Builder
@@ -18,5 +20,7 @@ public class PlanType {
 
     private String name;
     private Integer paymentInterval;
+    @Column(nullable = true)
+    private LocalDateTime deletedAt;
 
 }

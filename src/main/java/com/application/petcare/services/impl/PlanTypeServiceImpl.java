@@ -9,6 +9,7 @@ import com.application.petcare.services.PlanTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ public class PlanTypeServiceImpl implements PlanTypeService {
     public PlanTypeResponse createPlanType(PlanTypeCreateRequest request) {
         PlanType planType = PlanType.builder()
                 .name(request.getName())
+                .deletedAt(null)
                 .paymentInterval(request.getPaymentInterval()).build();
         PlanType savedPlanType = repository.save(planType);
         return mapToResponse(savedPlanType);
@@ -55,10 +57,10 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 
     @Override
     public void deletePlanType(Integer planTypeId) {
-        if (!repository.existsById(planTypeId)) {
-            throw new ResourceNotFoundException("User not found with ID: " + planTypeId);
-        }
-        repository.deleteById(planTypeId);
+        PlanType planType = repository.findById(planTypeId)
+                        .orElseThrow(() -> new ResourceNotFoundException("PlanType not found"));
+        planType.setDeletedAt(LocalDateTime.now());
+        repository.save(planType);
     }
 
     public PlanTypeResponse mapToResponse(PlanType request){
