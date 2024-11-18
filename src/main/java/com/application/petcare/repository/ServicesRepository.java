@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ServicesRepository extends JpaRepository<Services, Integer> {
     List<Services> findAllByIdInAndDeletedAtIsNull (List<Integer> ids);
+    List<Services> findAllByDeletedAtIsNull();
 }

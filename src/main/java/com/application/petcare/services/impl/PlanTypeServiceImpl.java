@@ -50,7 +50,7 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 
     @Override
     public List<PlanTypeResponse> findAllPlanTypes() {
-        return repository.findAll().stream()
+        return repository.findAllByDeletedAtIsNull().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }

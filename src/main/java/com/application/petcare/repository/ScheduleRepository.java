@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
+    List<Schedule> findAllByDeletedAtIsNull();
+
     Optional<List<Schedule>> findAllByIdInAndDeletedAtIsNull (List<Integer> ids);
     Optional<Schedule> findByScheduleDateAndScheduleTime(LocalDateTime scheduleDate, LocalTime scheduleTime);
 

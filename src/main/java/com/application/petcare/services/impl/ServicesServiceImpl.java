@@ -89,7 +89,7 @@ public class ServicesServiceImpl implements ServicesService {
     public List<ServicesResponse> findAllServices() {
         log.info("Fetching all services");
 
-        return servicesRepository.findAll().stream()
+        return servicesRepository.findAllByDeletedAtIsNull().stream()
                 .map(this::mapToServicosResponse)
                 .collect(Collectors.toList());
     }

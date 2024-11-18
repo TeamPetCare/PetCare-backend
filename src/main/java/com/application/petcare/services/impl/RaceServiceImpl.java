@@ -64,7 +64,7 @@ public class RaceServiceImpl implements RaceService {
     public List<RaceResponse> getAllRaces() {
         log.info("Fetching all racas");
 
-        return raceRepository.findAll().stream()
+        return raceRepository.findAllByDeletedAtIsNull().stream()
                 .map(this::mapToRacaResponse)
                 .collect(Collectors.toList());
     }

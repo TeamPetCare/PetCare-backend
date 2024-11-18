@@ -130,12 +130,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponse> findAllUsersById() {
-        return repository.findAll().stream().map(this::mapToResponse).collect(Collectors.toList());
+        return repository.findAllByDeletedAtIsNull().stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
     @Override
     public byte[] generateCsvFileCustomerAndPets() {
-        List<User> list = repository.findAll();
+        List<User> list = repository.findAllByDeletedAtIsNull();
         return writeCsvFileCustomerAndPets(list);
     }
 

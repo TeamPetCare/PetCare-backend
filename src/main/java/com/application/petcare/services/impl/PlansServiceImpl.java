@@ -86,7 +86,7 @@ public class PlansServiceImpl implements PlansService {
 
     @Override
     public List<PlansResponse> findAllPlans() {
-        return plansRepository.findAll().stream().map(this::mapToResponse).toList();
+        return plansRepository.findAllByDeletedAtIsNull().stream().map(this::mapToResponse).toList();
     }
 
     @Override

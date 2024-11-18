@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    List<User> findAllByDeletedAtIsNull();
     Optional<User> findByEmailAndDeletedAtIsNull (String email);
     List<User> findByRoleAndDeletedAtIsNull(Role role);
     List<User> findByRoleNotAndDeletedAtIsNull(Role role);

@@ -50,7 +50,7 @@ public class SpecieServiceImpl implements SpecieService {
     public List<SpecieResponse> getAllEspecies() {
         log.info("Fetching all species");
 
-        return especieRepository.findAll().stream()
+        return especieRepository.findAllByDeletedAtIsNull().stream()
                 .map(this::mapToEspecieResponse)
                 .collect(Collectors.toList());
     }

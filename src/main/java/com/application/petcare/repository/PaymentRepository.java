@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     List<Payment> findByIdInAndDeletedAtIsNull (List<Integer> paymentIds);
+    List<Payment> findAllByDeletedAtIsNull();
+
 }

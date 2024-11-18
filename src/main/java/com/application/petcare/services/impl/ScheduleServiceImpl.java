@@ -94,12 +94,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleResponse> findAllSchedules() {
-        return scheduleRepository.findAll().stream().map(this::mapToResponse).toList();
+        return scheduleRepository.findAllByDeletedAtIsNull().stream().map(this::mapToResponse).toList();
     }
 
     @Override
     public List<Schedule> findAllMonthlySchedules() {
-        return scheduleRepository.findAll();
+        return scheduleRepository.findAllByDeletedAtIsNull();
     }
 
     @Override

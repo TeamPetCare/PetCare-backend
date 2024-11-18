@@ -62,7 +62,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<PaymentResponse> getAllPayments() {
-        return paymentRepository.findAll().stream().map(this::mapToPaymentResponse).toList();
+        return paymentRepository.findAllByDeletedAtIsNull().stream().map(this::mapToPaymentResponse).toList();
     }
 
     @Override

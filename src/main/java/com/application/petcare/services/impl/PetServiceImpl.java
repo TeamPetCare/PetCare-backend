@@ -177,14 +177,14 @@ public class PetServiceImpl implements PetService {
     @Override
     public List<PetResponse> getAllPets() {
         log.info("Fetching all pets");
-        return petRepository.findAll().stream()
+        return petRepository.findAllByDeletedAtIsNull().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<PetPetsListResponse> getAllPetsPetsList() {
-        return maptoPetPetsListResponse(petRepository.findAll().stream().collect(Collectors.toList()));
+        return maptoPetPetsListResponse(petRepository.findAllByDeletedAtIsNull().stream().collect(Collectors.toList()));
     }
 
     @Override
@@ -207,7 +207,7 @@ public class PetServiceImpl implements PetService {
                 Pet pet = petRepository.findById(petIds.get(i))
                                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found"));
                 pet.setDeletedAt(LocalDateTime.now());
-                petRepository.deleteById(petIds.get(i));
+                petRepository.save(pet);
             }
         }
 

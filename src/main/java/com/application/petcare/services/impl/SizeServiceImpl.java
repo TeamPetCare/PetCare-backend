@@ -75,7 +75,7 @@ public class SizeServiceImpl implements SizeService {
     public List<SizeResponse> getAllSizes() {
         log.info("Fetching all sizes");
 
-        return sizeRepository.findAll().stream()
+        return sizeRepository.findAllByDeletedAtIsNull().stream()
                 .map(this::mapToSizeResponse)
                 .collect(Collectors.toList());
     }
