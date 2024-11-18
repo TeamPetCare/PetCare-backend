@@ -67,7 +67,7 @@ public class Pet {
     private Size size;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonManagedReference
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

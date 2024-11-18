@@ -73,8 +73,8 @@ public class User {
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 
-    @OneToMany
-    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private List<Pet> pets;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
