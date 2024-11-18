@@ -53,7 +53,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<NotificationResponse> getAllNotifications() {
-        return notificationRepository.findAll().stream().map(this::mapNotificationToNotificationResponse).toList();
+        return notificationRepository.findAllByDeletedAtIsNull().stream().map(this::mapNotificationToNotificationResponse).toList();
     }
 
     @Override
