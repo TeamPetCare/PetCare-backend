@@ -55,6 +55,7 @@ public class Schedule {
     @ManyToMany
     @JsonManagedReference
     @JoinTable(
+            name = "Schedule_has_Services",
             joinColumns = @JoinColumn(name = "schedule_id"),
             inverseJoinColumns = @JoinColumn(name = "services_id")
     )
