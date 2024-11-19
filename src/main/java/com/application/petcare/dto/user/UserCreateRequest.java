@@ -3,16 +3,14 @@ package com.application.petcare.dto.user;
 import com.application.petcare.entities.Pet;
 import com.application.petcare.enums.Role;
 import jakarta.validation.constraints.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.List;
-
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserCreateRequest {
-
     @NotBlank(message = "Name is required")
     private String name;
 
@@ -35,9 +33,9 @@ public class UserCreateRequest {
     private String street;
 
     @NotNull(message = "Number is required")
-    private Integer number;  // Corrigido para @NotNull
+    private Integer number;
 
-    @Size(max=255, message = "Complement is required")
+    @Size(max = 255, message = "Complement is required")
     private String complement;
 
     @NotBlank(message = "CEP is required")
