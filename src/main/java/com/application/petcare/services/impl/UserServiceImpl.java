@@ -286,7 +286,8 @@ public class UserServiceImpl implements UserService {
                     .roleEmployee(user.get(i).getRoleEmployee())
                     .disponibilityStatusEmployee(user.get(i).getDisponibilityStatusEmployee())
                     .cpfClient(user.get(i).getCpfClient())
-                    .pet(petServiceImpl.maptoPetPetsListResponse(user.get(i).getPets()))
+                    .pet(petServiceImpl.maptoPetPetsListResponse(user.get(i).getPets()).stream()
+                            .filter(petPetsListResponse -> petPetsListResponse.getDeletedAt() == null).collect(Collectors.toList()))
                     .lastSchedule(lastSchedule)
                     .totalSchedules(petPetsListResponses.stream().mapToInt(PetPetsListResponse::getTotalSchedules).sum())
                     .build());

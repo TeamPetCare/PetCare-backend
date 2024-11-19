@@ -220,6 +220,15 @@ public class PetServiceImpl implements PetService {
     public List<PetPetsListResponse> maptoPetPetsListResponse(List<Pet> pets){
         List<PetPetsListResponse> petPetsListResponses = new ArrayList<>();
         for (int i = 0; i < pets.size(); i++) {
+
+            Schedule lastSchedule = scheduleRepository.findTopByPetIdOrderByScheduleDateDesc(pets.get(i).getId());
+            LocalDateTime lastScheduleTime;
+            if(lastSchedule != null){
+                lastScheduleTime = lastSchedule.getScheduleDate();
+            }else{
+                lastScheduleTime = LocalDateTime.of(0,1,1,0,0,0);
+            }
+
             petPetsListResponses.add(PetPetsListResponse.builder()
                     .id(pets.get(i).getId())
                     .name(pets.get(i).getName())
@@ -232,9 +241,10 @@ public class PetServiceImpl implements PetService {
                     .plan(pets.get(i).getPlan())
                     .specie(pets.get(i).getSpecie())
                     .race(pets.get(i).getRace())
+                            .deletedAt(pets.get(i).getDeletedAt())
                     .size(pets.get(i).getSize())
                             .userId(pets.get(i).getUser().getId())
-                    .lastSchedule(scheduleRepository.findTopByPetIdOrderByScheduleDateDesc(pets.get(i).getId()).getScheduleDate())
+                    .lastSchedule(lastScheduleTime)
                     .totalSchedules(scheduleRepository.countByPetId(pets.get(i).getId())).build()
             );
         }

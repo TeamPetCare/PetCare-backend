@@ -26,6 +26,7 @@ public class PetPetsListResponse {
     private Race race;
     private Size size;
     private Integer userId;
+    private LocalDateTime deletedAt;
     private LocalDateTime lastSchedule;
     private Integer totalSchedules;
 }
