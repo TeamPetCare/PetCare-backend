@@ -11,6 +11,7 @@ import com.application.petcare.exceptions.PetNotFoundException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.*;
 import com.application.petcare.services.PetService;
+import com.application.petcare.utils.ImageDatabase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class PetServiceImpl implements PetService {
     private final PlansRepository plansRepository;
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
+    private final ImageDatabase imageDatabase;
 
     @Override
     public PetResponse createPet(PetCreateRequest request) {
@@ -237,7 +239,7 @@ public class PetServiceImpl implements PetService {
                     .estimatedWeight(pets.get(i).getEstimatedWeight())
                     .birthdate(pets.get(i).getBirthdate())
                     .petObservations(pets.get(i).getPetObservations())
-                    .petImg(pets.get(i).getPetImg())
+                    .petImg(imageDatabase.downloadImagem(pets.get(i).getId(), false))
                     .plan(pets.get(i).getPlan())
                     .specie(pets.get(i).getSpecie())
                     .race(pets.get(i).getRace())
@@ -260,7 +262,7 @@ public class PetServiceImpl implements PetService {
                 .estimatedWeight(pet.getEstimatedWeight())
                 .birthdate(pet.getBirthdate())
                 .petObservations(pet.getPetObservations())
-                .petImg(pet.getPetImg())
+                .petImg(imageDatabase.downloadImagem(pet.getId(), false))
                 .specieId(pet.getSpecie().getId())
                 .raceId(pet.getRace().getId())
                 .sizeId(pet.getSize().getId())

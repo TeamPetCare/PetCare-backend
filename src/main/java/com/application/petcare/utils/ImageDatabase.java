@@ -73,11 +73,6 @@ public class ImageDatabase {
             return "Not found";
         }
 
-
-        if(blobClient.equals(null)){
-            throw new BadRequestException("isUser is null");
-        }
-
         try (InputStream inputStream = blobClient.openInputStream()) {
             byte[] buffer = new byte[1024];
             int bytesRead;
@@ -95,11 +90,6 @@ public class ImageDatabase {
                 throw new BadRequestException("Imagem não encontrada");
             }
 
-            // Retorna a imagem como um array de bytes
-//            return ResponseEntity.ok()
-//                    .contentType(org.springframework.http.MediaType.parseMediaType(contentType))
-//                    .header("Content-Disposition", "inline; filename=\"imagem_" + userId + ".jpg\"")
-//                    .body(outputStream.toByteArray());
             return blobClient.getBlobUrl();
         } catch (IOException e) {
             e.printStackTrace();
