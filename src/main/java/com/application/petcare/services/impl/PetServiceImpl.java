@@ -77,6 +77,8 @@ public class PetServiceImpl implements PetService {
                 .build();
 
         Pet savedPet = petRepository.save(pet);
+        savedPet.setPetImg(imageDatabase.downloadImagem(savedPet.getId(), false));
+        petRepository.save(pet);
         log.info("Pet created successfully: {}", savedPet);
         return mapToResponse(savedPet);
     }
@@ -239,7 +241,7 @@ public class PetServiceImpl implements PetService {
                     .estimatedWeight(pets.get(i).getEstimatedWeight())
                     .birthdate(pets.get(i).getBirthdate())
                     .petObservations(pets.get(i).getPetObservations())
-                    .petImg(imageDatabase.downloadImagem(pets.get(i).getId(), false))
+                    .petImg(pets.get(i).getPetImg())
                     .plan(pets.get(i).getPlan())
                     .specie(pets.get(i).getSpecie())
                     .race(pets.get(i).getRace())
@@ -262,7 +264,7 @@ public class PetServiceImpl implements PetService {
                 .estimatedWeight(pet.getEstimatedWeight())
                 .birthdate(pet.getBirthdate())
                 .petObservations(pet.getPetObservations())
-                .petImg(imageDatabase.downloadImagem(pet.getId(), false))
+                .petImg(pet.getPetImg())
                 .specieId(pet.getSpecie().getId())
                 .raceId(pet.getRace().getId())
                 .sizeId(pet.getSize().getId())

@@ -70,6 +70,8 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateEntryFoundException("Email is already used by another user");
         }
         User savedUser = repository.save(user);
+        savedUser.setUserImg(imageDatabase.downloadImagem(savedUser.getId(), true));
+        repository.save(savedUser);
         return mapToResponse(savedUser);
     }
 
@@ -227,7 +229,7 @@ public class UserServiceImpl implements UserService {
                 .name(user.getName())
                 .email(user.getEmail())
                 .role(user.getRole())
-                .userImage(imageDatabase.downloadImagem(user.getId(), true))
+                .userImage(user.getUserImg())
                 .build();
     }
 
@@ -237,7 +239,7 @@ public class UserServiceImpl implements UserService {
             userEmployeeResponses.add(UserEmployeeResponse.builder()
                     .id(users.get(i).getId())
                     .name(users.get(i).getName())
-                    .userImg(imageDatabase.downloadImagem(users.get(i).getId(), true))
+                    .userImg(users.get(i).getUserImg())
                     .email(users.get(i).getEmail())
                     .password(users.get(i).getPassword())
                     .cellphone(users.get(i).getCellphone())
@@ -271,7 +273,7 @@ public class UserServiceImpl implements UserService {
             userCustomerResponses.add(UserCustomerResponse.builder()
                     .id(user.get(i).getId())
                     .name(user.get(i).getName())
-                    .userImg(imageDatabase.downloadImagem(user.get(i).getId(), true))
+                    .userImg(user.get(i).getUserImg())
                     .email(user.get(i).getEmail())
                     .password(user.get(i).getPassword())
                     .cellphone(user.get(i).getCellphone())
@@ -305,7 +307,7 @@ public class UserServiceImpl implements UserService {
         return UserResponse.builder()
                 .id(user.getId())
                 .name(user.getName())
-                .userImg(imageDatabase.downloadImagem(user.getId(), true))
+                .userImg(user.getUserImg())
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .cellphone(user.getCellphone())
