@@ -15,5 +15,7 @@ public class UserCustomerDeleteRequest {
     private Integer id;
     private Integer numero_de_pets;
     private String whatsapp;
-
+    private String cep;
+    private String ultimoAgendamento;
+    private Integer totalAgendamentos;
 }

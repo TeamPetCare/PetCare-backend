@@ -21,7 +21,7 @@ public class ImageDatabase {
     // Nome do container no Azure Blob
     private final String CONTAINER_NAME = "imagens";
 
-    public void uploadImagem(MultipartFile file, Integer userId, Boolean isUser) throws IOException {
+    public String uploadImagem(MultipartFile file, Integer userId, Boolean isUser) throws IOException {
         // Cria o cliente do container do Blob
         BlobContainerClient containerClient = new BlobContainerClientBuilder()
                 .connectionString(CONNECTION_STRING)
@@ -50,6 +50,7 @@ public class ImageDatabase {
             BlobHttpHeaders headers = new BlobHttpHeaders().setContentType(file.getContentType());
             blobClient.setHttpHeaders(headers);
         }
+        return blobClient.getBlobUrl();
     }
 
     public String downloadImagem(Integer userId, Boolean isUser) {
