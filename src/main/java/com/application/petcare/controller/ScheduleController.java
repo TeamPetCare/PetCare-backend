@@ -31,7 +31,7 @@ public interface ScheduleController {
 
     @Operation(summary = "Buscar todos os agendamentos mensais")
     @GetMapping("/monthly-schedules")
-    ResponseEntity<List<Schedule>> getAllMonthlySchedules();
+    ResponseEntity<List<Schedule>> getAllMonthlySchedules(@RequestParam LocalDateTime month);
 
     @Operation(summary = "Atualiza agendamento por ID")
     @PutMapping("/{id}")

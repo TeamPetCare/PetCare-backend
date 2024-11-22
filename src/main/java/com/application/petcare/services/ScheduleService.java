@@ -20,7 +20,7 @@ public interface ScheduleService {
 
     List<ScheduleResponse> findAllSchedules();
 
-    List<Schedule> findAllMonthlySchedules();
+    List<Schedule> findAllMonthlySchedules(LocalDateTime month);
 
     void deleteScheduleById(Integer id);
 

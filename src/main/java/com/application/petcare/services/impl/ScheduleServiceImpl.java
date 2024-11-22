@@ -99,8 +99,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<Schedule> findAllMonthlySchedules() {
-        LocalDateTime startMonth = LocalDateTime.now().withDayOfMonth(1);
+    public List<Schedule> findAllMonthlySchedules(LocalDateTime month) {
+        LocalDateTime startMonth = month.withDayOfMonth(1);
         LocalDateTime start = startMonth.minusDays(7);
         LocalDateTime end = startMonth.plusDays(37);
         return scheduleRepository.findByScheduleDateBetween(start, end);

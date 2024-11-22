@@ -38,8 +38,8 @@ public class ScheduleControllerImpl implements ScheduleController {
     }
 
     @Override
-    public ResponseEntity<List<Schedule>> getAllMonthlySchedules() {
-        return ResponseEntity.ok().body(scheduleService.findAllMonthlySchedules());
+    public ResponseEntity<List<Schedule>> getAllMonthlySchedules(LocalDateTime month) {
+        return ResponseEntity.ok().body(scheduleService.findAllMonthlySchedules(month));
     }
 
     @Override
