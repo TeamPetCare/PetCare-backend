@@ -60,7 +60,7 @@ public interface UserController {
 
     @Operation(summary = "Deleta muitos clientes por ids")
     @DeleteMapping("/customers/delete")
-    ResponseEntity<Void> deleteSelectedCustomers(@RequestBody List<UserCustomerDeleteRequest> userCustomerDeleteRequests);
+    ResponseEntity<Void> deleteSelectedCustomers(@RequestBody List<Integer> userCustomerDeleteRequests);
 
     @Operation(summary = "Pega as informacoes do usuario")
     @GetMapping("/info/{id}")

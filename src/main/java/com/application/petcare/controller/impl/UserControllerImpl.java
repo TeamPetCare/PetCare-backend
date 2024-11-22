@@ -103,7 +103,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<Void> deleteSelectedCustomers(List<UserCustomerDeleteRequest> userCustomerDeleteRequests) {
+    public ResponseEntity<Void> deleteSelectedCustomers(List<Integer> userCustomerDeleteRequests) {
         userService.deleteSelectedCustomers(userCustomerDeleteRequests);
         return ResponseEntity.noContent().build();
     }

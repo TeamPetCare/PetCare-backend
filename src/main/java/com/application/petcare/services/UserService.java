@@ -28,7 +28,7 @@ public interface UserService {
 
     List<UserEmployeeResponse> getAllEmployees();
 
-    void deleteSelectedCustomers(List<UserCustomerDeleteRequest> userCustomerDeleteRequests);
+    void deleteSelectedCustomers(List<Integer> userCustomerDeleteRequests);
 
     UserInfosResponse getUserInfo(Integer id);
 }

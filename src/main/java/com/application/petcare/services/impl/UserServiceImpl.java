@@ -168,13 +168,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteSelectedCustomers(List<UserCustomerDeleteRequest> userCustomerDeleteRequests) {
+    public void deleteSelectedCustomers(List<Integer> userCustomerDeleteRequests) {
+//        for (int i = 0; i < userCustomerDeleteRequests.size(); i++) {
+//            UserResponse userResponse = findUserById(userCustomerDeleteRequests.get(i).getId());
+//            for (int j = 0; j < userResponse.getPetIds().size(); j++) {
+//                petService.deletePet(userResponse.getPetIds().get(i));
+//            }
+//            deleteUser(userCustomerDeleteRequests.get(i).getId());
+//        }
         for (int i = 0; i < userCustomerDeleteRequests.size(); i++) {
-            UserResponse userResponse = findUserById(userCustomerDeleteRequests.get(i).getId());
-            for (int j = 0; j < userResponse.getPetIds().size(); j++) {
-                petService.deletePet(userResponse.getPetIds().get(i));
-            }
-            deleteUser(userCustomerDeleteRequests.get(i).getId());
+            deleteUser(userCustomerDeleteRequests.get(i));
         }
     }
 
