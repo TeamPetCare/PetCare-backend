@@ -14,6 +14,7 @@ import com.application.petcare.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -99,7 +100,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<Schedule> findAllMonthlySchedules() {
-        return scheduleRepository.findAllByDeletedAtIsNull();
+        LocalDateTime startMonth = LocalDateTime.now().withDayOfMonth(1);
+        LocalDateTime start = startMonth.minusDays(7);
+        LocalDateTime end = startMonth.plusDays(37);
+        return scheduleRepository.findByScheduleDateBetween(start, end);
     }
 
     @Override

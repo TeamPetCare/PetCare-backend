@@ -7,6 +7,7 @@ import com.application.petcare.enums.StatusAgendamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -19,6 +20,8 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     Optional<Schedule> findByScheduleDateAndScheduleTime(LocalDateTime scheduleDate, LocalTime scheduleTime);
 
     long countByScheduleStatus(StatusAgendamento status);
+
+    List<Schedule> findByScheduleDateBetween(LocalDateTime start, LocalDateTime end);
 
     Schedule findTopByPetIdOrderByScheduleDateDesc(Integer petId);
     Integer countByPetId(Integer petId);
