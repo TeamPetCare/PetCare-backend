@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.application.petcare.exceptions.BadRequestException;
@@ -56,8 +57,13 @@ public class PetServiceImpl implements PetService {
         Size size = sizeRepository.findById(request.getSizeId())
                 .orElseThrow(() -> new BadRequestException("Size not found"));
 
-        Plans plans = plansRepository.findById(request.getPlanId())
-                .orElseThrow(() -> new ResourceNotFoundException("Plan not found"));
+
+        Plans plans;
+        if(request.getPlanId() == null){
+            plans = null;
+        }else{
+            plans = plansRepository.findById(request.getPlanId()).get();
+        }
 
         Pet pet = Pet.builder()
                 .name(request.getName())
@@ -71,14 +77,13 @@ public class PetServiceImpl implements PetService {
                 .size(size)
                 .deletedAt(null)
                 .petObservations(request.getPetObservations())
-                .plan(plansRepository.findById(request.getPlanId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Plan not found")))
+                .plan(plans)
                 .user(possibleCustomer)
                 .build();
 
         Pet savedPet = petRepository.save(pet);
         savedPet.setPetImg(imageDatabase.downloadImagem(savedPet.getId(), false));
-        petRepository.save(pet);
+        petRepository.save(savedPet);
         log.info("Pet created successfully: {}", savedPet);
         return mapToResponse(savedPet);
     }
@@ -105,8 +110,12 @@ public class PetServiceImpl implements PetService {
         Race race = raceRepository.findById(request.getRaceId())
                 .orElseThrow(() -> new ResourceNotFoundException("Race not found"));
 
-        Plans plans = plansRepository.findById(request.getPlanId())
-                .orElseThrow(() -> new ResourceNotFoundException("Plan not found"));
+        Plans plans;
+        if(request.getPlanId() == null){
+            plans = null;
+        }else{
+            plans = plansRepository.findById(request.getPlanId()).get();
+        }
 
         // Atualizando as informações
         pet.setName(request.getName());
@@ -148,8 +157,12 @@ public class PetServiceImpl implements PetService {
         Race race = raceRepository.findById(request.getRaca())
                 .orElseThrow(() -> new ResourceNotFoundException("Race not found"));
 
-        Plans plans = plansRepository.findById(request.getPlano())
-                .orElseThrow(() -> new ResourceNotFoundException("Plan not found"));
+        Plans plans;
+        if(request.getPlano() == null){
+            plans = null;
+        }else{
+            plans = plansRepository.findById(request.getPlano()).get();
+        }
 
         // Atualizando as informações
         pet.setName(request.getPet());
@@ -233,6 +246,14 @@ public class PetServiceImpl implements PetService {
                 lastScheduleTime = LocalDateTime.of(0,1,1,0,0,0);
             }
 
+            Plans plans;
+            if(pets.get(i).getPlan() == null){
+                plans = null;
+            }else {
+                plans = pets.get(i).getPlan();
+            }
+
+
             petPetsListResponses.add(PetPetsListResponse.builder()
                     .id(pets.get(i).getId())
                     .name(pets.get(i).getName())
@@ -242,7 +263,7 @@ public class PetServiceImpl implements PetService {
                     .birthdate(pets.get(i).getBirthdate())
                     .petObservations(pets.get(i).getPetObservations())
                     .petImg(pets.get(i).getPetImg())
-                    .plan(pets.get(i).getPlan())
+                    .plan(plans)
                     .specie(pets.get(i).getSpecie())
                     .race(pets.get(i).getRace())
                             .deletedAt(pets.get(i).getDeletedAt())
@@ -256,6 +277,14 @@ public class PetServiceImpl implements PetService {
     }
 
     private PetResponse mapToResponse(Pet pet) {
+
+        Integer planId;
+        if(pet.getPlan() == null){
+            planId = null;
+        }else{
+            planId = pet.getPlan().getId();
+        }
+
         return PetResponse.builder()
                 .id(pet.getId())
                 .name(pet.getName())
@@ -268,7 +297,7 @@ public class PetServiceImpl implements PetService {
                 .specieId(pet.getSpecie().getId())
                 .raceId(pet.getRace().getId())
                 .sizeId(pet.getSize().getId())
-                .planId(pet.getPlan().getId())
+                .planId(planId)
                 .userId(pet.getUser().getId())
                 .build();
     }

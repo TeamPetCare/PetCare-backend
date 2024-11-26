@@ -32,7 +32,6 @@ public class PetCreateRequest {
 
     private String petImg;
 
-//    @NotNull(message = "Plan ID is required")
     private Integer planId;
 
 //    @NotNull(message = "Specie ID is required")
