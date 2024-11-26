@@ -1,5 +1,6 @@
 package com.application.petcare.dto.pet;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 
 @Builder
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL) // Ignora campos nulos no JSON
 public class PetCreateRequest {
 //    @NotBlank(message = "Name is required")
     private String name;
@@ -20,7 +22,7 @@ public class PetCreateRequest {
     private String color;
 
 //    @NotNull(message = "Estimated weight is required")
-    private double estimatedWeight;
+    private Double estimatedWeight;
 
 //    @NotNull(message = "Birthdate is required")
     private LocalDate birthdate;
