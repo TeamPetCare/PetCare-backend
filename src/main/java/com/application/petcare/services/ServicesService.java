@@ -12,4 +12,5 @@ public interface ServicesService {
     void deleteService(Integer id);
     List<ServicesResponse> findAllServices();
     ServicesResponse getServiceById(Integer id);
+    List<ServicesResponse> getServicesByIdsList(List<Integer> ids);
 }

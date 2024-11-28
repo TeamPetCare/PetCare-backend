@@ -8,6 +8,7 @@ import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
 import com.application.petcare.enums.StatusAgendamento;
 import com.application.petcare.exceptions.BadRoleException;
+import com.application.petcare.exceptions.DuplicateScheduleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.*;
 import com.application.petcare.services.ScheduleService;
@@ -39,6 +40,17 @@ public class ScheduleServiceImpl implements ScheduleService {
             throw new BadRoleException("User is a customer");
         }
 
+        LocalDateTime startDate = request.getScheduleDate();
+        LocalDateTime endDate = request.getScheduleDate()
+                        .plusHours(request.getScheduleTime().getHour())
+                        .plusMinutes(request.getScheduleTime().getMinute());
+
+        List<Schedule> existingSchedule = scheduleRepository.findByScheduleDateBetweenAndEmployeeId(startDate, endDate, request.getEmployeeId());
+        if(!existingSchedule.isEmpty()){
+            throw new DuplicateScheduleException("Schedule with this employee in the same period already exists");
+        }
+
+
         Schedule schedule = Schedule.builder()
                 .scheduleStatus(request.getScheduleStatus())
                 .scheduleDate(request.getScheduleDate())
@@ -66,6 +78,16 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         if(possibleEmployee.getRole().equals(Role.ROLE_CUSTOMER)){
             throw new BadRoleException("User is a customer");
+        }
+
+        LocalDateTime startDate = request.getScheduleDate();
+        LocalDateTime endDate = request.getScheduleDate()
+                .plusHours(request.getScheduleTime().getHour())
+                .plusMinutes(request.getScheduleTime().getMinute());
+
+        List<Schedule> existingSchedule = scheduleRepository.findByScheduleDateBetweenAndEmployeeId(startDate, endDate, request.getEmployeeId());
+        if(!existingSchedule.isEmpty()){
+            throw new DuplicateScheduleException("Schedule with this employee in the same period already exists");
         }
 
         Schedule schedule = scheduleRepository.findById(id)

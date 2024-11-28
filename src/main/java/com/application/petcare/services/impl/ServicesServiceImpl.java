@@ -103,6 +103,11 @@ public class ServicesServiceImpl implements ServicesService {
         return mapToServicosResponse(servico);
     }
 
+    @Override
+    public List<ServicesResponse> getServicesByIdsList(List<Integer> ids) {
+        return servicesRepository.findAllByIdInAndDeletedAtIsNull(ids).stream().map(this::mapToServicosResponse).collect(Collectors.toList());
+    }
+
     private ServicesResponse mapToServicosResponse(Services services) {
 
 //        Integer[] scheduleIds = new Integer[services.getSchedules().size()];

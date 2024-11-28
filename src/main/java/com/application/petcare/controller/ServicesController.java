@@ -34,4 +34,8 @@ public interface ServicesController {
     @Operation(summary = "Excluir serviço por ID")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteService(@PathVariable Integer id);
+
+    @Operation(summary = "Busca serviços por uma lista de IDs")
+    @GetMapping("/ids-list/{ids}")
+    ResponseEntity<List<ServicesResponse>> getServicesByIdsList(@RequestParam List<Integer> ids);
 }

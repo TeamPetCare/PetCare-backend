@@ -42,6 +42,11 @@ public class ServicesControllerImpl implements ServicesController {
         return ResponseEntity.noContent().build();
     }
 
+    @Override
+    public ResponseEntity<List<ServicesResponse>> getServicesByIdsList(List<Integer> ids) {
+        return ResponseEntity.ok().body(servicesService.getServicesByIdsList(ids));
+    }
+
     @GetMapping
     public ResponseEntity<List<ServicesResponse>> getAllServices(){
         List<ServicesResponse> servicos = servicesService.findAllServices();
