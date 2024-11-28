@@ -17,5 +17,6 @@ public class ServicesResponse {
     private Double price;
     private Time estimatedTime;
     private Boolean disponibility;
+    private Boolean isExclusive;
 //    private List<Integer> scheduleIds;
 }

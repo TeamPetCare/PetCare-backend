@@ -41,5 +41,7 @@ public class Services {
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 
+    private Boolean isExclusive;
+
 
 }

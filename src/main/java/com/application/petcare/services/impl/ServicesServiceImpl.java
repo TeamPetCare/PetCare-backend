@@ -38,6 +38,7 @@ public class ServicesServiceImpl implements ServicesService {
                 .estimatedTime(request.getEstimatedTime())
                 .disponibility(request.getDisponibility())
                 .deletedAt(null)
+                .isExclusive(request.getIsExclusive())
 //                .schedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
 //                        .filter(schedules -> !schedules.isEmpty())
 //                        .orElseThrow(() -> new ResourceNotFoundException("Schedule not foun")))
@@ -60,6 +61,7 @@ public class ServicesServiceImpl implements ServicesService {
         servico.setPrice(request.getPrice());
         servico.setEstimatedTime(request.getEstimatedTime());
         servico.setDisponibility(request.getDisponibility());
+        servico.setIsExclusive(request.getIsExclusive());
 //        servico.setSchedules(scheduleRepository.findAllByIdIn(request.getScheduleIds())
 //                .filter(schedules -> !schedules.isEmpty())
 //                .orElseThrow(() -> new ResourceNotFoundException("Schedule not foun")));
@@ -121,9 +123,8 @@ public class ServicesServiceImpl implements ServicesService {
                 services.getNote(),
                 services.getPrice(),
                 services.getEstimatedTime(),
-                services.getDisponibility()
-//                ,
-//                List.of(scheduleIds)
+                services.getDisponibility(),
+                services.getIsExclusive()
         );
     }
 }
