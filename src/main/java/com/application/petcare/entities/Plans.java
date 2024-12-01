@@ -50,6 +50,7 @@ public class Plans {
     @ManyToOne
     private PlanType planType;
 
+    // resolvendo o problema
     @NotNull
     @ManyToMany
     @JsonManagedReference
