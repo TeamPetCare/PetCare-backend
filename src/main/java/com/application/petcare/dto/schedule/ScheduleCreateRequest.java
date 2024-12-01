@@ -40,7 +40,6 @@ public class ScheduleCreateRequest {
     @NotNull(message = "Pet is required")
     private Integer petId;
 
-    @NotNull(message = "Payment is required")
     private Integer paymentId;
 
     @NotNull(message = "Service is required")
