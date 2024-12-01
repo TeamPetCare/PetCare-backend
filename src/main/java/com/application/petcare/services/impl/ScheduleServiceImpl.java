@@ -44,11 +44,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         LocalDateTime endDate = request.getScheduleDate()
                         .plusHours(request.getScheduleTime().getHour())
                         .plusMinutes(request.getScheduleTime().getMinute());
-
-        List<Schedule> existingSchedule = scheduleRepository.findByScheduleDateBetweenAndEmployeeId(startDate, endDate, request.getEmployeeId());
-        if(!existingSchedule.isEmpty()){
-            throw new DuplicateScheduleException("Schedule with this employee in the same period already exists");
-        }
+//
+//        List<Schedule> existingSchedule = scheduleRepository.findByScheduleDateBetweenAndEmployeeId(startDate, endDate, request.getEmployeeId());
+//        if(!existingSchedule.isEmpty()){
+//            throw new DuplicateScheduleException("Schedule with this employee in the same period already exists");
+//        }
 
 
         Schedule schedule = Schedule.builder()
@@ -85,10 +85,10 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .plusHours(request.getScheduleTime().getHour())
                 .plusMinutes(request.getScheduleTime().getMinute());
 
-        List<Schedule> existingSchedule = scheduleRepository.findByScheduleDateBetweenAndEmployeeId(startDate, endDate, request.getEmployeeId());
-        if(!existingSchedule.isEmpty()){
-            throw new DuplicateScheduleException("Schedule with this employee in the same period already exists");
-        }
+//        List<Schedule> existingSchedule = scheduleRepository.findByScheduleDateBetweenAndEmployeeId(startDate, endDate, request.getEmployeeId());
+//        if(!existingSchedule.isEmpty()){
+//            throw new DuplicateScheduleException("Schedule with this employee in the same period already exists");
+//        }
 
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
