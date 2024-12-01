@@ -164,24 +164,26 @@ Schedule schedule = Schedule.builder()
 
 
 
-    public ScheduleResponse mapToResponse(Schedule schedule){
-
-        Integer[] serviceIds = new Integer[schedule.getServices().size()];
-        for (int i = 0; i < serviceIds.length; i++) {
-            serviceIds[i] = schedule.getServices().get(i).getId();
-        }
-
-        return ScheduleResponse.builder()
-                .id(schedule.getId())
-                .scheduleStatus(schedule.getScheduleStatus())
-                .scheduleDate(schedule.getScheduleDate())
-                .scheduleTime(schedule.getScheduleTime())
-                .creationDate(schedule.getCreationDate())
-                .scheduleNote(schedule.getScheduleNote())
-                .petId(schedule.getPet().getId())
-                .paymentId(schedule.getPayment().getId())
-                .serviceIds(List.of(serviceIds))
-                .employeeId(schedule.getEmployee().getId())
-                .build();
+public ScheduleResponse mapToResponse(Schedule schedule) {
+    // Obter os IDs dos serviços associados ao Schedule
+    Integer[] serviceIds = new Integer[schedule.getServices().size()];
+    for (int i = 0; i < serviceIds.length; i++) {
+        serviceIds[i] = schedule.getServices().get(i).getId();
     }
+
+    return ScheduleResponse.builder()
+            .id(schedule.getId())
+            .scheduleStatus(schedule.getScheduleStatus())
+            .scheduleDate(schedule.getScheduleDate())
+            .scheduleTime(schedule.getScheduleTime())
+            .creationDate(schedule.getCreationDate())
+            .scheduleNote(schedule.getScheduleNote())
+            .petId(schedule.getPet().getId())
+            // Verificação de nulidade para evitar NullPointerException
+            .paymentId(schedule.getPayment() != null ? schedule.getPayment().getId() : null)
+            .serviceIds(List.of(serviceIds))
+            .employeeId(schedule.getEmployee().getId())
+            .build();
+}
+
 }
