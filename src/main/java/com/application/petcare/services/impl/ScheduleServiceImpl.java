@@ -51,20 +51,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 //        }
 
 
-        Schedule schedule = Schedule.builder()
-                .scheduleStatus(request.getScheduleStatus())
-                .scheduleDate(request.getScheduleDate())
-                .scheduleTime(request.getScheduleTime())
-                .creationDate(request.getCreationDate())
-                .scheduleNote(request.getScheduleNote())
-                .deletedAt(null)
-                .pet(petRepository.findById(request.getPetId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Pet not found")))
-                .payment(paymentRepository.findById(request.getPaymentId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Payment not found")))
-                .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()))
-                .employee(possibleEmployee)
-                .build();
+Schedule schedule = Schedule.builder()
+        .scheduleStatus(request.getScheduleStatus())
+        .scheduleDate(request.getScheduleDate())
+        .scheduleTime(request.getScheduleTime())
+        .creationDate(request.getCreationDate())
+        .scheduleNote(request.getScheduleNote())
+        .deletedAt(null)
+        .pet(petRepository.findById(request.getPetId())
+                .orElseThrow(() -> new ResourceNotFoundException("Pet not found")))
+        .payment(request.getPaymentId() == null 
+                ? null 
+                : paymentRepository.findById(request.getPaymentId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Payment not found")))
+        .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()))
+        .employee(possibleEmployee)
+        .build();
+
 
             Schedule savedSchedule = scheduleRepository.save(schedule);
 
