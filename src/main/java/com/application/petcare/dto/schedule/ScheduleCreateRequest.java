@@ -8,6 +8,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.annotation.Nullable;
 import lombok.*;
 
 import java.sql.Time;
@@ -40,6 +41,7 @@ public class ScheduleCreateRequest {
     @NotNull(message = "Pet is required")
     private Integer petId;
 
+    @Nullable
     private Integer paymentId;
 
     @NotNull(message = "Service is required")
