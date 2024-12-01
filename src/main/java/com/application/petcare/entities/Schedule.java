@@ -48,7 +48,6 @@ public class Schedule {
     @ManyToOne
     private Pet pet;
 
-    @NotNull
     @OneToOne
     private Payment payment;
 
