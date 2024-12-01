@@ -1,5 +1,6 @@
 package com.application.petcare.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -31,6 +32,7 @@ public class PlanType {
 
     @NotNull
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(
             name = "plan_type_services",
             joinColumns = @JoinColumn(name = "plan_type_id"),

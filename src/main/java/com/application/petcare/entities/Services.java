@@ -1,5 +1,6 @@
 package com.application.petcare.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -44,9 +45,11 @@ public class Services {
     private Boolean isExclusive;
 
     @ManyToMany(mappedBy = "services")
+    @JsonBackReference
     private List<PlanType> planTypes = new ArrayList<>();
 
     @ManyToMany(mappedBy = "services")
+    @JsonBackReference
     private List<Plans> plans = new ArrayList<>();
 
 }

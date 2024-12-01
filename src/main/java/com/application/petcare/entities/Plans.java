@@ -2,6 +2,7 @@ package com.application.petcare.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -51,6 +52,7 @@ public class Plans {
 
     @NotNull
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(
             name = "plan_services",
             joinColumns = @JoinColumn(name = "plan_id"),
