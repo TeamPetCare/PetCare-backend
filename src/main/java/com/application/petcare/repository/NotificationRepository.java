@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
     List<Notification> findAllByDeletedAtIsNull();
+    List<Notification> findAllByDeletedAtIsNullAndUser_Id(Integer userId);
 }

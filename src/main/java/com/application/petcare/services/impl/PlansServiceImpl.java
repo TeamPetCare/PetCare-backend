@@ -42,6 +42,7 @@ public class PlansServiceImpl implements PlansService {
                 .price(request.getPrice())
                 .active(request.getActive())
                 .renewal(request.getRenewal())
+                .hasDiscount(request.getHasDiscount())
                 .description(request.getDescription())
                 .deletedAt(null)
                 .planType(planTypeRepository.findById(request.getPlanTypeId())
@@ -65,6 +66,7 @@ public class PlansServiceImpl implements PlansService {
         plans.setPrice(request.getPrice());
         plans.setActive(request.getActive());
         plans.setRenewal(request.getRenewal());
+        plans.setHasDiscount(request.getHasDiscount());
         plans.setDescription(request.getDescription());
         plans.setPlanType(planTypeRepository.findById(request.getPlanTypeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Plan type not found")));
@@ -129,6 +131,7 @@ public class PlansServiceImpl implements PlansService {
                 .price(plans.getPrice())
                 .active(plans.getActive())
                 .renewal(plans.getRenewal())
+                .hasDiscount(plans.getHasDiscount())
                 .description(plans.getDescription())
                 .planTypeId(plans.getPlanType().getId())
                 .servicesIds(services)

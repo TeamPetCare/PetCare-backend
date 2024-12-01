@@ -26,6 +26,8 @@ public class PlansCreateRequest {
     private Boolean active;
     @NotNull(message = "Renewal is required")
     private int renewal;
+    @NotNull(message = "Has discount is required")
+    private Boolean hasDiscount;
     @NotBlank(message = "Description is required")
     private String description;
     @NotNull(message = "Plan Type id is required")

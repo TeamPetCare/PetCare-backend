@@ -1,5 +1,6 @@
 package com.application.petcare.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,13 @@ public class Notification {
     private String description;
     @Column(nullable = false)
     private LocalDateTime notificationDate;
+    @Column(nullable = false)
+    private Boolean saw;
     @Column(nullable = true)
     private LocalDateTime deletedAt;
+
+    @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

@@ -5,11 +5,13 @@ import com.application.petcare.dto.plantype.PlanTypeResponse;
 import com.application.petcare.entities.PlanType;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.PlanTypeRepository;
+import com.application.petcare.repository.ServicesRepository;
 import com.application.petcare.services.PlanTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,11 +20,16 @@ import java.util.stream.Collectors;
 public class PlanTypeServiceImpl implements PlanTypeService {
 
     private final PlanTypeRepository repository;
+    private final ServicesRepository servicesRepository;
 
     @Override
     public PlanTypeResponse createPlanType(PlanTypeCreateRequest request) {
         PlanType planType = PlanType.builder()
                 .name(request.getName())
+                .disponibility(request.getDisponibility())
+                .price(request.getPrice())
+                .description(request.getDescription())
+                .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()))
                 .deletedAt(null)
                 .paymentInterval(request.getPaymentInterval()).build();
         PlanType savedPlanType = repository.save(planType);
@@ -36,6 +43,10 @@ public class PlanTypeServiceImpl implements PlanTypeService {
 
         planType.setName(request.getName());
         planType.setPaymentInterval(planType.getPaymentInterval());
+        planType.setDisponibility(planType.getDisponibility());
+        planType.setPrice(planType.getPrice());
+        planType.setDescription(planType.getDescription());
+        planType.setServices(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()));
 
         PlanType updatedPlanType = repository.save(planType);
         return mapToResponse(updatedPlanType);
@@ -64,9 +75,20 @@ public class PlanTypeServiceImpl implements PlanTypeService {
     }
 
     public PlanTypeResponse mapToResponse(PlanType request){
+
+        List<Integer> serviceIds = new ArrayList<>();
+        for (int i = 0; i < request.getServices().size(); i++) {
+            serviceIds.add(request.getServices().get(i).getId());
+        }
+
         return PlanTypeResponse.builder()
                 .id(request.getId())
                 .name(request.getName())
-                .paymentInterval(request.getPaymentInterval()).build();
+                .paymentInterval(request.getPaymentInterval())
+                .disponibility(request.getDisponibility())
+                .description(request.getDescription())
+                .price(request.getPrice())
+                .serviceIds(serviceIds)
+                .build();
     }
 }

@@ -14,5 +14,7 @@ public interface NotificationService {
 
     List<NotificationResponse> getAllNotifications();
 
+    List<NotificationResponse> getAllUserNotifications(Integer id);
+
     void deleteNotification(Integer id);
 }

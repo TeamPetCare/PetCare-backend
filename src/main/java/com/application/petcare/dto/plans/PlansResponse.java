@@ -18,6 +18,7 @@ public class PlansResponse {
     private Double price;
     private Boolean active;
     private int renewal;
+    private Boolean hasDiscount;
     private String description;
     private Integer planTypeId;
     private List<Integer> servicesIds;

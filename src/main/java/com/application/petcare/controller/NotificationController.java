@@ -30,6 +30,11 @@ public interface NotificationController {
     @GetMapping
     ResponseEntity<List<NotificationResponse>> getAllNotifications();
 
+    @Operation(summary = "Listar todas as notificações de um usuário especifico")
+    @GetMapping("/user")
+    ResponseEntity<List<NotificationResponse>> getAllUserNotifications(Integer id);
+
+
     @Operation(summary = "Deletar uma notificação")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteNotification(@PathVariable Integer id);

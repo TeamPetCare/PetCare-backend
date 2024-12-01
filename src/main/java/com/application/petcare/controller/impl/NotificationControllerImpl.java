@@ -38,6 +38,11 @@ public class NotificationControllerImpl implements NotificationController {
     }
 
     @Override
+    public ResponseEntity<List<NotificationResponse>> getAllUserNotifications(Integer id) {
+        return ResponseEntity.ok().body(notificationService.getAllUserNotifications(id));
+    }
+
+    @Override
     public ResponseEntity<Void> deleteNotification(Integer id) {
         notificationService.deleteNotification(id);
         return ResponseEntity.noContent().build();
