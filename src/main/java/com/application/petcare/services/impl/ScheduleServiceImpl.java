@@ -102,7 +102,9 @@ Schedule schedule = Schedule.builder()
         schedule.setScheduleNote(request.getScheduleNote());
         schedule.setPet(petRepository.findById(request.getPetId())
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found")));
-        schedule.setPayment(paymentRepository.findById(request.getPaymentId())
+        schedule.setPayment(request.getPaymentId() == null
+                ? null
+                : paymentRepository.findById(request.getPaymentId())
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found")));
         schedule.setServices(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()));
         schedule.setEmployee(possibleEmployee);
