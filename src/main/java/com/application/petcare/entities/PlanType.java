@@ -30,7 +30,12 @@ public class PlanType {
     private LocalDateTime deletedAt;
 
     @NotNull
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "plan_type_services",
+            joinColumns = @JoinColumn(name = "plan_type_id"),
+            inverseJoinColumns = @JoinColumn(name = "services_id")
+    )
     private List<Services> services = new ArrayList<>();
 
 }

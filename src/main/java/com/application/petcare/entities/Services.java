@@ -43,5 +43,10 @@ public class Services {
 
     private Boolean isExclusive;
 
+    @ManyToMany(mappedBy = "services")
+    private List<PlanType> planTypes = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "services")
+    private List<Plans> plans = new ArrayList<>();
 
 }

@@ -50,7 +50,12 @@ public class Plans {
     private PlanType planType;
 
     @NotNull
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "plan_services",
+            joinColumns = @JoinColumn(name = "plan_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id")
+    )
     private List<Services> services = new ArrayList<>();
 
     private List<Integer> repeatQuantity = new ArrayList<>();
