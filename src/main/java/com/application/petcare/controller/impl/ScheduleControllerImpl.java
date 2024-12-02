@@ -2,6 +2,7 @@ package com.application.petcare.controller.impl;
 
 import com.application.petcare.controller.ScheduleController;
 import com.application.petcare.dto.schedule.ScheduleCreateRequest;
+import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
@@ -33,7 +34,7 @@ public class ScheduleControllerImpl implements ScheduleController {
     }
 
     @Override
-    public ResponseEntity<List<ScheduleResponse>> getAllSchedules() {
+    public ResponseEntity<List<ScheduleGetAllSchedulesResponse>> getAllSchedules() {
         return ResponseEntity.ok(scheduleService.findAllSchedules());
     }
 

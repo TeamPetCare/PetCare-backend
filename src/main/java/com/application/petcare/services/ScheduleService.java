@@ -2,6 +2,7 @@ package com.application.petcare.services;
 
 
 import com.application.petcare.dto.schedule.ScheduleCreateRequest;
+import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
@@ -18,7 +19,7 @@ public interface ScheduleService {
 
     ScheduleResponse findScheduleById(Integer id);
 
-    List<ScheduleResponse> findAllSchedules();
+    List<ScheduleGetAllSchedulesResponse> findAllSchedules();
 
     List<Schedule> findAllMonthlySchedules(LocalDateTime month);
 

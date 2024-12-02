@@ -1,6 +1,7 @@
 package com.application.petcare.services.impl;
 
 import com.application.petcare.dto.schedule.ScheduleCreateRequest;
+import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,14 +38,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         User possibleEmployee = userRepository.findById(request.getEmployeeId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        if(possibleEmployee.getRole().equals(Role.ROLE_CUSTOMER)){
+        if (possibleEmployee.getRole().equals(Role.ROLE_CUSTOMER)) {
             throw new BadRoleException("User is a customer");
         }
 
         LocalDateTime startDate = request.getScheduleDate();
         LocalDateTime endDate = request.getScheduleDate()
-                        .plusHours(request.getScheduleTime().getHour())
-                        .plusMinutes(request.getScheduleTime().getMinute());
+                .plusHours(request.getScheduleTime().getHour())
+                .plusMinutes(request.getScheduleTime().getMinute());
 //
 //        List<Schedule> existingSchedule = scheduleRepository.findByScheduleDateBetweenAndEmployeeId(startDate, endDate, request.getEmployeeId());
 //        if(!existingSchedule.isEmpty()){
@@ -51,25 +53,25 @@ public class ScheduleServiceImpl implements ScheduleService {
 //        }
 
 
-Schedule schedule = Schedule.builder()
-        .scheduleStatus(request.getScheduleStatus())
-        .scheduleDate(request.getScheduleDate())
-        .scheduleTime(request.getScheduleTime())
-        .creationDate(request.getCreationDate())
-        .scheduleNote(request.getScheduleNote())
-        .deletedAt(null)
-        .pet(petRepository.findById(request.getPetId())
-                .orElseThrow(() -> new ResourceNotFoundException("Pet not found")))
-        .payment(request.getPaymentId() == null 
-                ? null 
-                : paymentRepository.findById(request.getPaymentId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Payment not found")))
-        .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()))
-        .employee(possibleEmployee)
-        .build();
+        Schedule schedule = Schedule.builder()
+                .scheduleStatus(request.getScheduleStatus())
+                .scheduleDate(request.getScheduleDate())
+                .scheduleTime(request.getScheduleTime())
+                .creationDate(request.getCreationDate())
+                .scheduleNote(request.getScheduleNote())
+                .deletedAt(null)
+                .pet(petRepository.findById(request.getPetId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Pet not found")))
+                .payment(request.getPaymentId() == null
+                        ? null
+                        : paymentRepository.findById(request.getPaymentId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Payment not found")))
+                .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()))
+                .employee(possibleEmployee)
+                .build();
 
 
-            Schedule savedSchedule = scheduleRepository.save(schedule);
+        Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return mapToResponse(savedSchedule);
     }
@@ -79,7 +81,7 @@ Schedule schedule = Schedule.builder()
 
         User possibleEmployee = userRepository.findById(request.getEmployeeId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        if(possibleEmployee.getRole().equals(Role.ROLE_CUSTOMER)){
+        if (possibleEmployee.getRole().equals(Role.ROLE_CUSTOMER)) {
             throw new BadRoleException("User is a customer");
         }
 
@@ -121,8 +123,8 @@ Schedule schedule = Schedule.builder()
     }
 
     @Override
-    public List<ScheduleResponse> findAllSchedules() {
-        return scheduleRepository.findAllByDeletedAtIsNull().stream().map(this::mapToResponse).toList();
+    public List<ScheduleGetAllSchedulesResponse> findAllSchedules() {
+        return scheduleRepository.findAllByDeletedAtIsNull().stream().map(this::mapToScheduleGetAllSchedulesResponse).toList();
     }
 
     @Override
@@ -164,28 +166,57 @@ Schedule schedule = Schedule.builder()
     }
 
 
+    public ScheduleResponse mapToResponse(Schedule schedule) {
+        // Obter os IDs dos serviços associados ao Schedule
+        Integer[] serviceIds = new Integer[schedule.getServices().size()];
+        for (int i = 0; i < serviceIds.length; i++) {
+            serviceIds[i] = schedule.getServices().get(i).getId();
+        }
 
-
-public ScheduleResponse mapToResponse(Schedule schedule) {
-    // Obter os IDs dos serviços associados ao Schedule
-    Integer[] serviceIds = new Integer[schedule.getServices().size()];
-    for (int i = 0; i < serviceIds.length; i++) {
-        serviceIds[i] = schedule.getServices().get(i).getId();
+        return ScheduleResponse.builder()
+                .id(schedule.getId())
+                .scheduleStatus(schedule.getScheduleStatus())
+                .scheduleDate(schedule.getScheduleDate())
+                .scheduleTime(schedule.getScheduleTime())
+                .creationDate(schedule.getCreationDate())
+                .scheduleNote(schedule.getScheduleNote())
+                .petId(schedule.getPet().getId())
+                // Verificação de nulidade para evitar NullPointerException
+                .paymentId(schedule.getPayment() != null ? schedule.getPayment().getId() : null)
+                .serviceIds(List.of(serviceIds))
+                .employeeId(schedule.getEmployee().getId())
+                .build();
     }
 
-    return ScheduleResponse.builder()
-            .id(schedule.getId())
-            .scheduleStatus(schedule.getScheduleStatus())
-            .scheduleDate(schedule.getScheduleDate())
-            .scheduleTime(schedule.getScheduleTime())
-            .creationDate(schedule.getCreationDate())
-            .scheduleNote(schedule.getScheduleNote())
-            .petId(schedule.getPet().getId())
-            // Verificação de nulidade para evitar NullPointerException
-            .paymentId(schedule.getPayment() != null ? schedule.getPayment().getId() : null)
-            .serviceIds(List.of(serviceIds))
-            .employeeId(schedule.getEmployee().getId())
-            .build();
-}
+    public ScheduleGetAllSchedulesResponse mapToScheduleGetAllSchedulesResponse(Schedule schedule){
+
+        List<String> serviceNames = new ArrayList<>();
+        for (int i = 0; i < schedule.getServices().size(); i++) {
+            serviceNames.add(schedule.getServices().get(i).getName());
+        }
+
+        List<Integer> serviceIds = new ArrayList<>();
+        for (int i = 0; i < schedule.getServices().size(); i++) {
+            serviceIds.add(schedule.getServices().get(i).getId());
+        }
+
+        return ScheduleGetAllSchedulesResponse.builder()
+                .id(schedule.getId())
+                .scheduleStatus(schedule.getScheduleStatus())
+                .scheduleDate(schedule.getScheduleDate())
+                .scheduleTime(schedule.getScheduleTime())
+                .creationDate(schedule.getCreationDate())
+                .scheduleNote(schedule.getScheduleNote())
+                .serviceNames(serviceNames)
+                .userCelphoneNumber(schedule.getPet().getUser().getCellphone())
+                .userName(schedule.getPet().getUser().getName())
+                .petName(schedule.getPet().getName())
+                .petImg(schedule.getPet().getPetImg())
+                .payment(schedule.getPayment())
+                .userId(schedule.getPet().getUser().getId())
+                .petId(schedule.getPet().getId())
+                .serviceIds(serviceIds)
+                .build();
+    }
 
 }

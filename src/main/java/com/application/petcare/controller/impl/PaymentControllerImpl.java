@@ -4,7 +4,6 @@ import com.application.petcare.controller.PaymentController;
 import com.application.petcare.dto.mercadopago.PixPaymentRequest;
 import com.application.petcare.dto.payment.PaymentCreateRequest;
 import com.application.petcare.dto.payment.PaymentResponse;
-import com.application.petcare.enums.PaymentMethod;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.PaymentService;
@@ -55,10 +54,6 @@ public class PaymentControllerImpl implements PaymentController {
         createdPayment.setPrice( payment.getTransactionAmount().doubleValue());
         createdPayment.setUser(userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found")));
-        createdPayment.setPaymentId(payment.getId().toString());
-        createdPayment.setPaymentMethod(PaymentMethod.PIX);
-        createdPayment.setPaymentStatus(false);
-        createdPayment.setDeletedAt(null);
         createPayment(mapToPaymentResponse(createdPayment));
         return ResponseEntity.ok(payment);
     }
@@ -68,10 +63,6 @@ public class PaymentControllerImpl implements PaymentController {
         return PaymentCreateRequest.builder()
                 .paymentDate(payment.getPaymentDate())
                 .price(payment.getPrice())
-                .userId(payment.getUser().getId())
-                .paymentId(payment.getPaymentId())
-                .paymentMethod(payment.getPaymentMethod())
-                .paymentStatus(payment.getPaymentStatus())
-                .build();
+                .userId(payment.getUser().getId()).build();
     }
 }

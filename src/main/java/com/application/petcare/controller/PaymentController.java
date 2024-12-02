@@ -39,6 +39,6 @@ public interface PaymentController {
     ResponseEntity<Void> deletePayment(@PathVariable Integer id);
 
     @Operation(summary = "Criar um novo pagamento pix")
-    @PostMapping("/pix")
-    ResponseEntity<Payment> createPixPayment(@RequestBody PixPaymentRequest request, Integer userId);
+    @PostMapping("/pix/{userId}")
+    ResponseEntity<Payment> createPixPayment(@RequestBody PixPaymentRequest request, @PathVariable Integer userId);
 }

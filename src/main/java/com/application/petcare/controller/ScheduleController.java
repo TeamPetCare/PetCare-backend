@@ -1,6 +1,7 @@
 package com.application.petcare.controller;
 
 import com.application.petcare.dto.schedule.ScheduleCreateRequest;
+import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
@@ -27,7 +28,7 @@ public interface ScheduleController {
 
     @Operation(summary = "Buscar todos os agendamentos")
     @GetMapping
-    ResponseEntity<List<ScheduleResponse>> getAllSchedules();
+    ResponseEntity<List<ScheduleGetAllSchedulesResponse>> getAllSchedules();
 
     @Operation(summary = "Buscar todos os agendamentos mensais")
     @GetMapping("/monthly-schedules")
