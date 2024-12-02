@@ -200,6 +200,11 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    public List<Pet> getAllPetsByIds(List<Integer> ids) {
+        return petRepository.findAllByIdInAndDeletedAtIsNull(ids);
+    }
+
+    @Override
     public List<PetPetsListResponse> getAllPetsPetsList() {
         return maptoPetPetsListResponse(petRepository.findAllByDeletedAtIsNull().stream().collect(Collectors.toList()));
     }

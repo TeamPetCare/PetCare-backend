@@ -40,6 +40,9 @@ public interface PetController {
     @GetMapping("/pets-list")
     ResponseEntity<List<PetPetsListResponse>> getAllPetsPetsList();
 
+    @Operation(summary = "Listar pets com uma lista de ids")
+    @GetMapping("/list-by-ids")
+    ResponseEntity<List<Pet>> getAllPetsByIds(@RequestParam List<Integer> ids);
 
     @Operation(summary = "Deletar um pet")
     @DeleteMapping("/{id}")

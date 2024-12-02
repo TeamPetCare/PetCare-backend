@@ -19,6 +19,8 @@ public interface PetService {
 
     List<PetResponse> getAllPets();
 
+    List<Pet> getAllPetsByIds(List<Integer> ids);
+
     List<PetPetsListResponse> getAllPetsPetsList();
 
     void deletePet(Integer id);
