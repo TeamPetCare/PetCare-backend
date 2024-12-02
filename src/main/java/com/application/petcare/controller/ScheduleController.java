@@ -5,6 +5,7 @@ import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
+import com.application.petcare.entities.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -58,4 +59,7 @@ public interface ScheduleController {
             @RequestParam("serviceId") Integer serviceId
     );
 
+    @Operation(summary = "Gerar relatório dos agendamentos existentes")
+    @GetMapping(value = "/report-schedule", produces = "text/csv")
+    ResponseEntity<byte[]> generateCsvFileSchedule();
 }

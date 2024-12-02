@@ -35,7 +35,6 @@ public class ScheduleCreateRequest {
     @NotNull(message = "Creation date is required")
     private LocalDateTime creationDate;
 
-    @NotBlank(message = "Schedule note is required")
     private String scheduleNote;
 
     @NotNull(message = "Pet is required")

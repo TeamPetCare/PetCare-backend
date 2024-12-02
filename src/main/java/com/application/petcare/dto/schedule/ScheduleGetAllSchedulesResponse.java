@@ -20,6 +20,7 @@ public class ScheduleGetAllSchedulesResponse {
     private String scheduleNote;
 
     private List<String> serviceNames;
+    private List<Double> servicePrices;
     private String userCelphoneNumber;
     private String userName;
     private String petImg;

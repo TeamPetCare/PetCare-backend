@@ -10,6 +10,8 @@ import com.application.petcare.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -68,5 +70,20 @@ public class ScheduleControllerImpl implements ScheduleController {
                 .findSchedulesByDateAndTimeAndService(date, startTime, endTime, serviceId);
 
         return ResponseEntity.ok(schedules);
+    }
+
+    @Override
+    public ResponseEntity<byte[]> generateCsvFileSchedule() {
+
+        byte[] response = scheduleService.generateCsvFileSchedule();
+
+        if(response == null){
+            return ResponseEntity.status(500).body("Erro ao gerar o arquivo CSV".getBytes());
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"reportSchedule.csv\"")
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(response);
     }
 }

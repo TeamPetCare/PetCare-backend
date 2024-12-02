@@ -4,6 +4,7 @@ import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
+import com.application.petcare.entities.Pet;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
@@ -13,12 +14,17 @@ import com.application.petcare.exceptions.DuplicateScheduleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.*;
 import com.application.petcare.services.ScheduleService;
+import com.opencsv.CSVWriter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,6 +171,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         return schedules.stream().map(this::mapToResponse).toList();
     }
 
+    public byte[] generateCsvFileSchedule() {
+        List<Schedule> list = scheduleRepository.findAllByDeletedAtIsNull();
+        return writeCsvFileSchedule(list);
+    }
+
 
     public ScheduleResponse mapToResponse(Schedule schedule) {
         // Obter os IDs dos serviços associados ao Schedule
@@ -188,15 +199,15 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .build();
     }
 
-    public ScheduleGetAllSchedulesResponse mapToScheduleGetAllSchedulesResponse(Schedule schedule){
+    public ScheduleGetAllSchedulesResponse mapToScheduleGetAllSchedulesResponse(Schedule schedule) {
 
         List<String> serviceNames = new ArrayList<>();
+        List<Double> servicePrices = new ArrayList<>();
+        List<Integer> serviceIds = new ArrayList<>();
+
         for (int i = 0; i < schedule.getServices().size(); i++) {
             serviceNames.add(schedule.getServices().get(i).getName());
-        }
-
-        List<Integer> serviceIds = new ArrayList<>();
-        for (int i = 0; i < schedule.getServices().size(); i++) {
+            servicePrices.add(schedule.getServices().get(i).getPrice());
             serviceIds.add(schedule.getServices().get(i).getId());
         }
 
@@ -208,6 +219,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .creationDate(schedule.getCreationDate())
                 .scheduleNote(schedule.getScheduleNote())
                 .serviceNames(serviceNames)
+                .servicePrices(servicePrices)
                 .userCelphoneNumber(schedule.getPet().getUser().getCellphone())
                 .userName(schedule.getPet().getUser().getName())
                 .petName(schedule.getPet().getName())
@@ -217,6 +229,54 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .petId(schedule.getPet().getId())
                 .serviceIds(serviceIds)
                 .build();
+    }
+
+    private byte[] writeCsvFileSchedule(List<Schedule> lista) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(byteArrayOutputStream, StandardCharsets.UTF_8),
+                ';', // Delimitador
+                CSVWriter.DEFAULT_QUOTE_CHARACTER,
+                CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                CSVWriter.DEFAULT_LINE_END)) {
+
+
+            // Cabeçalho do CSV
+            String[] header = {"ID", "Status Agendamento", "Data agendamento", "Tempo agendamento", "Data criação", "Obsercação Agendamento", "Nome Cliente", "Nome Pet", "Raça", "Nascimento", "Porte", "Observações", "Valor Pagamento", "Nome funcionario"};
+            writer.writeNext(header);
+
+            for (Schedule schedule : lista) {
+                String[] record = {
+                        String.valueOf(schedule.getId()),
+                        schedule.getScheduleStatus() != null ? schedule.getScheduleStatus().name() : "",
+                        schedule.getScheduleDate() != null ? schedule.getScheduleDate().format(formatter) : "",
+                        schedule.getScheduleTime() != null ? schedule.getScheduleTime().format(timeFormatter) : "",
+                        schedule.getCreationDate() != null ? schedule.getCreationDate().format(formatter) : "",
+                        schedule.getScheduleNote() != null ? schedule.getScheduleNote() : "",
+                        schedule.getPet().getUser() != null ? schedule.getPet().getUser().getName() : "",
+                        schedule.getPet() != null ? schedule.getPet().getName() : "",
+                        schedule.getPet().getRace() != null ? schedule.getPet().getRace().getRaceType() : "",
+                        schedule.getPet().getBirthdate() != null ? schedule.getPet().getBirthdate().format(dateFormatter) : "",
+                        schedule.getPet().getSize() != null ? schedule.getPet().getSize().getSizeType() : "",
+                        schedule.getPet().getPetObservations() != null ? schedule.getPet().getPetObservations() : "",
+                        schedule.getPayment() != null && schedule.getPayment().getPrice() != null ?
+                                String.valueOf(schedule.getPayment().getPrice()) : "",
+                        schedule.getEmployee() != null ? schedule.getEmployee().getName() : ""
+                };
+                writer.writeNext(record);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return byteArrayOutputStream.toByteArray();
     }
 
 }

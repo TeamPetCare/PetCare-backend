@@ -6,6 +6,7 @@ import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
 import com.application.petcare.entities.Schedule;
+import com.application.petcare.entities.User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,6 +30,8 @@ public interface ScheduleService {
 
     List<ScheduleResponse> findSchedulesByDateAndTimeAndService(
             LocalDateTime date, LocalTime startTime, LocalTime endTime, Integer serviceId);
+
+    public byte[] generateCsvFileSchedule();
 }
 
 

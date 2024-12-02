@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -332,7 +333,7 @@ public class UserServiceImpl implements UserService {
     private byte[] writeCsvFileCustomerAndPets(List<User> lista) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(byteArrayOutputStream),
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(byteArrayOutputStream, StandardCharsets.UTF_8),
                 ';', // Delimitador
                 CSVWriter.DEFAULT_QUOTE_CHARACTER,
                 CSVWriter.DEFAULT_ESCAPE_CHARACTER,
