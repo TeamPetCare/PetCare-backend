@@ -113,6 +113,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found")));
         schedule.setServices(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()));
         schedule.setEmployee(possibleEmployee);
+        schedule.setDeletedAt(request.getDeletedAt());
 
         Schedule updatedSchedule = scheduleRepository.save(schedule);
         return mapToResponse(updatedSchedule);

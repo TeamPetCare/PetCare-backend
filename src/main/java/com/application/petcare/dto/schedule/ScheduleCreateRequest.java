@@ -48,4 +48,6 @@ public class ScheduleCreateRequest {
 
     @NotNull(message = "Employee is required")
     private Integer employeeId;
+
+    private LocalDateTime deletedAt;
 }
