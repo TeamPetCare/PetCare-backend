@@ -27,6 +27,7 @@ public class ScheduleGetAllSchedulesResponse {
     private String petName;
     private Payment payment;
 
+    private Integer employeeId;
     private Integer userId;
     private List<Integer> serviceIds;
     private Integer petId;
