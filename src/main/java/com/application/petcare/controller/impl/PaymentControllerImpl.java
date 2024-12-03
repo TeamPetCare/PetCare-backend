@@ -1,6 +1,7 @@
 package com.application.petcare.controller.impl;
 
 import com.application.petcare.controller.PaymentController;
+import com.application.petcare.dto.mercadopago.MercadoPagoResponse;
 import com.application.petcare.dto.mercadopago.PixPaymentRequest;
 import com.application.petcare.dto.payment.PaymentCreateRequest;
 import com.application.petcare.dto.payment.PaymentResponse;
@@ -53,6 +54,11 @@ public class PaymentControllerImpl implements PaymentController {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return ResponseEntity.ok(pixPaymentService.createPixPayment(request.getAmount(), user));
+    }
+    public ResponseEntity<Void> mercadoPagoApiCallBack(@RequestBody MercadoPagoResponse mercadoPagoResponse) {
+        System.out.println("CALLBACK");
+        pixPaymentService.checkPayment(mercadoPagoResponse);
+        return ResponseEntity.noContent().build();
     }
 
 

@@ -2,6 +2,7 @@ package com.application.petcare.controller;
 
 
 
+import com.application.petcare.dto.mercadopago.MercadoPagoResponse;
 import com.application.petcare.dto.mercadopago.PixPaymentRequest;
 import com.application.petcare.dto.payment.PaymentCreateRequest;
 import com.application.petcare.dto.payment.PaymentResponse;
@@ -42,4 +43,8 @@ public interface PaymentController {
     @Operation(summary = "Criar um novo pagamento pix")
     @PostMapping("/pix/{userId}")
     ResponseEntity<PaymentModel> createPixPayment(@RequestBody PixPaymentRequest request, @PathVariable Integer userId);
+
+    @Operation(summary = "Atualizar status do pagamento")
+    @PostMapping("/callback")
+    ResponseEntity<Void> mercadoPagoApiCallBack(@RequestBody MercadoPagoResponse mercadoPagoResponse);
 }

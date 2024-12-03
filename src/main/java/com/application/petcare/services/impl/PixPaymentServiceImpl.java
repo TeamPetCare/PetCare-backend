@@ -94,6 +94,7 @@ public class PixPaymentServiceImpl implements PixPaymentService {
                 .description("Agendamento Petshop")
                 .paymentMethodId("pix") //Fixo em pix, existem formas de implementar servico de credito e debito porem necessita alterar a logica de payment
                 .dateOfExpiration(now.plusMinutes(30))
+                .callbackUrl("https://petcare-web-deb8bbbjcqgecucg.eastus-01.azurewebsites.net/")
                 .externalReference(UUID.randomUUID().toString())
                 .payer(PaymentPayerRequest.builder()
                         .email(user.getEmail())
