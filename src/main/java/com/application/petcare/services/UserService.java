@@ -24,6 +24,9 @@ public interface UserService {
 
     List<UserCustomerResponse> getAllCustomers();
 
+    List<UserPlansResponse> getAllCustomersAndPlans();
+
+
     List<UserCustomerResponse> getAllCustumersSortedByName();
 
     List<UserEmployeeResponse> getAllEmployees();

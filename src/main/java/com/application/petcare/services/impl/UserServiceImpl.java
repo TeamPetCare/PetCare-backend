@@ -3,11 +3,13 @@ package com.application.petcare.services.impl;
 import com.application.petcare.dto.pet.PetPetsListResponse;
 import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.Pet;
+import com.application.petcare.entities.Plans;
 import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
 import com.application.petcare.exceptions.DuplicateEntryFoundException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.PetRepository;
+import com.application.petcare.repository.PlansRepository;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.PetService;
 import com.application.petcare.services.UserService;
@@ -31,6 +33,8 @@ import com.opencsv.CSVWriter;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+
+    private final PlansRepository plansRepository;
 
     private final PetRepository petRepository;
     private final PetServiceImpl petServiceImpl;
@@ -64,9 +68,6 @@ public class UserServiceImpl implements UserService {
                 .pets(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()))
                 .build();
 
-        if (user.getPets().isEmpty()) {
-            throw new ResourceNotFoundException("Pets not found");
-        }
         if (repository.findByEmailAndDeletedAtIsNull(user.getEmail()).isPresent()){
             throw new DuplicateEntryFoundException("Email is already used by another user");
         }
@@ -136,6 +137,8 @@ public class UserServiceImpl implements UserService {
         return repository.findAllByDeletedAtIsNull().stream().map(this::mapToResponse).collect(Collectors.toList());
     }
 
+
+
     @Override
     public byte[] generateCsvFileCustomerAndPets() {
         List<User> list = repository.findAllByDeletedAtIsNull();
@@ -153,6 +156,25 @@ public class UserServiceImpl implements UserService {
 
     public List<UserCustomerResponse> getAllCustomers() {
         return mapToUserCustomerResponse(repository.findByRoleAndDeletedAtIsNull(Role.ROLE_CUSTOMER));
+    }
+
+    @Override
+    public List<UserPlansResponse> getAllCustomersAndPlans() {
+        List<User> users = repository.findByRoleNotAndDeletedAtIsNull(Role.ROLE_CUSTOMER);
+        List<UserPlansResponse> userPlansResponses = new ArrayList<>();
+        for (User user : users) {
+            if (user.getPets() != null && !user.getPets().isEmpty()) {
+                for (Pet pet : user.getPets()) {
+                    if (pet.getPlan() != null) {
+                        userPlansResponses.add(UserPlansResponse.builder()
+                                .user(user)
+                                .plans(pet.getPlan())  // Acessa o plano do pet
+                                .build());
+                    }
+                }
+            }
+        }
+        return userPlansResponses;
     }
 
     public List<UserCustomerResponse> getAllCustumersSortedByName() {

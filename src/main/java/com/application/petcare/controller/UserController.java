@@ -50,7 +50,12 @@ public interface UserController {
     @GetMapping("/customers")
     ResponseEntity<List<UserCustomerResponse>> getAllCustomers();
 
-    @Operation(summary = "Buscar todos os clientes ordenados por nome")
+    @Operation(summary = "Buscar todos os clientes e seus planos")
+    @GetMapping("/customers-plans")
+    ResponseEntity<List<UserPlansResponse>> getAllCustomersAndPlans();
+
+
+        @Operation(summary = "Buscar todos os clientes ordenados por nome")
     @GetMapping("/customers/name")
     ResponseEntity<List<UserCustomerResponse>> getAllCustomersSortedByName();
 
