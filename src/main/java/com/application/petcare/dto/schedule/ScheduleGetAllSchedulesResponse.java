@@ -1,6 +1,7 @@
 package com.application.petcare.dto.schedule;
 
 import com.application.petcare.entities.Payment;
+import com.application.petcare.entities.PaymentModel;
 import com.application.petcare.enums.StatusAgendamento;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +26,7 @@ public class ScheduleGetAllSchedulesResponse {
     private String userName;
     private String petImg;
     private String petName;
-    private Payment payment;
+    private PaymentModel payment;
 
     private Integer employeeId;
     private Integer userId;

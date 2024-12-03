@@ -5,6 +5,7 @@ package com.application.petcare.controller;
 import com.application.petcare.dto.mercadopago.PixPaymentRequest;
 import com.application.petcare.dto.payment.PaymentCreateRequest;
 import com.application.petcare.dto.payment.PaymentResponse;
+import com.application.petcare.entities.PaymentModel;
 import com.mercadopago.resources.payment.Payment;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,5 +41,5 @@ public interface PaymentController {
 
     @Operation(summary = "Criar um novo pagamento pix")
     @PostMapping("/pix/{userId}")
-    ResponseEntity<Payment> createPixPayment(@RequestBody PixPaymentRequest request, @PathVariable Integer userId);
+    ResponseEntity<PaymentModel> createPixPayment(@RequestBody PixPaymentRequest request, @PathVariable Integer userId);
 }

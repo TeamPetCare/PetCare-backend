@@ -26,7 +26,7 @@ public class PlansServiceImpl implements PlansService {
 
     private PlanTypeRepository planTypeRepository;
     private ServicesRepository servicesRepository;
-    private PaymentRepository paymentRepository;
+    private PaymentModelRepository paymentModelRepository;
     private PetRepository petRepository;
 
     private final Map<Integer, PlansStrategy> mapStrategy = Map.of(
@@ -49,7 +49,7 @@ public class PlansServiceImpl implements PlansService {
                         .orElseThrow(() -> new ResourceNotFoundException("Plan Type not found")))
                 .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServicesIds()))
                 .repeatQuantity(request.getRepeatQuantity())
-                .payments(paymentRepository.findByIdInAndDeletedAtIsNull(request.getPaymentIds()))
+                .payments(paymentModelRepository.findByIdInAndDeletedAtIsNull(request.getPaymentIds()))
                 .pets(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()))
                 .build();
         Plans savedPlan = plansRepository.save(plans);
@@ -72,7 +72,7 @@ public class PlansServiceImpl implements PlansService {
                 .orElseThrow(() -> new ResourceNotFoundException("Plan type not found")));
         plans.setServices(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServicesIds()));
         plans.setRepeatQuantity(request.getRepeatQuantity());
-        plans.setPayments(paymentRepository.findByIdInAndDeletedAtIsNull(request.getPaymentIds()));
+        plans.setPayments(paymentModelRepository.findByIdInAndDeletedAtIsNull(request.getPaymentIds()));
         plans.setPets(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()));
 
         Plans updatedPlan = plansRepository.save(plans);

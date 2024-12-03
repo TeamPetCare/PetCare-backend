@@ -68,7 +68,7 @@ public class Plans {
 
     @NotNull
     @OneToMany
-    private List<Payment> payments;
+    private List<PaymentModel> payments;
 
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference

@@ -4,13 +4,11 @@ import com.application.petcare.dto.schedule.ScheduleCreateRequest;
 import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
 import com.application.petcare.dto.schedule.ScheduleResponse;
 import com.application.petcare.dto.schedule.ScheduleStatsResponse;
-import com.application.petcare.entities.Pet;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
 import com.application.petcare.enums.StatusAgendamento;
 import com.application.petcare.exceptions.BadRoleException;
-import com.application.petcare.exceptions.DuplicateScheduleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.*;
 import com.application.petcare.services.ScheduleService;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +32,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private ScheduleRepository scheduleRepository;
 
     private PetRepository petRepository;
-    private PaymentRepository paymentRepository;
+    private PaymentModelRepository paymentModelRepository;
     private ServicesRepository servicesRepository;
     private UserRepository userRepository;
 
@@ -70,7 +67,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                         .orElseThrow(() -> new ResourceNotFoundException("Pet not found")))
                 .payment(request.getPaymentId() == null
                         ? null
-                        : paymentRepository.findById(request.getPaymentId())
+                        : paymentModelRepository.findById(request.getPaymentId())
                         .orElseThrow(() -> new ResourceNotFoundException("Payment not found")))
                 .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()))
                 .employee(possibleEmployee)
@@ -112,7 +109,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .orElseThrow(() -> new ResourceNotFoundException("Pet not found")));
         schedule.setPayment(request.getPaymentId() == null
                 ? null
-                : paymentRepository.findById(request.getPaymentId())
+                : paymentModelRepository.findById(request.getPaymentId())
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found")));
         schedule.setServices(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()));
         schedule.setEmployee(possibleEmployee);

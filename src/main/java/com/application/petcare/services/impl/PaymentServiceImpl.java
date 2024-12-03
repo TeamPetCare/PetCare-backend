@@ -3,8 +3,9 @@ package com.application.petcare.services.impl;
 import com.application.petcare.dto.payment.PaymentCreateRequest;
 import com.application.petcare.dto.payment.PaymentResponse;
 import com.application.petcare.entities.Payment;
+import com.application.petcare.entities.PaymentModel;
 import com.application.petcare.exceptions.ResourceNotFoundException;
-import com.application.petcare.repository.PaymentRepository;
+import com.application.petcare.repository.PaymentModelRepository;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.PaymentService;
 import lombok.AllArgsConstructor;
@@ -18,11 +19,11 @@ import java.util.List;
 public class PaymentServiceImpl implements PaymentService {
 
     private UserRepository userRepository;
-    private PaymentRepository paymentRepository;
+    private PaymentModelRepository paymentModelRepository;
 
     @Override
     public PaymentResponse createPayment(PaymentCreateRequest request) {
-        Payment payment = Payment.builder()
+        PaymentModel payment = PaymentModel.builder()
                 .price(request.getPrice())
                 .paymentDate(request.getPaymentDate())
                 .paymentId(request.getPaymentId())
@@ -32,13 +33,13 @@ public class PaymentServiceImpl implements PaymentService {
                 .user(userRepository.findById(request.getUserId())
                         .orElseThrow(() -> new ResourceNotFoundException("User not found")))
                 .build();
-        Payment savedPayment = paymentRepository.save(payment);
+        PaymentModel savedPayment = paymentModelRepository.save(payment);
         return mapToPaymentResponse(savedPayment);
     }
 
     @Override
     public PaymentResponse updatePayment(Integer id, PaymentCreateRequest request) {
-        Payment payment = paymentRepository.findById(id)
+        PaymentModel payment = paymentModelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
         payment.setId(id);
         payment.setPrice(request.getPrice());
@@ -49,31 +50,31 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setUser(userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found")));
 
-        Payment updatedPayment = paymentRepository.save(payment);
+        PaymentModel updatedPayment = paymentModelRepository.save(payment);
         return mapToPaymentResponse(updatedPayment);
     }
 
     @Override
     public PaymentResponse getPaymentById(Integer id) {
-        Payment payment = paymentRepository.findById(id)
+        PaymentModel payment = paymentModelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
         return mapToPaymentResponse(payment);
     }
 
     @Override
     public List<PaymentResponse> getAllPayments() {
-        return paymentRepository.findAllByDeletedAtIsNull().stream().map(this::mapToPaymentResponse).toList();
+        return paymentModelRepository.findAllByDeletedAtIsNull().stream().map(this::mapToPaymentResponse).toList();
     }
 
     @Override
     public void deletePayment(Integer id) {
-        Payment payment = paymentRepository.findById(id)
+        PaymentModel payment = paymentModelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Payment not found"));
         payment.setDeletedAt(LocalDateTime.now());
-        Payment updatedPayment = paymentRepository.save(payment);
+        PaymentModel updatedPayment = paymentModelRepository.save(payment);
     }
 
-    public PaymentResponse mapToPaymentResponse(Payment payment){
+    public PaymentResponse mapToPaymentResponse(PaymentModel payment){
         return PaymentResponse.builder()
                 .id(payment.getId())
                 .price(payment.getPrice())

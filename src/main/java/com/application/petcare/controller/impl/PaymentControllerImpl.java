@@ -4,16 +4,17 @@ import com.application.petcare.controller.PaymentController;
 import com.application.petcare.dto.mercadopago.PixPaymentRequest;
 import com.application.petcare.dto.payment.PaymentCreateRequest;
 import com.application.petcare.dto.payment.PaymentResponse;
+import com.application.petcare.entities.PaymentModel;
+import com.application.petcare.entities.User;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.UserRepository;
 import com.application.petcare.services.PaymentService;
 import com.application.petcare.services.PixPaymentService;
-import com.mercadopago.resources.payment.Payment;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -47,15 +48,11 @@ public class PaymentControllerImpl implements PaymentController {
     }
 
 
-    public ResponseEntity<Payment> createPixPayment(@RequestBody PixPaymentRequest request, Integer userId) {
-        Payment payment = pixPaymentService.createPixPayment(request.getAmount(), request.getEmail(), request.getName(), request.getCpf());
-        com.application.petcare.entities.Payment createdPayment = new com.application.petcare.entities.Payment();
-        createdPayment.setPaymentDate(LocalDateTime.from(payment.getDateCreated().toInstant()));
-        createdPayment.setPrice( payment.getTransactionAmount().doubleValue());
-        createdPayment.setUser(userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found")));
-        createPayment(mapToPaymentResponse(createdPayment));
-        return ResponseEntity.ok(payment);
+    public ResponseEntity<PaymentModel> createPixPayment(@RequestBody PixPaymentRequest request, Integer userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return ResponseEntity.ok(pixPaymentService.createPixPayment(request.getAmount(), user));
     }
 
 

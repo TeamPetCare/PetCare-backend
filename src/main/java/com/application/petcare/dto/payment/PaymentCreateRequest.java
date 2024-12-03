@@ -1,6 +1,7 @@
 package com.application.petcare.dto.payment;
 
 import com.application.petcare.enums.PaymentMethod;
+import com.application.petcare.enums.PaymentStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
@@ -24,7 +25,7 @@ public class PaymentCreateRequest {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
     @NotNull(message = "Payment Status is required")
-    private Boolean paymentStatus;
+    private PaymentStatus paymentStatus;
     @NotNull(message = "User id is required")
     private Integer userId;
 }

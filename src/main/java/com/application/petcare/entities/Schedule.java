@@ -49,7 +49,7 @@ public class Schedule {
     private Pet pet;
 
     @OneToOne
-    private Payment payment;
+    private PaymentModel payment;
 
     @ManyToMany
     @JsonManagedReference
