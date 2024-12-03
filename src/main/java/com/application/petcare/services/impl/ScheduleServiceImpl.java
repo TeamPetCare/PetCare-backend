@@ -190,6 +190,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .creationDate(schedule.getCreationDate())
                 .scheduleNote(schedule.getScheduleNote())
                 .petId(schedule.getPet().getId())
+                .deletedAt(schedule.getDeletedAt())
                 // Verificação de nulidade para evitar NullPointerException
                 .paymentId(schedule.getPayment() != null ? schedule.getPayment().getId() : null)
                 .serviceIds(List.of(serviceIds))

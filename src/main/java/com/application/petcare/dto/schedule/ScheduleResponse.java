@@ -30,5 +30,6 @@ public class ScheduleResponse {
     private Integer petId;
     private Integer paymentId;
     private List<Integer> serviceIds;
+    private LocalDateTime deletedAt;
     private Integer employeeId;
 }
