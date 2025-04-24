@@ -76,6 +76,12 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
+    public ResponseEntity<UserResponse> updateUserWithPetList(Integer id, List<Integer> userUpdateRequest) {
+        UserResponse updatedUser = userService.updateUserWithPetList(id, userUpdateRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+    }
+
+    @Override
     public ResponseEntity<UserResponse> updateCustomer(Integer id, UserCustomerUpdateRequest request) {
         UserResponse updatedUser = userService.updateCustomer(id, request);
         return ResponseEntity.ok().body(updatedUser);

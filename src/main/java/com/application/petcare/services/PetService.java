@@ -11,6 +11,8 @@ import java.util.List;
 public interface PetService {
     PetResponse createPet(PetCreateRequest request);
 
+    List<Integer> createListOfPet(List<PetCreateRequest> request);
+
     PetResponse updatePet(Integer id, PetCreateRequest request);
 
     PetResponse updatePetPetsList(Integer id, PetPetsListUpdateRequest request);

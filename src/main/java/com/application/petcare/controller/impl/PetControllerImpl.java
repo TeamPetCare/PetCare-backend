@@ -25,6 +25,11 @@ public class PetControllerImpl implements PetController {
     }
 
     @Override
+    public ResponseEntity<List<Integer>> createListOfPet(List<PetCreateRequest> request) {
+        return ResponseEntity.ok(petService.createListOfPet(request));
+    }
+
+    @Override
     public ResponseEntity<PetResponse> updatePet(Integer id, PetCreateRequest request) {
         return ResponseEntity.ok(petService.updatePet(id, request));
     }

@@ -12,6 +12,8 @@ public interface UserService {
 
     UserResponse updateUser(Integer id, UserUpdateRequest request);
 
+    UserResponse updateUserWithPetList(Integer id, List<Integer> request);
+
     UserResponse updateCustomer(Integer id, UserCustomerUpdateRequest request);
 
     UserResponse findUserById(Integer planTypeId);

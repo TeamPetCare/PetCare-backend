@@ -31,6 +31,18 @@ public interface ScheduleController {
     @GetMapping
     ResponseEntity<List<ScheduleGetAllSchedulesResponse>> getAllSchedules();
 
+    @Operation(summary = "Buscar todos os agendamentos mensais de um cliente")
+    @GetMapping("/client/{id}")
+    ResponseEntity<List<Schedule>> getClientSchedulesByUserId(
+            @PathVariable Integer id,
+            @RequestParam LocalDateTime month);
+
+    @Operation(summary = "Buscar todos os agendamentos mensais de um pet")
+    @GetMapping("/pet/{id}")
+    ResponseEntity<List<Schedule>> getClientSchedulesByPetId(
+            @RequestParam LocalDateTime month,
+            @PathVariable Integer petId);
+
     @Operation(summary = "Buscar todos os agendamentos mensais")
     @GetMapping("/monthly-schedules")
     ResponseEntity<List<Schedule>> getAllMonthlySchedules(@RequestParam LocalDateTime month);

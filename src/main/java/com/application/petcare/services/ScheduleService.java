@@ -20,6 +20,10 @@ public interface ScheduleService {
 
     ScheduleResponse findScheduleById(Integer id);
 
+    List<Schedule> findClientSchedulesByUserId(Integer id, LocalDateTime month);
+
+    List<Schedule> findClientSchedulesByPetId(LocalDateTime month, Integer petId);
+
     List<ScheduleGetAllSchedulesResponse> findAllSchedules();
 
     List<Schedule> findAllMonthlySchedules(LocalDateTime month);

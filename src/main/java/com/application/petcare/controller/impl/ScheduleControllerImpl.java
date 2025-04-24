@@ -41,6 +41,16 @@ public class ScheduleControllerImpl implements ScheduleController {
     }
 
     @Override
+    public ResponseEntity<List<Schedule>> getClientSchedulesByUserId(Integer id, LocalDateTime month) {
+        return ResponseEntity.ok().body(scheduleService.findClientSchedulesByUserId(id, month));
+    }
+
+    @Override
+    public ResponseEntity<List<Schedule>> getClientSchedulesByPetId(LocalDateTime month, Integer petId) {
+        return ResponseEntity.ok().body(scheduleService.findClientSchedulesByPetId(month, petId));
+    }
+
+    @Override
     public ResponseEntity<List<Schedule>> getAllMonthlySchedules(LocalDateTime month) {
         return ResponseEntity.ok().body(scheduleService.findAllMonthlySchedules(month));
     }

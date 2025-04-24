@@ -20,6 +20,10 @@ public interface PetController {
     @PostMapping
     ResponseEntity<PetResponse> createPet(@RequestBody PetCreateRequest request);
 
+    @Operation(summary = "Criar uma lista de Pets")
+    @PostMapping("/list")
+    ResponseEntity<List<Integer>> createListOfPet(@RequestBody List<PetCreateRequest> request);
+
     @Operation(summary = "Atualizar um pet existente")
     @PutMapping("/{id}")
     ResponseEntity<PetResponse> updatePet(@PathVariable Integer id, @RequestBody PetCreateRequest request);

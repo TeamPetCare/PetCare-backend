@@ -88,6 +88,59 @@ public class PetServiceImpl implements PetService {
         return mapToResponse(savedPet);
     }
 
+    public List<Integer> createListOfPet(List<PetCreateRequest> request){
+        List<Integer> petIds = new ArrayList<>();
+        for (int i = 0; i < request.size(); i++) {
+            log.info("Creating pet: {}", request);
+
+            User possibleCustomer = userRepository.findById(request.get(i).getUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+            if(!possibleCustomer.getRole().equals(Role.ROLE_CUSTOMER)){
+                throw new BadRoleException("User is not a customer");
+            }
+
+            Specie specie = specieRepository.findById(request.get(i).getSpecieId())
+                    .orElseThrow(() -> new BadRequestException("Especie not found"));
+
+            Race race = raceRepository.findById(request.get(i).getRaceId())
+                    .orElseThrow(() -> new BadRequestException("Raca not found"));
+
+            Size size = sizeRepository.findById(request.get(i).getSizeId())
+                    .orElseThrow(() -> new BadRequestException("Size not found"));
+
+
+            Plans plans;
+            if(request.get(i).getPlanId() == null){
+                plans = null;
+            }else{
+                plans = plansRepository.findById(request.get(i).getPlanId()).get();
+            }
+
+            Pet pet = Pet.builder()
+                    .name(request.get(i).getName())
+                    .specie(specie)
+                    .race(race)
+                    .petImg(request.get(i).getPetImg())
+                    .birthdate(request.get(i).getBirthdate())
+                    .gender(request.get(i).getGender())
+                    .color(request.get(i).getColor())
+                    .estimatedWeight(request.get(i).getEstimatedWeight())
+                    .size(size)
+                    .deletedAt(null)
+                    .petObservations(request.get(i).getPetObservations())
+                    .plan(plans)
+                    .user(possibleCustomer)
+                    .build();
+
+            Pet savedPet = petRepository.save(pet);
+            savedPet.setPetImg(imageDatabase.downloadImagem(savedPet.getId(), false));
+            petRepository.save(savedPet);
+            log.info("Pet created successfully: {}", savedPet);
+            petIds.add(savedPet.getId());
+        }
+        return(petIds);
+    }
+
     @Override
     public PetResponse updatePet(Integer id, PetCreateRequest request) {
         log.info("Updating pet with id: {}", id);

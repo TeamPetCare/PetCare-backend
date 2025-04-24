@@ -35,6 +35,12 @@ public interface UserController {
             @PathVariable Integer id,
             @RequestBody UserUpdateRequest userUpdateRequest);
 
+    @Operation(summary = "Atualizar usuário por ID com uma lista de Pets")
+    @PutMapping("/pets/{id}")
+    ResponseEntity<UserResponse> updateUserWithPetList(
+            @PathVariable Integer id,
+            @RequestBody List<Integer> userUpdateRequest);
+
     @Operation(summary = "Atualizar cliente por ID")
     @PutMapping("/customers/{id}")
     ResponseEntity<UserResponse> updateCustomer(@PathVariable Integer id, @RequestBody UserCustomerUpdateRequest request);

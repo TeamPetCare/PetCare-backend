@@ -127,6 +127,22 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    public List<Schedule> findClientSchedulesByUserId(Integer id, LocalDateTime month) {
+        LocalDateTime startMonth = month.withDayOfMonth(1);
+        LocalDateTime start = startMonth.minusDays(7);
+        LocalDateTime end = startMonth.plusDays(37);
+        return scheduleRepository.findByScheduleDateBetweenAndPetUserId(start, end, id);
+    }
+
+    @Override
+    public List<Schedule> findClientSchedulesByPetId(LocalDateTime month, Integer petId) {
+        LocalDateTime startMonth = month.withDayOfMonth(1);
+        LocalDateTime start = startMonth.minusDays(7);
+        LocalDateTime end = startMonth.plusDays(37);
+        return scheduleRepository.findByScheduleDateBetweenAndPetId(start, end, petId);
+    }
+
+    @Override
     public List<ScheduleGetAllSchedulesResponse> findAllSchedules() {
         return scheduleRepository.findAllByDeletedAtIsNull().stream().map(this::mapToScheduleGetAllSchedulesResponse).toList();
     }

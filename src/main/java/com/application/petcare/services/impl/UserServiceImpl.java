@@ -16,6 +16,7 @@ import com.application.petcare.services.UserService;
 import com.application.petcare.utils.ImageDatabase;
 import com.application.petcare.utils.ListaObj;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,9 @@ public class UserServiceImpl implements UserService {
     private final ImageDatabase imageDatabase;
 
     private PetService petService;
+
+    @Value("${api.security.token.secret}")
+    private String secret;
 
     @Override
     public UserResponse createUser(UserCreateRequest request) {
@@ -109,6 +113,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserResponse updateUserWithPetList(Integer id, List<Integer> request) {
+        User user = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
+        List<Pet> novosPets = petRepository.findAllByIdInAndDeletedAtIsNull(request);
+        if (user.getPets() == null) {
+            user.setPets(new ArrayList<>());
+        }
+        for (Pet pet : novosPets) {
+            if (!user.getPets().contains(pet)) {
+                user.getPets().add(pet);
+            }
+        }
+        User updatedUser = repository.save(user);
+        return mapToResponse(updatedUser);
+    }
+
+
+
+    @Override
     public UserResponse updateCustomer(Integer id, UserCustomerUpdateRequest request) {
         User user = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
@@ -124,6 +147,7 @@ public class UserServiceImpl implements UserService {
         User updatedUser = repository.save(user);
         return mapToResponse(updatedUser);
     }
+
 
     @Override
     public UserResponse findUserById(Integer userId) {
