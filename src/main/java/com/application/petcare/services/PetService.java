@@ -28,4 +28,6 @@ public interface PetService {
     void deletePet(Integer id);
 
     void deletePetPetsList(List<Integer> petIds);
+
+    List getSpeciesSizesAndRaces();
 }

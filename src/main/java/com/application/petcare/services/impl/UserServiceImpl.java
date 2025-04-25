@@ -235,6 +235,14 @@ public class UserServiceImpl implements UserService {
         return mapToUserInfoResponse(possibleUser);
     }
 
+    @Override
+    public Boolean isCPFUsed(String cpf) {
+        if(repository.existsByCpfClient(cpf)){
+            throw new IllegalArgumentException("CPF já está sendo usado");
+        }
+        return false;
+    }
+
     private void mergeSortByName(ListaObj<UserCustomerResponse> lista, int inicio, int fim) {
         if (inicio < fim) {
             int meio = (inicio + fim) / 2;

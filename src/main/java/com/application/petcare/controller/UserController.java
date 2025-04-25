@@ -61,7 +61,7 @@ public interface UserController {
     ResponseEntity<List<UserPlansResponse>> getAllCustomersAndPlans();
 
 
-        @Operation(summary = "Buscar todos os clientes ordenados por nome")
+    @Operation(summary = "Buscar todos os clientes ordenados por nome")
     @GetMapping("/customers/name")
     ResponseEntity<List<UserCustomerResponse>> getAllCustomersSortedByName();
 
@@ -76,6 +76,10 @@ public interface UserController {
     @Operation(summary = "Pega as informacoes do usuario")
     @GetMapping("/info/{id}")
     ResponseEntity<UserInfosResponse> getUserInfo(@PathVariable Integer id);
+
+    @Operation(summary = "Verifica se cpf já está em uso")
+    @GetMapping("/cpf")
+    ResponseEntity<Boolean> isCPFUsed(@RequestBody String cpf);
 }
 
 

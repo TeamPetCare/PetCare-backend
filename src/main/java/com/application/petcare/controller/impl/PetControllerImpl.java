@@ -70,4 +70,9 @@ public class PetControllerImpl implements PetController {
         petService.deletePetPetsList(ids);
         return ResponseEntity.noContent().build();
     }
+
+    @Override
+    public ResponseEntity<List> getSpeciesSizesAndRaces() {
+        return ResponseEntity.ok().body(petService.getSpeciesSizesAndRaces());
+    }
 }

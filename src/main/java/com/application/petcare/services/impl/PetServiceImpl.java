@@ -291,6 +291,16 @@ public class PetServiceImpl implements PetService {
         }
     }
 
+    @Override
+    public List getSpeciesSizesAndRaces() {
+        List listaDados = List.of(
+                specieRepository.findAllByDeletedAtIsNull(),
+                sizeRepository.findAllByDeletedAtIsNull(),
+                raceRepository.findAllByDeletedAtIsNull()
+        );
+        return listaDados;
+    }
+
 
     public List<PetPetsListResponse> maptoPetPetsListResponse(List<Pet> pets){
         List<PetPetsListResponse> petPetsListResponses = new ArrayList<>();

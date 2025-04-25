@@ -124,4 +124,9 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok().body(userService.getUserInfo(id));
     }
 
+    @Override
+    public ResponseEntity<Boolean> isCPFUsed(String cpf) {
+        return ResponseEntity.ok().body(userService.isCPFUsed(cpf));
+    }
+
 }

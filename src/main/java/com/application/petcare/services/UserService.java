@@ -36,4 +36,6 @@ public interface UserService {
     void deleteSelectedCustomers(List<Integer> userCustomerDeleteRequests);
 
     UserInfosResponse getUserInfo(Integer id);
+
+    Boolean isCPFUsed(String cpf);
 }
