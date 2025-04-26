@@ -126,13 +126,14 @@ jobs:
 
       - name: Remover todos os usos da porta 80
         run: |
-          PIDS=$(sudo lsof -t -i :80)
+          PIDS=$(sudo lsof -t -i :80 || true)  # Ignora erros do lsof
           if [ -n "$PIDS" ]; then
             echo "Matando os processos que estão utilizando a porta 80..."
             sudo kill -9 $PIDS
           else
             echo "Nenhum processo encontrado utilizando a porta 80."
           fi
+      
       
 
       - name: Run Docker Container
