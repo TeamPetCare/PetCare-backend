@@ -89,13 +89,12 @@ jobs:
       - name: Push Image Docker
         run: docker push guilhermenevesm/petcare-rest-application
 
-  deploy:  # deploy está no mesmo nível de build
-    needs: build
-    runs-on: self-hosted
-    steps:
-      - name: Pull image from Dockerhub
-        run: docker pull guilhermenevesm/petcare-rest-application:latest
+  deploy:
+      needs: build
+      runs-on: self-hosted
+      steps:
+        - name: Pull image from Dockerhub
+          run: docker pull guilhermenevesm/petcare-rest-application:latest
 
-      - name: Run Docker Container
-        run: docker run -d -p 8080:8080 --name petcare-rest-application guilhermenevesm/petcare-rest-application
-
+        - name: Run Docker Container
+          run: docker run -d -p 8080:8080 --name petcare-rest-application guilhermenevesm/petcare-rest-application
