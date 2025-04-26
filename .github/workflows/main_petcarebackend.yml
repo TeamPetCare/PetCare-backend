@@ -125,8 +125,15 @@ jobs:
           fi
 
       - name: Remover todos os usos da porta 80
-        run: sudo lsof -t -i :80 | xargs sudo kill -9
+        run: |
+          PIDS=$(sudo lsof -t -i :80)
+          if [ -n "$PIDS" ]; then
+            echo "Matando os processos que estão utilizando a porta 80..."
+            sudo kill -9 $PIDS
+          else
+            echo "Nenhum processo encontrado utilizando a porta 80."
+          fi
+      
 
       - name: Run Docker Container
         run: sudo docker run -d --restart unless-stopped -p 80:80 -e DATABASE_USER='${{secrets.DATABASE_USER}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_SOURCE='${{secrets.DATABASE_URL}}' -e PASSWORD_KEY='${{secrets.PASSWORD_KEY}}' -e MERCADO_PAGO_KEY='${{secrets.MERCADO_PAGO_KEY}}' -e BLOB_CONNECTION='${{secrets.BLOB_CONNECTION}}' --name petcare-rest-application ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application
-  
