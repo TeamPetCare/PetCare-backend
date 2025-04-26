@@ -1,55 +1,85 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - petcareBackend
+#name: Build and deploy JAR app to Azure Web App - petcareBackend
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#  workflow_dispatch:
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Set up Java Version
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '17'
+#
+#
+#      - name: Build with Maven
+#        run: mvn clean install
+#
+#      - name: Upload artifact for deployment job
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: java-app
+#          path: '${{ github.workspace }}/target/*.jar'
+#
+#  deploy:
+#    runs-on: ubuntu-latest
+#    needs: build
+#    environment:
+#      name: 'Production'
+#      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+#
+#    steps:
+#      - name: Download artifact from build job
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: java-app
+#
+#      - name: Deploy to Azure Web App
+#        id: deploy-to-webapp
+#        uses: azure/webapps-deploy@v2
+#        with:
+#          app-name: 'petcareBackend'
+#          slot-name: 'Production'
+#          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AFE80BAB2CB141608AE848542B456B21 }}
+#          package: '*.jar'
+
+
+name: Deploy PetCare Aplication
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+      branches: [main]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+  jobs:
+      build:
+            runs-on: ubuntu-latest
+            steps:
+              - name: Checkout code
+                uses: actions/checkout@v3
 
-    steps:
-      - uses: actions/checkout@v4
+              - name: Setup Java
+                uses: actions/setup-java@v3
+                with:
+                    distribution: 'temurin',
+                    java-version: '17'
+              - name: Build project
+                run: mvn clean install #-DskipTests
 
-      - name: Set up Java Version
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+              - name: Login Docker Hub
+                run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+              - name: Build Docker Image
+                run: docker build -t guilhermenevesm/PetCareRestApplication .
+              - name: Push Image Docker
+                run: docker push guilhermenevesm/PetCareRestApplication
 
-
-      - name: Build with Maven
-        run: mvn clean install
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: java-app
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'petcareBackend'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AFE80BAB2CB141608AE848542B456B21 }}
-          package: '*.jar'
