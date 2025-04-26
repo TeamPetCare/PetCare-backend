@@ -84,17 +84,17 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: sudo docker build -t guilhermenevesm/petcare-rest-application .
+        run: sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application .
 
       - name: Push Image Docker
-        run: sudo docker push guilhermenevesm/petcare-rest-application
+        run: sudo docker push ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application
 
   deploy:
       needs: build
       runs-on: self-hosted
       steps:
         - name: Pull image from Dockerhub
-          run: sudo docker pull guilhermenevesm/petcare-rest-application:latest
+          run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application:latest
 
         - name: Run Docker Container
-          run: sudo docker run -d -p 8080:8080 --name petcare-rest-application guilhermenevesm/petcare-rest-application
+          run: sudo docker run -d -p 8080:8080 --name petcare-rest-application ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application
