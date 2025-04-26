@@ -106,14 +106,27 @@ jobs:
             echo "Nenhum container em execução com o nome petcare-rest-application."
           fi
 
-      - name: Parar todos containers
-        run: sudo docker stop $(sudo docker ps -aq)
+      - name: Parar todos containers se existirem
+        run: |
+          CONTAINERS=$(sudo docker ps -q)
+          if [ -n "$CONTAINERS" ]; then
+            sudo docker stop $CONTAINERS
+          else
+            echo "Nenhum container em execução para parar."
+          fi
 
-      - name: Remover Docker Container
-        run: sudo docker rm $(sudo docker ps -aq)
+      - name: Remover Docker Container se existirem
+        run: |
+          CONTAINERS=$(sudo docker ps -aq)
+          if [ -n "$CONTAINERS" ]; then
+            sudo docker rm $CONTAINERS
+          else
+            echo "Nenhum container para remover."
+          fi
 
       - name: Remover todos os usos da porta 80
         run: sudo lsof -t -i :80 | xargs sudo kill -9
 
       - name: Run Docker Container
         run: sudo docker run -d --restart unless-stopped -p 80:80 -e DATABASE_USER='${{secrets.DATABASE_USER}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_SOURCE='${{secrets.DATABASE_URL}}' -e PASSWORD_KEY='${{secrets.PASSWORD_KEY}}' -e MERCADO_PAGO_KEY='${{secrets.MERCADO_PAGO_KEY}}' -e BLOB_CONNECTION='${{secrets.BLOB_CONNECTION}}' --name petcare-rest-application ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application
+  
