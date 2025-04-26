@@ -100,4 +100,4 @@ jobs:
           run: sudo docker rm -f petcare-rest-application
 
         - name: Run Docker Container
-          run: sudo docker run -d -p 8080:8080 -e DATABASE_USER='${{secrets.DATABASE_USER}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_SOURCE='${{secrets.DATABASE_URL}}' -e PASSWORD_KEY='${{secrets.PASSWORD_KEY}}' -e MERCADO_PAGO_KEY='${{secrets.MERCADO_PAGO_KEY}}' -e BLOB_CONNECTION='${{secrets.BLOB_CONNECTION}}' --name petcare-rest-application ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application
+          run: sudo docker run -d -p 80:80 -e DATABASE_USER='${{secrets.DATABASE_USER}}' -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_SOURCE='${{secrets.DATABASE_URL}}' -e PASSWORD_KEY='${{secrets.PASSWORD_KEY}}' -e MERCADO_PAGO_KEY='${{secrets.MERCADO_PAGO_KEY}}' -e BLOB_CONNECTION='${{secrets.BLOB_CONNECTION}}' --name petcare-rest-application ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application
