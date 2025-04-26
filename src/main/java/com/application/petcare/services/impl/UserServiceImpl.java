@@ -238,7 +238,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean isCPFUsed(String cpf) {
         if(repository.existsByCpfClient(cpf)){
-            throw new IllegalArgumentException("CPF já está sendo usado");
+            return true;
         }
         return false;
     }

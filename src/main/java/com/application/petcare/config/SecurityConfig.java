@@ -63,7 +63,7 @@ public class SecurityConfig {
                         .requestMatchers("/validate-token").permitAll()
                         .requestMatchers("/api/notifications").hasRole("EMPLOYEE")
                         .requestMatchers("/api/payments").hasRole("EMPLOYEE")
-                        .requestMatchers("/api/pets").hasRole("EMPLOYEE")
+                        .requestMatchers("/api/pets").hasRole("CUSTOMER")
                         .requestMatchers("/api/plans").hasRole("EMPLOYEE")
                         .requestMatchers("/api/plan-types").hasRole("EMPLOYEE")
                         .requestMatchers("/api/races").hasRole("EMPLOYEE")
@@ -71,7 +71,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/services").hasRole("EMPLOYEE")
                         .requestMatchers("/api/species").hasRole("EMPLOYEE")
                         .requestMatchers("/api/sizes").hasRole("EMPLOYEE")
-                        .requestMatchers("/api/users").hasRole("ADMIN")
+                        .requestMatchers("/api/users").permitAll()
 
                         .anyRequest().authenticated()
                 )
