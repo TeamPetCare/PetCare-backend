@@ -87,7 +87,7 @@ jobs:
         run: sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application .
 
       - name: Push Image Docker
-        run: sudo docker push ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/petcare-rest-application
 
   deploy:
       needs: build
