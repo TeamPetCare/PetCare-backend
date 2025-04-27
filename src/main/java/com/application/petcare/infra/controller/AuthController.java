@@ -46,6 +46,19 @@ public class AuthController {
         return ResponseEntity.badRequest().build();
     }
 
+    @PostMapping("/login/customer")
+    public ResponseEntity<LoginResponseDto> loginCustomer(@RequestBody LoginRequestDto body){
+        User user = this.repository.findByEmailAndDeletedAtIsNull(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
+        if(!user.getRole().equals(Role.ROLE_CUSTOMER)){
+            throw new BadRoleException("Owner or employee is not allowed");
+        }
+        if(passwordEncoder.matches(body.password(), user.getPassword())){
+            String token = this.tokenService.generateToken(user);
+            return ResponseEntity.ok().body(new LoginResponseDto(user.getName(), token));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
 
     @PostMapping("/register")
     public ResponseEntity<LoginResponseDto> register(@RequestBody RegisterRequestDto body){
