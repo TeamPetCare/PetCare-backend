@@ -79,7 +79,7 @@ public interface UserController {
 
     @Operation(summary = "Verifica se cpf já está em uso")
     @GetMapping("/cpf")
-    ResponseEntity<Boolean> isCPFUsed(@RequestBody String cpf);
+    ResponseEntity<Boolean> isCPFUsed(@RequestParam String cpf);
 }
 
 
