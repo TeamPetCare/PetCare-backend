@@ -57,7 +57,7 @@ public class SecurityConfig {
                                 "/api/payments/callback"
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/swagger-ui/index.html#").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/validate-token").permitAll()
