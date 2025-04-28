@@ -40,6 +40,10 @@ public interface PetController {
     @GetMapping
     ResponseEntity<List<PetResponse>> getAllPets();
 
+    @Operation(summary = "Lista todos os pets de um usuário")
+    @GetMapping
+    ResponseEntity<List<Pet>> getAllPetsByUserId(Integer userId);
+
     @Operation(summary = "Listar todos os pets na tela Clientes e Pets")
     @GetMapping("/pets-list")
     ResponseEntity<List<PetPetsListResponse>> getAllPetsPetsList();

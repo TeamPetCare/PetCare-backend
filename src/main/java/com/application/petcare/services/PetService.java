@@ -23,6 +23,8 @@ public interface PetService {
 
     List<Pet> getAllPetsByIds(List<Integer> ids);
 
+    List<Pet> getAllPetsByUserId(Integer userId);
+
     List<PetPetsListResponse> getAllPetsPetsList();
 
     void deletePet(Integer id);

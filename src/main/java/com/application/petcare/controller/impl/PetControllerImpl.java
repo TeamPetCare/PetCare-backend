@@ -50,6 +50,11 @@ public class PetControllerImpl implements PetController {
     }
 
     @Override
+    public ResponseEntity<List<Pet>> getAllPetsByUserId(Integer userId) {
+        return ResponseEntity.ok(petService.getAllPetsByUserId(userId));
+    }
+
+    @Override
     public ResponseEntity<List<PetPetsListResponse>> getAllPetsPetsList() {
         return ResponseEntity.ok().body(petService.getAllPetsPetsList());
     }
