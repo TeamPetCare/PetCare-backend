@@ -41,7 +41,7 @@ public class AuthController {
         }
         if(passwordEncoder.matches(body.password(), user.getPassword())){
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok().body(new LoginResponseDto(user.getName(), token));
+            return ResponseEntity.ok().body(new LoginResponseDto(user.getId(), user.getName(), token));
         }
         return ResponseEntity.badRequest().build();
     }
@@ -54,7 +54,7 @@ public class AuthController {
         }
         if(passwordEncoder.matches(body.password(), user.getPassword())){
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok().body(new LoginResponseDto(user.getName(), token));
+            return ResponseEntity.ok().body(new LoginResponseDto(user.getId(), user.getName(), token));
         }
         return ResponseEntity.badRequest().build();
     }
@@ -85,7 +85,7 @@ public class AuthController {
 
             this.repository.save(newUser);
             String token = this.tokenService.generateToken(newUser);
-            return ResponseEntity.ok().body(new LoginResponseDto(newUser.getName(), token));
+            return ResponseEntity.ok().body(new LoginResponseDto(newUser.getId(), newUser.getName(), token));
         }
         throw new DuplicateEntryFoundException("Email is already used by another user");
     }

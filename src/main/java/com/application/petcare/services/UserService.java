@@ -1,5 +1,6 @@
 package com.application.petcare.services;
 
+import com.application.petcare.dto.login.LoginResponseDto;
 import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.User;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
-    UserResponse createUser(UserCreateRequest request);
+    LoginResponseDto createUser(UserCreateRequest request);
 
     UserResponse updateUser(Integer id, UserUpdateRequest request);
 

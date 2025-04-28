@@ -1,5 +1,6 @@
 package com.application.petcare.controller;
 
+import com.application.petcare.dto.login.LoginResponseDto;
 import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.User;
 import com.azure.core.management.Resource;
@@ -15,7 +16,7 @@ import java.util.List;
 public interface UserController {
     @Operation(summary = "Criar um novo usuário")
     @PostMapping
-    ResponseEntity<UserResponse> createUser(@RequestBody UserCreateRequest userCreateRequest);
+    ResponseEntity<LoginResponseDto> createUser(@RequestBody UserCreateRequest userCreateRequest);
 
     @Operation(summary = "Buscar usuário por ID")
     @GetMapping("/{id}")

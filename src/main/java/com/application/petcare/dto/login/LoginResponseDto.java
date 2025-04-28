@@ -1,5 +1,5 @@
 package com.application.petcare.dto.login;
 
-public record LoginResponseDto (String name, String token){
+public record LoginResponseDto (Integer id, String name, String token){
 
 }

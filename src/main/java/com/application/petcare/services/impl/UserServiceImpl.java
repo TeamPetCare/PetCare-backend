@@ -1,13 +1,15 @@
 package com.application.petcare.services.impl;
 
+import com.application.petcare.dto.login.LoginRequestDto;
+import com.application.petcare.dto.login.LoginResponseDto;
 import com.application.petcare.dto.pet.PetPetsListResponse;
 import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.Pet;
-import com.application.petcare.entities.Plans;
 import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
 import com.application.petcare.exceptions.DuplicateEntryFoundException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
+import com.application.petcare.infra.controller.AuthController;
 import com.application.petcare.repository.PetRepository;
 import com.application.petcare.repository.PlansRepository;
 import com.application.petcare.repository.UserRepository;
@@ -37,6 +39,8 @@ public class UserServiceImpl implements UserService {
 
     private final PlansRepository plansRepository;
 
+    private final AuthController authController;
+
     private final PetRepository petRepository;
     private final PetServiceImpl petServiceImpl;
 
@@ -50,7 +54,7 @@ public class UserServiceImpl implements UserService {
     private String secret;
 
     @Override
-    public UserResponse createUser(UserCreateRequest request) {
+    public LoginResponseDto createUser(UserCreateRequest request) {
         User user = User.builder()
                 .name(request.getName())
                 .userImg(request.getUserImg())
@@ -78,7 +82,10 @@ public class UserServiceImpl implements UserService {
         User savedUser = repository.save(user);
         savedUser.setUserImg(imageDatabase.downloadImagem(savedUser.getId(), true));
         repository.save(savedUser);
-        return mapToResponse(savedUser);
+
+        LoginResponseDto loginRsponse = authController.login(new LoginRequestDto(user.getEmail(), user.getPassword())).getBody();
+
+        return loginRsponse;
     }
 
     @Override
@@ -109,6 +116,9 @@ public class UserServiceImpl implements UserService {
         }
 
         User updatedUser = repository.save(user);
+
+
+
         return mapToResponse(updatedUser);
     }
 

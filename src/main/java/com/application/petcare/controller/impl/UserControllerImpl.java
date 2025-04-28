@@ -1,6 +1,7 @@
 package com.application.petcare.controller.impl;
 
 import com.application.petcare.controller.UserController;
+import com.application.petcare.dto.login.LoginResponseDto;
 import com.application.petcare.dto.user.*;
 import com.application.petcare.entities.User;
 import com.application.petcare.services.UserService;
@@ -20,8 +21,8 @@ public class UserControllerImpl implements UserController {
     private final UserService userService;
 
     @Override
-    public ResponseEntity<UserResponse> createUser(UserCreateRequest userCreateRequest) {
-        UserResponse createdUser = userService.createUser(userCreateRequest);
+    public ResponseEntity<LoginResponseDto> createUser(UserCreateRequest userCreateRequest) {
+        LoginResponseDto createdUser = userService.createUser(userCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
