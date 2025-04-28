@@ -259,7 +259,7 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public List<Pet> getAllPetsByUserId(Integer userId) {
-        return petRepository.findAllByUserIdInAndDeletedAtIsNull(userId);
+        return petRepository.findAllByUserIdAndDeletedAtIsNull(userId);
     }
 
     @Override
