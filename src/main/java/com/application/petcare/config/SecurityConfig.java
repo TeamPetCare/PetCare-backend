@@ -77,10 +77,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/users/pets").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/cpf").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/races").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/species").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/sizes").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/pets/data").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/races").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/species").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/sizes").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/pets/data").permitAll()
 
 
                         .anyRequest().authenticated()
