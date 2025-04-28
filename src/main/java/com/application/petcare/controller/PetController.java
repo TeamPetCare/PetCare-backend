@@ -41,7 +41,7 @@ public interface PetController {
     ResponseEntity<List<PetResponse>> getAllPets();
 
     @Operation(summary = "Lista todos os pets de um usuário")
-    @GetMapping
+    @GetMapping("/user/{id}")
     ResponseEntity<List<Pet>> getAllPetsByUserId(Integer userId);
 
     @Operation(summary = "Listar todos os pets na tela Clientes e Pets")
