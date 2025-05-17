@@ -83,9 +83,15 @@ public class UserServiceImpl implements UserService {
         savedUser.setUserImg(imageDatabase.downloadImagem(savedUser.getId(), true));
         repository.save(savedUser);
 
-        LoginResponseDto loginRsponse = authController.login(new LoginRequestDto(user.getEmail(), user.getPassword())).getBody();
+        LoginResponseDto loginResponseDto;
 
-        return loginRsponse;
+        if(savedUser.getRole() == Role.ROLE_CUSTOMER){
+            loginResponseDto = authController.loginCustomer(new LoginRequestDto(savedUser.getEmail(), savedUser.getPassword())).getBody();
+        }else{
+            loginResponseDto = authController.login(new LoginRequestDto(savedUser.getEmail(), savedUser.getPassword())).getBody();
+        }
+
+        return loginResponseDto;
     }
 
     @Override
