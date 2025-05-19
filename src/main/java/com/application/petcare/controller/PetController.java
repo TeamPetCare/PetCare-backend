@@ -32,7 +32,7 @@ public interface PetController {
     @PutMapping("pets-list/{id}")
     ResponseEntity<PetResponse> updatePetPetsList(@PathVariable Integer id,@RequestBody PetPetsListUpdateRequest request);
 
-        @Operation(summary = "Buscar um pet pelo ID")
+    @Operation(summary = "Buscar um pet pelo ID")
     @GetMapping("/{id}")
     ResponseEntity<PetResponse> getPetById(@PathVariable Integer id);
 
@@ -41,8 +41,8 @@ public interface PetController {
     ResponseEntity<List<PetResponse>> getAllPets();
 
     @Operation(summary = "Lista todos os pets de um usuário")
-    @GetMapping("/user/{id}")
-    ResponseEntity<List<Pet>> getAllPetsByUserId(Integer userId);
+    @GetMapping("/user/{userId}")
+    ResponseEntity<List<Pet>> getAllPetsByUserId(@PathVariable Integer userId);
 
     @Operation(summary = "Listar todos os pets na tela Clientes e Pets")
     @GetMapping("/pets-list")
