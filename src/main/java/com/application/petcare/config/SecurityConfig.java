@@ -84,8 +84,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/services/**").hasRole("EMPLOYEE")
                         .requestMatchers("/api/species/**").hasRole("EMPLOYEE")
                         .requestMatchers("/api/sizes/**").hasRole("EMPLOYEE")
-
-
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
