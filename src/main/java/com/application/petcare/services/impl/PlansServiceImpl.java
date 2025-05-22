@@ -1,5 +1,6 @@
 package com.application.petcare.services.impl;
 
+import com.application.petcare.dto.plans.UserPlansResponse;
 import com.application.petcare.strategy.FortnighPlanStrategy;
 import com.application.petcare.strategy.MensalPlanStrategy;
 import com.application.petcare.strategy.PlansStrategy;
@@ -87,6 +88,11 @@ public class PlansServiceImpl implements PlansService {
     }
 
     @Override
+    public List<UserPlansResponse> findAllPlansByUserId(Integer userId) {
+        return plansRepository.findAllByPetsUserIdAndDeletedAtIsNull(userId).stream().map(this::mapToUserPlansResponse).toList();
+    }
+
+    @Override
     public List<PlansResponse> findAllPlans() {
         return plansRepository.findAllByDeletedAtIsNull().stream().map(this::mapToResponse).toList();
     }
@@ -134,6 +140,40 @@ public class PlansServiceImpl implements PlansService {
                 .hasDiscount(plans.getHasDiscount())
                 .description(plans.getDescription())
                 .planTypeId(plans.getPlanType().getId())
+                .servicesIds(services)
+                .repeatQuantity(plans.getRepeatQuantity())
+                .paymentIds(payments)
+                .petIds(pets)
+                .build();
+    }
+
+    public UserPlansResponse mapToUserPlansResponse(Plans plans){
+
+        List<Integer> services = new ArrayList<>();
+        for (int i = 0; i < plans.getServices().size(); i++) {
+            services.add(plans.getServices().get(i).getId());
+        }
+
+        List<Integer> payments = new ArrayList<>();
+        for (int i = 0; i < plans.getPayments().size(); i++) {
+            payments.add(plans.getPayments().get(i).getId());
+        }
+
+        List<Integer> pets = new ArrayList<>();
+        for (int i = 0; i < plans.getPets().size(); i++) {
+            pets.add(plans.getPets().get(i).getId());
+        }
+
+        return UserPlansResponse.builder()
+                .id(plans.getId())
+                .subscriptionDate(plans.getSubscriptionDate())
+                .name(plans.getName())
+                .price(plans.getPrice())
+                .active(plans.getActive())
+                .renewal(plans.getRenewal())
+                .hasDiscount(plans.getHasDiscount())
+                .description(plans.getDescription())
+                .planType(plans.getPlanType())
                 .servicesIds(services)
                 .repeatQuantity(plans.getRepeatQuantity())
                 .paymentIds(payments)

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserPlansResponse {
+public class UserAllPlansResponse {
     private User user;
     private Plans plans;
 }

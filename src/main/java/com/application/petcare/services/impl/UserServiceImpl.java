@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -199,14 +198,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserPlansResponse> getAllCustomersAndPlans() {
+    public List<UserAllPlansResponse> getAllCustomersAndPlans() {
         List<User> users = repository.findByRoleNotAndDeletedAtIsNull(Role.ROLE_CUSTOMER);
-        List<UserPlansResponse> userPlansResponses = new ArrayList<>();
+        List<UserAllPlansResponse> userAllPlansRespons = new ArrayList<>();
         for (User user : users) {
             if (user.getPets() != null && !user.getPets().isEmpty()) {
                 for (Pet pet : user.getPets()) {
                     if (pet.getPlan() != null) {
-                        userPlansResponses.add(UserPlansResponse.builder()
+                        userAllPlansRespons.add(UserAllPlansResponse.builder()
                                 .user(user)
                                 .plans(pet.getPlan())  // Acessa o plano do pet
                                 .build());
@@ -214,7 +213,7 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
-        return userPlansResponses;
+        return userAllPlansRespons;
     }
 
     public List<UserCustomerResponse> getAllCustumersSortedByName() {

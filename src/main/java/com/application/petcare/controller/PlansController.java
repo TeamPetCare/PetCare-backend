@@ -2,6 +2,7 @@ package com.application.petcare.controller;
 
 import com.application.petcare.dto.plans.PlansCreateRequest;
 import com.application.petcare.dto.plans.PlansResponse;
+import com.application.petcare.dto.plans.UserPlansResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,10 @@ public interface PlansController {
     @Operation(summary = "Criar um novo plano")
     @PostMapping
     ResponseEntity<PlansResponse> createPlan(@RequestBody PlansCreateRequest plansCreateRequest);
+
+    @Operation(summary = "Busca todos os planos de um user por id")
+    @GetMapping("/user/{userId}")
+    ResponseEntity<List<UserPlansResponse>> getPlanByUserId(@PathVariable Integer userId);
 
     @Operation(summary = "Buscar plano por ID")
     @GetMapping("/{id}")

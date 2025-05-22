@@ -3,6 +3,7 @@ package com.application.petcare.controller.impl;
 import com.application.petcare.controller.PlansController;
 import com.application.petcare.dto.plans.PlansCreateRequest;
 import com.application.petcare.dto.plans.PlansResponse;
+import com.application.petcare.dto.plans.UserPlansResponse;
 import com.application.petcare.services.PlansService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,11 @@ public class PlansControllerImpl implements PlansController {
     @Override
     public ResponseEntity<PlansResponse> createPlan(PlansCreateRequest plansCreateRequest) {
         return ResponseEntity.status(201).body(plansService.createPlans(plansCreateRequest));
+    }
+
+    @Override
+    public ResponseEntity<List<UserPlansResponse>> getPlanByUserId(Integer userId) {
+        return ResponseEntity.ok().body(plansService.findAllPlansByUserId(userId));
     }
 
     @Override

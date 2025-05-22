@@ -3,10 +3,8 @@ package com.application.petcare.controller.impl;
 import com.application.petcare.controller.UserController;
 import com.application.petcare.dto.login.LoginResponseDto;
 import com.application.petcare.dto.user.*;
-import com.application.petcare.entities.User;
 import com.application.petcare.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -100,7 +98,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<List<UserPlansResponse>> getAllCustomersAndPlans() {
+    public ResponseEntity<List<UserAllPlansResponse>> getAllCustomersAndPlans() {
         return ResponseEntity.ok().body(userService.getAllCustomersAndPlans());
     }
 

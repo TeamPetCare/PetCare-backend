@@ -2,7 +2,6 @@ package com.application.petcare.services;
 
 import com.application.petcare.dto.login.LoginResponseDto;
 import com.application.petcare.dto.user.*;
-import com.application.petcare.entities.User;
 
 
 import java.util.List;
@@ -27,7 +26,7 @@ public interface UserService {
 
     List<UserCustomerResponse> getAllCustomers();
 
-    List<UserPlansResponse> getAllCustomersAndPlans();
+    List<UserAllPlansResponse> getAllCustomersAndPlans();
 
 
     List<UserCustomerResponse> getAllCustumersSortedByName();

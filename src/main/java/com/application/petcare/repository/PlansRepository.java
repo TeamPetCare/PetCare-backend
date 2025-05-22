@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PlansRepository extends JpaRepository<Plans, Integer> {
     List<Plans> findAllByDeletedAtIsNull();
+    List<Plans> findAllByPetsUserIdAndDeletedAtIsNull(Integer userId);
 }
