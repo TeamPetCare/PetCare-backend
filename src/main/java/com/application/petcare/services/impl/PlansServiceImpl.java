@@ -149,35 +149,16 @@ public class PlansServiceImpl implements PlansService {
 
     public UserPlansResponse mapToUserPlansResponse(Plans plans){
 
-        List<Integer> services = new ArrayList<>();
-        for (int i = 0; i < plans.getServices().size(); i++) {
-            services.add(plans.getServices().get(i).getId());
-        }
-
-        List<Integer> payments = new ArrayList<>();
-        for (int i = 0; i < plans.getPayments().size(); i++) {
-            payments.add(plans.getPayments().get(i).getId());
-        }
-
-        List<Integer> pets = new ArrayList<>();
+        List<String> petsNames = new ArrayList<>();
         for (int i = 0; i < plans.getPets().size(); i++) {
-            pets.add(plans.getPets().get(i).getId());
+            petsNames.add(plans.getPets().get(i).getName());
         }
 
         return UserPlansResponse.builder()
                 .id(plans.getId())
-                .subscriptionDate(plans.getSubscriptionDate())
-                .name(plans.getName())
-                .price(plans.getPrice())
                 .active(plans.getActive())
-                .renewal(plans.getRenewal())
-                .hasDiscount(plans.getHasDiscount())
-                .description(plans.getDescription())
-                .planType(plans.getPlanType())
-                .servicesIds(services)
-                .repeatQuantity(plans.getRepeatQuantity())
-                .paymentIds(payments)
-                .petIds(pets)
+                .planTypeName(plans.getPlanType().getName())
+                .petNames(petsNames)
                 .build();
     }
 }

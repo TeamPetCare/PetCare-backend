@@ -70,6 +70,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/pets/data").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/payments").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/plans").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/plans/user/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/plan-types").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/validate-token").permitAll()

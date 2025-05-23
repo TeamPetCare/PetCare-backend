@@ -14,16 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserPlansResponse {
     private Integer id;
-    private LocalDateTime subscriptionDate;
-    private String name;
-    private Double price;
     private Boolean active;
-    private int renewal;
-    private Boolean hasDiscount;
-    private String description;
-    private PlanType planType;
-    private List<Integer> servicesIds;
-    private List<Integer> repeatQuantity;
-    private List<Integer> paymentIds;
-    private List<Integer> petIds;
+    private String planTypeName;
+    private List<String> petNames;
 }
