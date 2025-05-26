@@ -27,6 +27,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
     List<Schedule> findByScheduleDateBetweenAndPetUserId(LocalDateTime start, LocalDateTime end, Integer userId);
 
+    List<Schedule> findByPetUserId(Integer userId);
+
+
     List<Schedule> findByScheduleDateBetweenAndPetId(LocalDateTime start, LocalDateTime end, Integer petId);
 
 
