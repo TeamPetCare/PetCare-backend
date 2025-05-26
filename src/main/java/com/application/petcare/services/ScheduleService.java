@@ -1,10 +1,7 @@
 package com.application.petcare.services;
 
 
-import com.application.petcare.dto.schedule.ScheduleCreateRequest;
-import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
-import com.application.petcare.dto.schedule.ScheduleResponse;
-import com.application.petcare.dto.schedule.ScheduleStatsResponse;
+import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
 import org.springframework.stereotype.Service;
@@ -22,7 +19,7 @@ public interface ScheduleService {
 
     List<Schedule> findClientSchedulesByUserId(Integer id, LocalDateTime month);
 
-    List<Schedule> findAllClientSchedulesByUserId(Integer id);
+    List<SchedulesAllTimeClientResponse> findAllClientSchedulesByUserId(Integer id);
 
     List<Schedule> findClientSchedulesByPetId(LocalDateTime month, Integer petId);
 

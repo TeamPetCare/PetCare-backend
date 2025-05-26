@@ -1,9 +1,6 @@
 package com.application.petcare.services.impl;
 
-import com.application.petcare.dto.schedule.ScheduleCreateRequest;
-import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
-import com.application.petcare.dto.schedule.ScheduleResponse;
-import com.application.petcare.dto.schedule.ScheduleStatsResponse;
+import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
@@ -135,7 +132,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<Schedule> findAllClientSchedulesByUserId(Integer id) {
+    public List<SchedulesAllTimeClientResponse> findAllClientSchedulesByUserId(Integer id) {
         return scheduleRepository.findByPetUserId(id);
     }
 
@@ -193,6 +190,19 @@ public class ScheduleServiceImpl implements ScheduleService {
     public byte[] generateCsvFileSchedule() {
         List<Schedule> list = scheduleRepository.findAllByDeletedAtIsNull();
         return writeCsvFileSchedule(list);
+    }
+
+    public SchedulesAllTimeClientResponse mapToAllTimeClientResponse(Schedule schedule){
+        return SchedulesAllTimeClientResponse.builder()
+                .id(schedule.getId())
+                .userId(schedule.getPet().getUser().getId())
+                .scheduleStatus(schedule.getScheduleStatus())
+                .scheduleDate(schedule.getScheduleDate())
+                .scheduleTime(schedule.getScheduleTime())
+                .petId(schedule.getPet().getId())
+                .petName(schedule.getPet().getName())
+                .paymentStatus(schedule.getPayment() != null ? schedule.getPayment().getPaymentStatus() : null)
+                .build();
     }
 
 

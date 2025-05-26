@@ -1,10 +1,7 @@
 package com.application.petcare.controller.impl;
 
 import com.application.petcare.controller.ScheduleController;
-import com.application.petcare.dto.schedule.ScheduleCreateRequest;
-import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
-import com.application.petcare.dto.schedule.ScheduleResponse;
-import com.application.petcare.dto.schedule.ScheduleStatsResponse;
+import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.services.ScheduleService;
 import lombok.AllArgsConstructor;
@@ -41,7 +38,7 @@ public class ScheduleControllerImpl implements ScheduleController {
     }
 
     @Override
-    public ResponseEntity<List<Schedule>> getAllClientSchedulesByUserId(Integer id) {
+    public ResponseEntity<List<SchedulesAllTimeClientResponse>> getAllClientSchedulesByUserId(Integer id) {
         return ResponseEntity.ok(scheduleService.findAllClientSchedulesByUserId(id));
     }
 

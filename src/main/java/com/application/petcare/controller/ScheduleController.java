@@ -1,9 +1,6 @@
 package com.application.petcare.controller;
 
-import com.application.petcare.dto.schedule.ScheduleCreateRequest;
-import com.application.petcare.dto.schedule.ScheduleGetAllSchedulesResponse;
-import com.application.petcare.dto.schedule.ScheduleResponse;
-import com.application.petcare.dto.schedule.ScheduleStatsResponse;
+import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +30,7 @@ public interface ScheduleController {
 
     @Operation(summary = "Buscar todos os agendamentos de um cliente")
     @GetMapping("/client/all-time/{id}")
-    ResponseEntity<List<Schedule>> getAllClientSchedulesByUserId(
+    ResponseEntity<List<SchedulesAllTimeClientResponse>> getAllClientSchedulesByUserId(
             @PathVariable Integer id);
 
     @Operation(summary = "Buscar todos os agendamentos mensais de um cliente")
