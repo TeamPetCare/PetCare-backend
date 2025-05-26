@@ -133,7 +133,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<SchedulesAllTimeClientResponse> findAllClientSchedulesByUserId(Integer id) {
-        return scheduleRepository.findByPetUserId(id);
+        return scheduleRepository.findByPetUserId(id).stream().map(this::mapToAllTimeClientResponse).toList();
     }
 
     @Override

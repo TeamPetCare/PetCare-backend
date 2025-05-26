@@ -1,6 +1,5 @@
 package com.application.petcare.repository;
 
-import com.application.petcare.dto.schedule.SchedulesAllTimeClientResponse;
 import com.application.petcare.entities.Pet;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.Services;
@@ -28,7 +27,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
     List<Schedule> findByScheduleDateBetweenAndPetUserId(LocalDateTime start, LocalDateTime end, Integer userId);
 
-    List<SchedulesAllTimeClientResponse> findByPetUserId(Integer userId);
+    List<Schedule> findByPetUserId(Integer userId);
 
 
     List<Schedule> findByScheduleDateBetweenAndPetId(LocalDateTime start, LocalDateTime end, Integer petId);
