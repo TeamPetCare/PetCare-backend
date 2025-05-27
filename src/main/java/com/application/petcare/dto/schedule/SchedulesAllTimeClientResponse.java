@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Builder
@@ -22,5 +23,6 @@ public class SchedulesAllTimeClientResponse {
     private PaymentStatus paymentStatus;
     private StatusAgendamento scheduleStatus;
     private LocalDateTime deletedAt;
+    private List<String> serviceNames;
     private Integer review;
 }

@@ -195,6 +195,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     public SchedulesAllTimeClientResponse mapToAllTimeClientResponse(Schedule schedule){
+
+        List<String> services = new ArrayList<>();
+        for (int i = 0; i < schedule.getServices().size(); i++) {
+            services.add(schedule.getServices().get(i).getName());
+        }
+
         return SchedulesAllTimeClientResponse.builder()
                 .id(schedule.getId())
                 .userId(schedule.getPet().getUser().getId())
@@ -205,6 +211,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .petName(schedule.getPet().getName())
                 .paymentStatus(schedule.getPayment() != null ? schedule.getPayment().getPaymentStatus() : null)
                 .review(schedule.getReview())
+                .serviceNames(services)
                 .deletedAt(schedule.getDeletedAt())
                 .build();
     }
