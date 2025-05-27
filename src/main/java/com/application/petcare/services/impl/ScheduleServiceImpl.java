@@ -68,6 +68,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                         .orElseThrow(() -> new ResourceNotFoundException("Payment not found")))
                 .services(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()))
                 .employee(possibleEmployee)
+                .review(request.getReview())
                 .build();
 
 
@@ -111,6 +112,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setServices(servicesRepository.findAllByIdInAndDeletedAtIsNull(request.getServiceIds()));
         schedule.setEmployee(possibleEmployee);
         schedule.setDeletedAt(request.getDeletedAt());
+        schedule.setReview(request.getReview());
 
         Schedule updatedSchedule = scheduleRepository.save(schedule);
         return mapToResponse(updatedSchedule);
@@ -202,6 +204,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .petId(schedule.getPet().getId())
                 .petName(schedule.getPet().getName())
                 .paymentStatus(schedule.getPayment() != null ? schedule.getPayment().getPaymentStatus() : null)
+                .review(schedule.getReview())
                 .build();
     }
 
@@ -226,6 +229,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .paymentId(schedule.getPayment() != null ? schedule.getPayment().getId() : null)
                 .serviceIds(List.of(serviceIds))
                 .employeeId(schedule.getEmployee().getId())
+                .review(schedule.getReview())
                 .build();
     }
 
@@ -258,6 +262,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .userId(schedule.getPet().getUser().getId())
                 .petId(schedule.getPet().getId())
                 .serviceIds(serviceIds)
+                .review(schedule.getReview())
                 .build();
     }
 
@@ -296,7 +301,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                         schedule.getPet().getPetObservations() != null ? schedule.getPet().getPetObservations() : "",
                         schedule.getPayment() != null && schedule.getPayment().getPrice() != null ?
                                 String.valueOf(schedule.getPayment().getPrice()) : "",
-                        schedule.getEmployee() != null ? schedule.getEmployee().getName() : ""
+                        schedule.getEmployee() != null ? schedule.getEmployee().getName() : "",
+                        schedule.getReview() != null ? String.valueOf(schedule.getReview()) : ""
                 };
                 writer.writeNext(record);
             }

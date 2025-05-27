@@ -44,6 +44,9 @@ public class Schedule {
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 
+    @Column(nullable = true)
+    private Integer review;
+
     @NotNull
     @ManyToOne
     private Pet pet;

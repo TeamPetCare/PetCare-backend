@@ -3,6 +3,7 @@ package com.application.petcare.dto.schedule;
 import com.application.petcare.entities.Payment;
 import com.application.petcare.entities.Pet;
 import com.application.petcare.enums.StatusAgendamento;
+import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
@@ -32,4 +33,5 @@ public class ScheduleResponse {
     private List<Integer> serviceIds;
     private LocalDateTime deletedAt;
     private Integer employeeId;
+    private Integer review;
 }

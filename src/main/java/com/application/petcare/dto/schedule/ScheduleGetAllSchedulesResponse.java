@@ -3,6 +3,7 @@ package com.application.petcare.dto.schedule;
 import com.application.petcare.entities.Payment;
 import com.application.petcare.entities.PaymentModel;
 import com.application.petcare.enums.StatusAgendamento;
+import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Data;
 
@@ -27,6 +28,7 @@ public class ScheduleGetAllSchedulesResponse {
     private String petImg;
     private String petName;
     private PaymentModel payment;
+    private Integer review;
 
     private Integer employeeId;
     private Integer userId;

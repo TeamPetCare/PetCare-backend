@@ -4,6 +4,7 @@ import com.application.petcare.entities.Payment;
 import com.application.petcare.entities.Pet;
 import com.application.petcare.entities.Services;
 import com.application.petcare.enums.StatusAgendamento;
+import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
@@ -36,6 +37,8 @@ public class ScheduleCreateRequest {
     private LocalDateTime creationDate;
 
     private String scheduleNote;
+
+    private Integer review;
 
     @NotNull(message = "Pet is required")
     private Integer petId;
