@@ -205,6 +205,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .petName(schedule.getPet().getName())
                 .paymentStatus(schedule.getPayment() != null ? schedule.getPayment().getPaymentStatus() : null)
                 .review(schedule.getReview())
+                .deletedAt(schedule.getDeletedAt())
                 .build();
     }
 

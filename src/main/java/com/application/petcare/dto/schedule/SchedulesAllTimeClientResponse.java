@@ -21,5 +21,6 @@ public class SchedulesAllTimeClientResponse {
     private LocalTime scheduleTime;
     private PaymentStatus paymentStatus;
     private StatusAgendamento scheduleStatus;
+    private LocalDateTime deletedAt;
     private Integer review;
 }
