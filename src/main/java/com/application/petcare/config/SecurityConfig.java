@@ -63,7 +63,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/schedules").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/users/pets").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/api/users").hasRole("CUSTOMER")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/*").hasRole("CUSTOMER")
                         .requestMatchers(HttpMethod.GET, "/api/users/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/cpf").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/races").permitAll()

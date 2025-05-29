@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import com.opencsv.CSVWriter;
+import org.springframework.util.StringUtils;
 
 
 @Service
@@ -101,7 +102,9 @@ public class UserServiceImpl implements UserService {
         user.setName(request.getName());
         user.setUserImg(request.getUserImg());
         user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        if (StringUtils.hasText(request.getPassword())) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
         user.setCellphone(request.getCellphone());
         user.setRole(request.getRole());
         user.setStreet(request.getStreet());
@@ -114,7 +117,8 @@ public class UserServiceImpl implements UserService {
         user.setRoleEmployee(request.getRoleEmployee());
         user.setDisponibilityStatusEmployee(request.getDisponibilityStatus());
         user.setCpfClient(request.getCpfClient());
-        user.setPets(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()));
+        user.getPets().clear();
+        user.getPets().addAll(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()));
 
         if (user.getPets().isEmpty()) {
             throw new ResourceNotFoundException("Pets not found");
