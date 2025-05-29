@@ -99,26 +99,78 @@ public class UserServiceImpl implements UserService {
         User user = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + id));
 
-        user.setName(request.getName());
-        user.setUserImg(request.getUserImg());
-        user.setEmail(request.getEmail());
+        if (StringUtils.hasText(request.getName())) {
+            user.setName(request.getName());
+        }
+
+        if (StringUtils.hasText(request.getUserImg())) {
+            user.setUserImg(request.getUserImg());
+        }
+
+        if (StringUtils.hasText(request.getEmail())) {
+            user.setEmail(request.getEmail());
+        }
+
         if (StringUtils.hasText(request.getPassword())) {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
         }
-        user.setCellphone(request.getCellphone());
-        user.setRole(request.getRole());
-        user.setStreet(request.getStreet());
-        user.setNumber(request.getNumber());
-        user.setComplement(request.getComplement());
-        user.setCep(request.getCep());
-        user.setDistrict(request.getDistrict());
-        user.setCity(request.getCity());
-        user.setCnpjOwner(request.getCnpjOwner());
-        user.setRoleEmployee(request.getRoleEmployee());
-        user.setDisponibilityStatusEmployee(request.getDisponibilityStatus());
-        user.setCpfClient(request.getCpfClient());
-        user.getPets().clear();
-        user.getPets().addAll(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()));
+
+        if (StringUtils.hasText(request.getCellphone())) {
+            user.setCellphone(request.getCellphone());
+        }
+
+        if (StringUtils.hasText(request.getRole().toString())) {
+            user.setRole(request.getRole());
+        }
+
+        if (StringUtils.hasText(request.getStreet())) {
+            user.setStreet(request.getStreet());
+        }
+
+// Para 'number', se for Integer no request, verifica null
+        if (request.getNumber() != null) {
+            user.setNumber(request.getNumber());
+        }
+
+        if (StringUtils.hasText(request.getComplement())) {
+            user.setComplement(request.getComplement());
+        }
+
+        if (StringUtils.hasText(request.getCep())) {
+            user.setCep(request.getCep());
+        }
+
+        if (StringUtils.hasText(request.getDistrict())) {
+            user.setDistrict(request.getDistrict());
+        }
+
+        if (StringUtils.hasText(request.getCity())) {
+            user.setCity(request.getCity());
+        }
+
+        if (StringUtils.hasText(request.getCnpjOwner())) {
+            user.setCnpjOwner(request.getCnpjOwner());
+        }
+
+        if (StringUtils.hasText(request.getRoleEmployee())) {
+            user.setRoleEmployee(request.getRoleEmployee());
+        }
+
+// Supondo que disponibilityStatus seja Boolean (objeto)
+        if (request.getDisponibilityStatus() != null) {
+            user.setDisponibilityStatusEmployee(request.getDisponibilityStatus());
+        }
+
+        if (StringUtils.hasText(request.getCpfClient())) {
+            user.setCpfClient(request.getCpfClient());
+        }
+
+// Para pets, verificar se lista não é nula e não vazia antes de atualizar
+        if (request.getPetIds() != null && !request.getPetIds().isEmpty()) {
+            user.getPets().clear();
+            user.getPets().addAll(petRepository.findAllByIdInAndDeletedAtIsNull(request.getPetIds()));
+        }
+
 
         if (user.getPets().isEmpty()) {
             throw new ResourceNotFoundException("Pets not found");
