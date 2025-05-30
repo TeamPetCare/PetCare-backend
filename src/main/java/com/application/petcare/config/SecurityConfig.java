@@ -75,7 +75,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/plans/user/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/plan-types").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/schedules/client/all-time/*").permitAll()
-                        .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/api/images/**").permitAll()
                         .requestMatchers("/validate-token").permitAll()
                         .requestMatchers("/api/species/**").hasRole("EMPLOYEE")
                         .requestMatchers("/api/users/**").hasRole("EMPLOYEE")
