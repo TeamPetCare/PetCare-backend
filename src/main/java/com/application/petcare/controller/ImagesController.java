@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @Tag(name = "Images", description = "Gerenciar imagens do banco de imagens")
-@RequestMapping("/images")
+@RequestMapping("/api/images")
 public interface ImagesController {
 
     @Operation(summary = "Criar uma nova imagem")
