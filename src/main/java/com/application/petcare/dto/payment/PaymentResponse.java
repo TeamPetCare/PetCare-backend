@@ -23,6 +23,7 @@ public class PaymentResponse {
     private Double price;
     private LocalDateTime paymentDate;
     private String paymentId;
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
