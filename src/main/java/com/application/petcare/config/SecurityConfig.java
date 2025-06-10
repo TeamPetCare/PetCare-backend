@@ -72,6 +72,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/sizes").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/pets/data").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/payments").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/services").hasRole("CUSTOMER")
                         .requestMatchers(HttpMethod.GET, "/api/plans").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/plans/user/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/plan-types").permitAll()
