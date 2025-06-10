@@ -1,6 +1,7 @@
 package com.application.petcare.entities;
 
 import com.application.petcare.enums.PaymentMethod;
+import com.application.petcare.enums.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -35,7 +36,7 @@ public class Payment {
     private PaymentMethod paymentMethod;
 
     @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentStatus;
+    private PaymentStatus paymentStatus;
 
 
     @Column(nullable = true)
