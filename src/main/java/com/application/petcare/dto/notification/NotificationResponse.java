@@ -1,7 +1,6 @@
 package com.application.petcare.dto.notification;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,10 +9,11 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class NotificationResponse {
+    private Integer id;
     private String notificationType;
     private String title;
     private String description;
-    private LocalDateTime notificationDate;
+    private LocalDateTime createdAt;
     private Boolean saw;
     private Integer userId;
 }

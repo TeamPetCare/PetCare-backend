@@ -5,6 +5,7 @@ import com.application.petcare.dto.notification.NotificationCreateRequest;
 import com.application.petcare.dto.notification.NotificationResponse;
 import com.application.petcare.services.NotificationService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +29,11 @@ public class NotificationControllerImpl implements NotificationController {
     }
 
     @Override
+    public ResponseEntity<List<NotificationResponse>> updateSawStatus(List<Integer> ids) {
+        return ResponseEntity.ok().body(notificationService.updateSawStatus(ids));
+    }
+
+    @Override
     public ResponseEntity<NotificationResponse> getNotificationById(Integer id) {
         return ResponseEntity.ok().body(notificationService.getNotificationById(id));
     }
@@ -38,8 +44,13 @@ public class NotificationControllerImpl implements NotificationController {
     }
 
     @Override
-    public ResponseEntity<List<NotificationResponse>> getAllUserNotifications(Integer id) {
-        return ResponseEntity.ok().body(notificationService.getAllUserNotifications(id));
+    public ResponseEntity<List<NotificationResponse>> getAllUserNotifications(Integer id, Pageable pageable) {
+        return ResponseEntity.ok().body(notificationService.getAllUserNotifications(id, pageable));
+    }
+
+    @Override
+    public ResponseEntity<List<NotificationResponse>> getAllNotReadedUserNotifications(Integer id) {
+        return ResponseEntity.ok().body(notificationService.getAllNotReadedUserNotifications(id));
     }
 
     @Override

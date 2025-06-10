@@ -34,7 +34,8 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
-    private Boolean paymentStatus;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentStatus;
 
 
     @Column(nullable = true)

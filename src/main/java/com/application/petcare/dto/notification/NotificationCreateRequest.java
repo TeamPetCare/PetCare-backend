@@ -17,8 +17,6 @@ public class NotificationCreateRequest {
     private String title;
     @NotBlank(message = "Description is required")
     private String description;
-    @NotNull(message = "Notification date is required")
-    private LocalDateTime notificationDate;
     @NotNull(message = "Have been saw? is required")
     private Boolean saw;
     @NotNull(message = "Notification date is required")

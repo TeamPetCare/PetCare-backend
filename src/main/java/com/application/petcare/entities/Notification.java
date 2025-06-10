@@ -25,9 +25,9 @@ public class Notification {
     @Column(nullable = false)
     private String description;
     @Column(nullable = false)
-    private LocalDateTime notificationDate;
-    @Column(nullable = false)
     private Boolean saw;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
     @Column(nullable = true)
     private LocalDateTime deletedAt;
 
