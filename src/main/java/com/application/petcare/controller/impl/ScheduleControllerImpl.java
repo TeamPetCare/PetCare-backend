@@ -63,6 +63,11 @@ public class ScheduleControllerImpl implements ScheduleController {
     }
 
     @Override
+    public ResponseEntity<ScheduleResponse> updateScheduleReview(Integer id, Integer review) {
+        return ResponseEntity.ok(scheduleService.updateScheduleReview(id, review));
+    }
+
+    @Override
     public ResponseEntity<Void> deleteSchedule(Integer id) {
         scheduleService.deleteScheduleById(id);
         return ResponseEntity.noContent().build();

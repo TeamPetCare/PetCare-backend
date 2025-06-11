@@ -5,6 +5,7 @@ import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
 import com.application.petcare.enums.Role;
 import com.application.petcare.enums.StatusAgendamento;
+import com.application.petcare.exceptions.BadRequestException;
 import com.application.petcare.exceptions.BadRoleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.*;
@@ -115,6 +116,18 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setReview(request.getReview());
 
         Schedule updatedSchedule = scheduleRepository.save(schedule);
+        return mapToResponse(updatedSchedule);
+    }
+
+    @Override
+    public ScheduleResponse updateScheduleReview(Integer id, Integer review) {
+        if(review > 5 || review < 1){
+            throw new BadRequestException("A nota deve ser um número dentre 1 e 5");
+        }
+        Schedule scheduleToUpdate = scheduleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
+        scheduleToUpdate.setReview(review);
+        Schedule updatedSchedule = scheduleRepository.save(scheduleToUpdate);
         return mapToResponse(updatedSchedule);
     }
 

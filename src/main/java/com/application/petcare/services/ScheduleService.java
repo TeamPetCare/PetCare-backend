@@ -4,6 +4,7 @@ package com.application.petcare.services;
 import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,8 @@ public interface ScheduleService {
     ScheduleResponse createSchedule(ScheduleCreateRequest request);
 
     ScheduleResponse updateSchedule(Integer id, ScheduleCreateRequest request);
+
+    ScheduleResponse updateScheduleReview(Integer id, Integer review);
 
     ScheduleResponse findScheduleById(Integer id);
 

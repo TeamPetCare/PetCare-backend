@@ -55,6 +55,12 @@ public interface ScheduleController {
             @PathVariable Integer id,
             @RequestBody ScheduleCreateRequest scheduleCreateRequest);
 
+    @Operation(summary = "Atualiza nota de um agendamento por ID")
+    @PutMapping("/review/{id}")
+    ResponseEntity<ScheduleResponse> updateScheduleReview(
+            @PathVariable Integer id,
+            @RequestParam Integer review);
+
     @Operation(summary = "Excluir agendamento por ID")
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteSchedule(@PathVariable Integer id);
