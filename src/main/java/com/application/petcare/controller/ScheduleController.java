@@ -3,6 +3,7 @@ package com.application.petcare.controller;
 import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
+import com.application.petcare.enums.StatusAgendamento;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -60,6 +61,12 @@ public interface ScheduleController {
     ResponseEntity<ScheduleResponse> updateScheduleReview(
             @PathVariable Integer id,
             @RequestParam Integer review);
+
+    @Operation(summary = "Atualiza o status de um agendamento por ID")
+    @PutMapping("/status/{id}")
+    ResponseEntity<ScheduleResponse> updateScheduleStatus(
+            @PathVariable Integer id,
+            @RequestParam StatusAgendamento status);
 
     @Operation(summary = "Excluir agendamento por ID")
     @DeleteMapping("/{id}")

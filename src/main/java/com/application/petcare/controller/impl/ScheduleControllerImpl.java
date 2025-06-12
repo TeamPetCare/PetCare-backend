@@ -3,6 +3,7 @@ package com.application.petcare.controller.impl;
 import com.application.petcare.controller.ScheduleController;
 import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
+import com.application.petcare.enums.StatusAgendamento;
 import com.application.petcare.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +66,11 @@ public class ScheduleControllerImpl implements ScheduleController {
     @Override
     public ResponseEntity<ScheduleResponse> updateScheduleReview(Integer id, Integer review) {
         return ResponseEntity.ok(scheduleService.updateScheduleReview(id, review));
+    }
+
+    @Override
+    public ResponseEntity<ScheduleResponse> updateScheduleStatus(Integer id, StatusAgendamento status) {
+        return ResponseEntity.ok().body(scheduleService.updateScheduleStatus(id, status));
     }
 
     @Override

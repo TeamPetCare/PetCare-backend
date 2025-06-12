@@ -132,6 +132,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    public ScheduleResponse updateScheduleStatus(Integer id, StatusAgendamento status) {
+        Schedule scheduleToUpdate = scheduleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
+        scheduleToUpdate.setScheduleStatus(status);
+        Schedule updatedSchedule = scheduleRepository.save(scheduleToUpdate);
+        return mapToResponse(updatedSchedule);
+    }
+
+    @Override
     public ScheduleResponse findScheduleById(Integer id) {
         Schedule schedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));

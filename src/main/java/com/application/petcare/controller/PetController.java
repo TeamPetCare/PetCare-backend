@@ -61,7 +61,7 @@ public interface PetController {
     ResponseEntity<Void> deletePetPetsList(@RequestBody List<Integer> ids);
 
     @Operation(summary = "Pegar todas Especies, Tamanhos e Raças")
-    @DeleteMapping("/data")
+    @GetMapping("/data")
     ResponseEntity<List> getSpeciesSizesAndRaces();
 
 }

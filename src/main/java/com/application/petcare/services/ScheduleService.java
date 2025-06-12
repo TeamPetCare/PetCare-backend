@@ -4,6 +4,7 @@ package com.application.petcare.services;
 import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
+import com.application.petcare.enums.StatusAgendamento;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,9 @@ public interface ScheduleService {
 
     ScheduleResponse updateScheduleReview(Integer id, Integer review);
 
-    ScheduleResponse findScheduleById(Integer id);
+    ScheduleResponse updateScheduleStatus(Integer id, StatusAgendamento status);
+
+    ScheduleResponse findScheduleById (Integer id);
 
     List<Schedule> findClientSchedulesByUserId(Integer id, LocalDateTime month);
 
