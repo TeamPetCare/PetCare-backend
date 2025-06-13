@@ -255,7 +255,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .paymentMethod(schedule.getPayment().getPaymentMethod())
                 .paymentStatus(schedule.getPayment().getPaymentStatus())
                 .scheduleNote(schedule.getScheduleNote())
-                .serviceIds(schedule.getServices())
+                .services(schedule.getServices())
                 .build();
     }
 
