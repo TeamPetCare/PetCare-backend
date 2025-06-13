@@ -1,5 +1,6 @@
 package com.application.petcare.services.impl;
 
+import com.application.petcare.dto.notification.NotificationCreateRequest;
 import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
@@ -9,6 +10,7 @@ import com.application.petcare.exceptions.BadRequestException;
 import com.application.petcare.exceptions.BadRoleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.*;
+import com.application.petcare.services.NotificationService;
 import com.application.petcare.services.ScheduleService;
 import com.opencsv.CSVWriter;
 import lombok.AllArgsConstructor;
@@ -33,6 +35,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private PaymentModelRepository paymentModelRepository;
     private ServicesRepository servicesRepository;
     private UserRepository userRepository;
+    private NotificationService notificationService;
 
     @Override
     public ScheduleResponse createSchedule(ScheduleCreateRequest request) {
@@ -73,8 +76,19 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .build();
 
 
-        Schedule savedSchedule = scheduleRepository.save(schedule);
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
+        notificationService.createNotification(
+                NotificationCreateRequest.builder()
+                        .notificationType("Agendamento")
+                        .title("Agendamento Confirmado.")
+                        .description("Atendimento agendado para " + schedule.getScheduleDate().format(dateFormatter) + " às " + schedule.getScheduleDate().format(timeFormatter) + ".")
+                        .saw(false)
+                        .userId(schedule.getPet().getUser().getId())
+                        .build()
+        );
+        Schedule savedSchedule = scheduleRepository.save(schedule);
         return mapToResponse(savedSchedule);
     }
 
@@ -114,6 +128,21 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setEmployee(possibleEmployee);
         schedule.setDeletedAt(request.getDeletedAt());
         schedule.setReview(request.getReview());
+
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        if(schedule.getScheduleStatus() == StatusAgendamento.CANCELADO){
+            notificationService.createNotification(
+                    NotificationCreateRequest.builder()
+                            .notificationType("Agendamento")
+                            .title("Agendamento Cancelado.")
+                            .description("Atendimento agendado para " + schedule.getScheduleDate().format(dateFormatter) + " às " + schedule.getScheduleDate().format(timeFormatter) + " foi cancelado.")
+                            .saw(false)
+                            .userId(schedule.getPet().getUser().getId())
+                            .build()
+            );
+        }
 
         Schedule updatedSchedule = scheduleRepository.save(schedule);
         return mapToResponse(updatedSchedule);
