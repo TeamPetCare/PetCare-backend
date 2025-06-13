@@ -1,5 +1,6 @@
 package com.application.petcare.dto.notification;
 
+import com.application.petcare.enums.NotificationType;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class NotificationCreateRequest {
     @NotBlank(message = "Notification type is required")
-    private String notificationType;
+    private NotificationType notificationType;
     @NotBlank(message = "Title is required")
     private String title;
     @NotBlank(message = "Description is required")

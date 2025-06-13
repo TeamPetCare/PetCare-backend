@@ -3,6 +3,7 @@ package com.application.petcare.services.impl;
 import com.application.petcare.dto.notification.NotificationCreateRequest;
 import com.application.petcare.dto.notification.NotificationResponse;
 import com.application.petcare.entities.Notification;
+import com.application.petcare.enums.NotificationType;
 import com.application.petcare.exceptions.ResourceNotFoundException;
 import com.application.petcare.repository.NotificationRepository;
 import com.application.petcare.repository.UserRepository;
@@ -97,7 +98,7 @@ public class NotificationServiceImpl implements NotificationService {
     public NotificationResponse mapNotificationToNotificationResponse(Notification request){
         return NotificationResponse.builder()
                 .id(request.getId())
-                .notificationType(request.getNotificationType())
+                .notificationType(request.getNotificationType().toString())
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .createdAt(request.getCreatedAt())

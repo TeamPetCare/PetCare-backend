@@ -1,5 +1,6 @@
 package com.application.petcare.entities;
 
+import com.application.petcare.enums.NotificationType;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +20,8 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
-    private String notificationType;
+    @Enumerated(EnumType.STRING)
+    private NotificationType notificationType;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)

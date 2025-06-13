@@ -4,6 +4,7 @@ import com.application.petcare.dto.notification.NotificationCreateRequest;
 import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
+import com.application.petcare.enums.NotificationType;
 import com.application.petcare.enums.Role;
 import com.application.petcare.enums.StatusAgendamento;
 import com.application.petcare.exceptions.BadRequestException;
@@ -81,7 +82,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         notificationService.createNotification(
                 NotificationCreateRequest.builder()
-                        .notificationType("Agendamento")
+                        .notificationType(NotificationType.CONFIRMED)
                         .title("Agendamento Confirmado.")
                         .description("Atendimento agendado para " + schedule.getScheduleDate().format(dateFormatter) + " às " + schedule.getScheduleDate().format(timeFormatter) + ".")
                         .saw(false)
@@ -135,7 +136,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(schedule.getScheduleStatus() == StatusAgendamento.CANCELADO){
             notificationService.createNotification(
                     NotificationCreateRequest.builder()
-                            .notificationType("Agendamento")
+                            .notificationType(NotificationType.CONFIRMED)
                             .title("Agendamento Cancelado.")
                             .description("Atendimento agendado para " + schedule.getScheduleDate().format(dateFormatter) + " às " + schedule.getScheduleDate().format(timeFormatter) + " foi cancelado.")
                             .saw(false)
