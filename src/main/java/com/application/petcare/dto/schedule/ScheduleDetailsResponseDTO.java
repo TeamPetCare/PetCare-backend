@@ -22,5 +22,5 @@ public class ScheduleDetailsResponseDTO {
     private PaymentMethod paymentMethod;
     private PaymentStatus paymentStatus;
     private String scheduleNote;
-    private List<Services> serviceIds;
+    private List<Services> services;
 }

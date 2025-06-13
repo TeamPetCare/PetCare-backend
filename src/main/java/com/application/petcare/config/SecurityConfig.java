@@ -80,6 +80,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/plans/user/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/plan-types").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/schedules/client/all-time/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/schedules/details/*").permitAll()
                         .requestMatchers("/api/images/**").permitAll()
                         .requestMatchers("/validate-token").permitAll()
                         .requestMatchers("/api/schedules/**").hasRole("CUSTOMER")
