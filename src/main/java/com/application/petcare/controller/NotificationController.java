@@ -41,7 +41,7 @@ public interface NotificationController {
     @GetMapping("/user/{id}")
     ResponseEntity<List<NotificationResponse>> getAllUserNotifications(
             @PathVariable Integer id,
-            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable);
+            @PageableDefault(size = 7, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable);
 
     @Operation(summary = "Listar todas as notificações não vistas de um usuário especifico")
     @GetMapping("/user/not-readed/{id}")
