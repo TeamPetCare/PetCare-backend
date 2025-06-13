@@ -148,6 +148,13 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    public ScheduleDetailsResponseDTO getScheduleDetailsById(Integer id) {
+        Schedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
+        return mapToScheduleDetailsDTO(schedule);
+    }
+
+    @Override
     public List<Schedule> findClientSchedulesByUserId(Integer id, LocalDateTime month) {
         LocalDateTime startMonth = month.withDayOfMonth(1);
         LocalDateTime start = startMonth.minusDays(7);
@@ -238,6 +245,19 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .build();
     }
 
+    public ScheduleDetailsResponseDTO mapToScheduleDetailsDTO(Schedule schedule){
+        return ScheduleDetailsResponseDTO.builder()
+                .id(schedule.getId())
+                .scheduleStatus(schedule.getScheduleStatus())
+                .scheduleDate(schedule.getScheduleDate())
+                .scheduleTime(schedule.getScheduleTime())
+                .petName(schedule.getPet().getName())
+                .paymentMethod(schedule.getPayment().getPaymentMethod())
+                .paymentStatus(schedule.getPayment().getPaymentStatus())
+                .scheduleNote(schedule.getScheduleNote())
+                .serviceIds(schedule.getServices())
+                .build();
+    }
 
     public ScheduleResponse mapToResponse(Schedule schedule) {
         // Obter os IDs dos serviços associados ao Schedule

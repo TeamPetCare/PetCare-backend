@@ -25,6 +25,10 @@ public interface ScheduleController {
     @GetMapping("/{id}")
     ResponseEntity<ScheduleResponse> getScheduleById(@PathVariable Integer id);
 
+    @Operation(summary = "Buscar agendamento por ID")
+    @GetMapping("/details/{id}")
+    ResponseEntity<ScheduleDetailsResponseDTO> getScheduleDetailsById(@PathVariable Integer id);
+
     @Operation(summary = "Buscar todos os agendamentos")
     @GetMapping
     ResponseEntity<List<ScheduleGetAllSchedulesResponse>> getAllSchedules();

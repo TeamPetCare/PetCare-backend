@@ -23,6 +23,8 @@ public interface ScheduleService {
 
     ScheduleResponse findScheduleById (Integer id);
 
+    ScheduleDetailsResponseDTO getScheduleDetailsById(Integer id);
+
     List<Schedule> findClientSchedulesByUserId(Integer id, LocalDateTime month);
 
     List<SchedulesAllTimeClientResponse> findAllClientSchedulesByUserId(Integer id);
