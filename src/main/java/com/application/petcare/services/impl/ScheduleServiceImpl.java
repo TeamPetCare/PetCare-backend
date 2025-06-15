@@ -278,6 +278,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ScheduleDetailsResponseDTO mapToScheduleDetailsDTO(Schedule schedule){
         return ScheduleDetailsResponseDTO.builder()
                 .id(schedule.getId())
+                .paymentLink(schedule.getPayment().getPaymentLink())
+                .review(schedule.getReview())
+                .creationDate(schedule.getCreationDate())
                 .scheduleStatus(schedule.getScheduleStatus())
                 .scheduleDate(schedule.getScheduleDate())
                 .scheduleTime(schedule.getScheduleTime())
