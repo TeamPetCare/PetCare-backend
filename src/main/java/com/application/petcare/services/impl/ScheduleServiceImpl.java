@@ -4,9 +4,7 @@ import com.application.petcare.dto.notification.NotificationCreateRequest;
 import com.application.petcare.dto.schedule.*;
 import com.application.petcare.entities.Schedule;
 import com.application.petcare.entities.User;
-import com.application.petcare.enums.NotificationType;
-import com.application.petcare.enums.Role;
-import com.application.petcare.enums.StatusAgendamento;
+import com.application.petcare.enums.*;
 import com.application.petcare.exceptions.BadRequestException;
 import com.application.petcare.exceptions.BadRoleException;
 import com.application.petcare.exceptions.ResourceNotFoundException;
@@ -275,11 +273,19 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .build();
     }
 
-    public ScheduleDetailsResponseDTO mapToScheduleDetailsDTO(Schedule schedule){
+    public ScheduleDetailsResponseDTO mapToScheduleDetailsDTO(Schedule schedule) {
         String paymentLink = "";
-        if(schedule.getPayment().getPaymentLink() != null){
-           paymentLink = schedule.getPayment().getPaymentLink();
+        PaymentMethod paymentMethod = null;
+        PaymentStatus paymentStatus = null;
+
+        if (schedule.getPayment() != null) {
+            if (schedule.getPayment().getPaymentLink() != null) {
+                paymentLink = schedule.getPayment().getPaymentLink();
+            }
+            paymentMethod = schedule.getPayment().getPaymentMethod();
+            paymentStatus = schedule.getPayment().getPaymentStatus();
         }
+
         return ScheduleDetailsResponseDTO.builder()
                 .id(schedule.getId())
                 .paymentLink(paymentLink)
@@ -289,12 +295,13 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .scheduleDate(schedule.getScheduleDate())
                 .scheduleTime(schedule.getScheduleTime())
                 .petName(schedule.getPet().getName())
-                .paymentMethod(schedule.getPayment().getPaymentMethod())
-                .paymentStatus(schedule.getPayment().getPaymentStatus())
+                .paymentMethod(paymentMethod)
+                .paymentStatus(paymentStatus)
                 .scheduleNote(schedule.getScheduleNote())
                 .services(schedule.getServices())
                 .build();
     }
+
 
     public ScheduleResponse mapToResponse(Schedule schedule) {
         // Obter os IDs dos serviços associados ao Schedule
