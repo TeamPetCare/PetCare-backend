@@ -282,7 +282,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
         return ScheduleDetailsResponseDTO.builder()
                 .id(schedule.getId())
-                .paymentLink(schedule.getPayment().getPaymentLink())
+                .paymentLink(paymentLink)
                 .review(schedule.getReview())
                 .creationDate(schedule.getCreationDate())
                 .scheduleStatus(schedule.getScheduleStatus())
