@@ -273,6 +273,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .build();
     }
 
+    //a
     public ScheduleDetailsResponseDTO mapToScheduleDetailsDTO(Schedule schedule) {
         String paymentLink = "";
         PaymentMethod paymentMethod = null;
