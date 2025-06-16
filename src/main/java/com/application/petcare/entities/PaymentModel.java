@@ -41,7 +41,8 @@ public class PaymentModel {
     @ManyToOne
     private User user;
 
-    @Column(length = 5000)
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String qrCodeImageBase64;
 
     private String paymentLink;

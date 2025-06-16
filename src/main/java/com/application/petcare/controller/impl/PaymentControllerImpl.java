@@ -55,6 +55,7 @@ public class PaymentControllerImpl implements PaymentController {
 
         return ResponseEntity.ok(pixPaymentService.createPixPayment(request.getAmount(), user));
     }
+
     public ResponseEntity<Void> mercadoPagoApiCallBack(@RequestBody MercadoPagoResponse mercadoPagoResponse) {
         System.out.println("CALLBACK");
         pixPaymentService.checkPayment(mercadoPagoResponse);
